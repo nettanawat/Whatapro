@@ -1,0 +1,238 @@
+#mainbackground {
+    background-image: url('img/cloudy1.png');
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+#welcomebackground{
+    background-image: url('img/welcome.png');
+    width: 580px;
+    height: 306px;
+    position: absolute;
+    margin: 12% 15%;
+}
+#loginbackground{
+    background-image: url('img/loginbg.png');
+    width: 299px;
+    height: 90px;
+    position: absolute;
+    margin: 15.8% 60%;
+}
+#formlogin{
+    margin-left: 5%;
+}
+#fontlogin{
+    font-family: STHeiti;
+    font-size: 15px;
+}
+#WAP{
+    font-family: Hobo Std;
+    font-size: 20px;
+    color: #9ee7ed;
+    margin: 1.1% 50%;
+}
+#WAPMAIN{
+    font-family: Hobo Std;
+    font-size: 20px;
+    margin: 1.1% 10%;
+    color: #9ee7ed;
+}
+#emailform{
+    height: 15px;
+    width: 200px;
+    font-family: STHeiti;
+    font-size: 15px;
+}
+#passwordform{
+    height: 15px;
+    width: 140px;
+    font-family: STHeiti;
+    font-size: 15px;
+}
+#loginbutton{
+    height: 15px;
+    width: 55px;
+    font-family: STHeiti;
+}
+
+#formregister{
+    background-image: url('img/registerbg.png');
+    width: 299px;
+    height: 160px;
+    position: absolute;
+    margin: 1% 0%;
+}
+#newtotext{
+    font-family: STHeiti;
+    font-size: 20px;
+    margin-left: 5%;
+    margin-bottom: 0px;
+}
+#signuptext{
+    font-family: STHeiti;
+    font-size: 18px;
+    color: grey;
+}
+#registerform{
+    margin-left: 5%;
+    margin-top: 2%;
+    height: 15px;
+    width: 265px;
+    font-family: STHeiti;
+    font-size: 15px;
+}
+#registerbutton{
+    margin-left: 45%;
+    margin-top: 2%;
+    height: 25px;
+    width: 150px;
+    font-family: STHeiti;
+    font-size: 15px;
+}
+#fooster{
+    font-family: STHeiti;
+    font-size: 12px;
+    margin-left: 20%;
+    margin-top: 47%;
+    color: gray;
+}
+#facebook{
+    width: 115px;
+    height: 71px;
+    position: absolute;
+    margin-top: 40%;
+    margin-left: 30px;
+}
+#twitter{
+    width: 115px;
+    height: 71px;
+    position: absolute;
+    margin-top: 40%;
+    margin-left: 130px;
+}
+#snowflakeContainer {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+.snowflake {
+    padding-left: 15px;
+    font-family: Cambria, Georgia, serif;
+    font-size: 14px;
+    line-height: 24px;
+    position: fixed;
+    color: #FFFFFF;
+    user-select: none;
+    z-index: 1000;
+}
+.snowflake:hover {
+    cursor: default;
+}
+#headerbg{
+    background-image: url('img/headerbg.png');
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    left: 0;    
+}
+#home{
+    background-image: url('img/homesmooth.png');
+}
+#home:hover, #home.active{
+    background-image: url('img/homesmooth_mouseover.png');
+}
+
+#user{
+    background-image: url('img/usersmooth.png');
+}
+#user:hover, #user.active{
+    background-image: url('img/usersmooth_mouseover.png');
+}
+
+#area{
+    background-image: url('img/areasmooth.png');
+}
+#area:hover,#area.active{
+    background-image: url('img/areasmooth_mouseover.png');
+}
+
+#promotion{
+    background-image: url('img/promotionsmooth.png');
+}
+#promotion:hover,#promotion.active{
+    background-image: url('img/promotionsmooth_mouseover.png');
+}
+#navigationbar{
+    margin-left: 10%; 
+    width: 400px; 
+    height: 50px; 
+    float:left;
+}
+.menu-item{
+    display: inline-block;
+    width: 90px;
+    height: 50px;
+    margin-left: -4px;
+}
+.menu-item1{
+    display: inline-block;
+    width: 106px;
+    height: 50px;
+    margin-left: -4px;
+}
+#search{
+    background-image:url('img/search.png');
+    width: 222px;
+    height: 34px;
+    background-repeat:no-repeat;
+    border: none;
+    font-family: Hobo Std;
+    margin: 10% 65%;
+}
+#signupbg{
+    background-image: url('img/signupbg2.png');
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    margin: 3.5% 5%;
+}
+#headercontentstyle{
+    font-family: Hobo Std;
+    font-size: 20px;
+    margin: 10px 15%;
+}
+#contentstyle{
+    font-family: Hobo Std;
+    font-size: 15px;
+    margin-left: 5%;
+}
+textarea{
+    resize: none;
+    font-family: Hobo Std;
+    font-size: 14px;
+    border-color: gray;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+#submitsignup{
+    width: 305px;
+    height: 30px;
+    font-size: 14px;
+    font-family: Hobo Std;
+}
+.titleFontSize{
+    font-size: 30px;
+}
+.adminBackground {
+    background: url(img/bake_opacity.png) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
