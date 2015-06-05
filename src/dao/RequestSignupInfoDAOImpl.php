@@ -11,6 +11,14 @@
  */
 class RequestSignupInfoDAOImpl implements RequestSignupInfoDAO {
 
+    private $database = '';
+    private $table = 'RequestingSignup';
+
+    function __construct()
+    {
+        $this->database = new medoo();
+    }
+
     //put your code herepublic function addNewRequest(){
     public function deleteRequest($id) {
         $sqlConnector = new SQLConnector();
@@ -18,7 +26,11 @@ class RequestSignupInfoDAOImpl implements RequestSignupInfoDAO {
     }
 
     public function getAllRequest() {
-        return SQLConnector::getDataFromTable("RequestingSignup");
+        $requestList = array();
+        foreach ($this->database->select($this->table,'*') as $row) {
+            $requestList[] = new RequestSignupInfo($row['id'], $row['email'], $row['password'], $row['name'],$row['address'], $row['phone_number'], $row['sub_district'], $row['latitude'], $row['longitude'], $row['open_time'], $row['description'],$row['request_date'], $row['approve_date'], $row['manage_by'], $row['status']);
+        }
+        return $requestList;
     }
 
     public function getRequesSignupById($id){
@@ -45,41 +57,32 @@ class RequestSignupInfoDAOImpl implements RequestSignupInfoDAO {
     }
 
     public function addNewRequest(RequestSignupInfo $requestingSingup) {
-        $sqlConnector = new SQLConnector();
-        $columnNames = array();
-        $columnNames[] = "email";
-        $columnNames[] = "password";
-        $columnNames[] = "name";
-        $columnNames[] = "phone_number";
-        $columnNames[] = "sub_district";
-        $columnNames[] = "latitude";
-        $columnNames[] = "longtitude";
-        $columnNames[] = "open_time";
-        $columnNames[] = "description";
-        $columnNames[] = "image";
-        $columnNames[] = "request_date";
-        $columnNames[] = "approve_date";
-        $columnNames[] = "manage_by";
-        $columnNames[] = "status";
-        
-        $columnValues = array();
-        $columnValues[] = $requestingSingup->getEmail();
-        $columnValues[] = $requestingSingup->getPassword();
-        $columnValues[] = $requestingSingup->getName();
-        $columnValues[] = $requestingSingup->getPhoneNumber();
-        $columnValues[] = $requestingSingup->getSubDistrict();
-        $columnValues[] = $requestingSingup->getLatitude();
-        $columnValues[] = $requestingSingup->getLongitude();
-        $columnValues[] = $requestingSingup->getOpenTime();
-        $columnValues[] = $requestingSingup->getDescription();
-        $columnValues[] = $requestingSingup->getImage();
-        $columnValues[] = $requestingSingup->getRequestDate();
-        $columnValues[] = $requestingSingup->getApproveDate();
-        $columnValues[] = $requestingSingup->getManageBy();
-        $columnValues[] = $requestingSingup->getStatus();
-        SQLConnector::insertDataIntoDatabase("RequestingSignup", $columnNames, $columnValues);
+
+        $now = new DateTime();
+        $now->setTimezone(new DateTimeZone('Asia/Bangkok'));    // Another way
+        $requestingSingup->setRequestDate($now->format('Y-m-d H:i:s'));
+        $data = [
+            'email' => $requestingSingup->getEmail(),
+            'password' => md5($requestingSingup->getPassword()),
+            'name' => $requestingSingup->getName(),
+            'address' => $requestingSingup->getAddress(),
+            'phone_number' => $requestingSingup->getPhoneNumber(),
+            'sub_district' => $requestingSingup->getSubDistrict(),
+            'latitude' => $requestingSingup->getLatitude(),
+            'longitude' => $requestingSingup->getLongitude(),
+            'open_time' => $requestingSingup->getOpenTime(),
+            'description' => $requestingSingup->getDescription(),
+            'request_date' => $requestingSingup->getRequestDate(),
+            'approve_date' => $requestingSingup->getApproveDate(),
+            'manage_by' => $requestingSingup->getManageBy(),
+            'status' => $requestingSingup->getStatus(),
+        ];
+        return $this->database->insert($this->table, $data);
     }
 
+    public function approveRequest($id)
+    {
+        // TODO: Implement approveRequest() method.
+    }
 }
 
-?>

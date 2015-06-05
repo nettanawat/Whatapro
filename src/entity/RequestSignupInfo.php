@@ -16,30 +16,30 @@ class RequestSignupInfo {
     private $email;
     private $password;
     private $name;
+    private $address;
     private $phoneNumber;
     private $subDistrict;
     private $latitude;
     private $longitude;
     private $openTime;
     private $description;
-    private $image;
     private $requestDate;
     private $approveDate;
     private $manageBy;
     private $status;
 
-    function __construct($id, $email, $password, $name, $phoneNumber, $subDistrict, $latitude, $longitude, $openTime, $description, $image, $requestDate, $approveDate, $manageBy, $status) {
+    function __construct($id, $email, $password, $name,$address, $phoneNumber, $subDistrict, $latitude, $longitude, $openTime, $description, $requestDate, $approveDate, $manageBy, $status) {
         $this->id = $id;
         $this->email = $email;
         $this->password = $password;
         $this->name = $name;
+        $this->address = $address;
         $this->phoneNumber = $phoneNumber;
         $this->subDistrict = $subDistrict;
         $this->latitude = $latitude;
         $this->longitude = $longitude;
         $this->openTime = $openTime;
         $this->description = $description;
-        $this->image = $image;
         $this->requestDate = $requestDate;
         $this->approveDate = $approveDate;
         $this->manageBy = $manageBy;
@@ -125,14 +125,6 @@ class RequestSignupInfo {
         $this->description = $description;
     }
 
-    public function getImage() {
-        return $this->image;
-    }
-
-    public function setImage($image) {
-        $this->image = $image;
-    }
-
     public function getRequestDate() {
         return $this->requestDate;
     }
@@ -163,6 +155,22 @@ class RequestSignupInfo {
 
     public function setStatus($status) {
         $this->status = $status;
+    }
+
+    /**
+     * @param mixed $address
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAddress()
+    {
+        return $this->address;
     }
 
 
