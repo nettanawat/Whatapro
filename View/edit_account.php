@@ -259,6 +259,7 @@ if (isset($_POST['edit'])) {
     }
 
     google.maps.event.addDomListener(window, 'load', initialize);
+
 </script>
 </body>
 </html>

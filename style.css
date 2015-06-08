@@ -236,3 +236,40 @@ textarea{
     background-size: cover;
 }
 
+.promotionboxtop{
+    height: 200px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border: solid 1px;
+    border-bottom: none;
+    border-color: lightgray;
+    box-shadow: 2px 0px 10px #888888;
+}
+
+.promotionboxbtm{
+    height: 80px;
+    border-top: none;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: solid 1px;
+    border-color: lightgray;
+    background-color: rgba(211,211,211,0.1);
+    box-shadow: 2px 2px 10px #888888;
+
+}
+
+.textinpromotionbox{
+    margin-top: 10px;
+    font-family: Helvetica-Light;
+    font-weight: lighter;
+    font-size: 18px;
+}
+
+.shadow{
+
+}
+
+.viewpromotion{
+    margin-top: 70px;
+}
+

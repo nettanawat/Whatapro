@@ -141,8 +141,9 @@ if (isset($_SESSION['manageAccountStatus']) && isset($_SESSION['manageAccountAct
             $shopImageList = array();
             $shopImageController = new ShopImageController();
 
+
             if ($shopInfo->getName() != null) {
-                $shopName = $shopInfo->getName();
+                $shopName = "<a href='profile.php?accountId=".$shopInfo->getAccountId()."' >".$shopInfo->getName()."</a>";
             }
             $imageList = $shopImageController->getImageByAccountId($account->getAccountId());
             if ($shopImageController->getImageByAccountId($account->getAccountId()) != null) {
@@ -150,6 +151,7 @@ if (isset($_SESSION['manageAccountStatus']) && isset($_SESSION['manageAccountAct
                     $shopImageList[] = $image->getImagePath();
                 }
             }
+
             Adaptor::setStatus($account->getStatus());
             echo '<tr>
                 <td>' . $account->getAccountId() . '</td>

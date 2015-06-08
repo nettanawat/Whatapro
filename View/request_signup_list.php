@@ -95,7 +95,6 @@ else{
 </div>
 
 <script>
-
     function showMap(){
         $( ".address" )
             .keyup(function() {
