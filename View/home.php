@@ -16,6 +16,5 @@ include_once 'session.php';
     <h1>Welcome to WAP</h1>
     <p>This page's content is under construction. I will show you something very cool next time :D.</p>
 </div>
-<!-- /container -->
 </body>
 </html>

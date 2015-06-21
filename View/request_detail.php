@@ -12,8 +12,10 @@ if ('admin' != $user_type) {
 ?>
 <head>
     <title>WAP / Request Detail</title>
+    <script src="../jquery.js"></script>
     <link href="../style.css" rel="stylesheet" type="text/css">
     <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -189,12 +191,6 @@ if ('admin' != $user_type) {
 </div>
 <!-- /container -->
 
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="../bootstrap/js/bootstrap.min.js"></script>
 <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
 <style>
     #googleMap {

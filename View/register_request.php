@@ -194,8 +194,6 @@ if (isset($_POST['inputEmail'])) {
     </div>
 </div>
 <!-- /row -->
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
 
 <script type="text/javascript">

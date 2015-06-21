@@ -64,7 +64,7 @@ if (isset($_POST['edit'])) {
     <script src="../bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div style="margin: 80px;" class="container-fluid">
+<div style="margin: 80px;" class="container-fluid" id="top">
     <div class="row">
         <form role="form" name="inputeditaccount" action="" method="post" enctype="multipart/form-data">
             <h2>Edit account</h2>
@@ -175,20 +175,23 @@ if (isset($_POST['edit'])) {
             <div class="col-md-12" id="result"></div>
 
             <div style="margin-top: 20px;" class="col-md-12">
-                <button type="submit" name="edit" class="btn btn-default">Update</button>
                 <a class="btn btn-default" href="account_list.php" role="button">Back</a>
+                <button type="submit" name="edit" class="btn btn-default">Update</button>
             </div>
         </form>
     </div>
     <!-- /row -->
 </div>
 <!-- /container -->
+<nav class="navbar navbar-fixed-bottom">
+    <div class="container-fluid">
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#top"><strong style="text-decoration: none; color: orangered">Back to top</strong></a></li>
+        </ul>
+    </div><!-- /.container-fluid -->
+</nav>
 
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
 <script>
 

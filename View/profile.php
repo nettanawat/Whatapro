@@ -15,6 +15,8 @@ if (isset($_GET['accountId'])) {
 <head>
     <script src="../jquery.js"></script>
     <link href="../style.css" rel="stylesheet" type="text/css">
+    <!--    <link rel="stylesheet" href="../screen.css">-->
+    <link rel="stylesheet" href="../lightbox.css">
     <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
     <script src="../bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../google_jsapi.js"></script>
@@ -23,7 +25,7 @@ if (isset($_GET['accountId'])) {
 
 </head>
 <body>
-<div style="margin: 55px;"></div>
+<div id="top" style="margin: 55px;"></div>
 
 <div class="col-md-12" style="width: 100%; height: 300px;" id="map-canvas">
 </div>
@@ -31,73 +33,101 @@ if (isset($_GET['accountId'])) {
 <input type="hidden" id="longitude" value="<?php echo $shopInfo->getLongitude(); ?>">
 
 <div style="padding-bottom: 30px;" class="container">
-    <div class="row">
-        <h2><?php echo $shopInfo->getName(); ?></h2>
 
-        <div class="form-group col-md-2">
-            <strong>Email : </strong>
 
-            <p class="col-md-12"><?php echo $account->getEmail(); ?></p>
-        </div>
-        <div class="form-group col-md-2">
-            <strong>Phone number : </strong>
+    <h1 class="text-center"><?php echo $shopInfo->getName(); ?></h1>
+    <div class="col-md-12">
+    <?php
+    if ('admin' == $user_type) {
 
-            <p class="col-md-12"><?php echo $shopInfo->getPhoneNumber(); ?></p>
-        </div>
-        <div class="form-group col-md-4">
-            <strong>Open and close time : </strong>
+        echo '<a style="margin-top: 30px;" href="edit_account.php?userId=' . $shopInfo->getAccountId() . '" class="btn btn-default">Edit this shop</a>';
+    }
+    ?>
+    </div>
+    <div class="form-group col-md-2">
+        <strong>Email : </strong>
 
-            <p class="col-md-12"><?php echo $shopInfo->getOpenTime(); ?></p>
-        </div>
-        <div class="form-group col-md-4">
-            <strong>Address : </strong>
+        <p class="col-md-12"><?php echo $account->getEmail(); ?></p>
+    </div>
+    <div class="form-group col-md-2">
+        <strong>Phone number : </strong>
 
-            <p class="col-md-12"><?php echo $shopInfo->getAddress(); ?></p>
-        </div>
-        <div class="form-group col-md-12">
-            <strong>Description</strong>
+        <p class="col-md-12"><?php echo $shopInfo->getPhoneNumber(); ?></p>
+    </div>
+    <div class="form-group col-md-4">
+        <strong>Open and close time : </strong>
 
-            <p class="col-md-12"><?php echo $shopInfo->getDescription(); ?></p>
-        </div>
-        <hr class="col-md-12">
-        <div style="padding-bottom: 20px;" class="col-md-12">
+        <p class="col-md-12"><?php echo $shopInfo->getOpenTime(); ?></p>
+    </div>
+    <div class="form-group col-md-4">
+        <strong>Address : </strong>
+
+        <p class="col-md-12"><?php echo $shopInfo->getAddress(); ?></p>
+    </div>
+    <div class="form-group col-md-12">
+        <strong>Description</strong>
+
+        <p class="col-md-12"><?php echo $shopInfo->getDescription(); ?></p>
+    </div>
+</div>
+<div class="container-fluid text-center">
+    <h3>SHOP IMAGES</h3>
+    <div class="image-row">
+        <div class="image-set">
             <?php
             foreach ($shopImage as $image) {
-                echo '<img style="padding-bottom:20px;" height="220px" class="col-md-4"  src="' . $image->getImagePath() . '">';
+                echo '
+                    <div class="col-md-3">
+                        <a class="example-image-link" href="' . $image->getImagePath() . '" data-lightbox="example-set">
+                        <img width="100%" class="example-image" src="' . $image->getImagePath() . '" alt=""/></a>
+                    </div>
+                    ';
             }
             ?>
-            <hr class="col-md-12">
         </div>
-        <h3>Current promotions</h3>
+    </div>
+</div>
 
-        <div class="col-md-12">
-            <div class="col-md-4 shadow">
+<div style="margin-top: 20px; padding-bottom: 50px" class="container-fluid text-center">
+    <h3 class="col-md-12">Current promotions</h3>
 
-                <?php
-                foreach ($promotionList as $promotion) {
-                    $promotionImageController = new PromotionImageController();
-                    $promotionImage = $promotionImageController->getPromotionImageByPromotionId($promotion->getPromotionId());
-                    $startDate = new DateTime($promotion->getStartDate());
+    <div class="col-md-12 shadow">
+        <?php
+        foreach ($promotionList as $promotion) {
+            $promotionImageController = new PromotionImageController();
+            $promotionImage = $promotionImageController->getPromotionImageByPromotionId($promotion->getPromotionId());
+            $startDate = new DateTime($promotion->getStartDate());
 
-                    $endDate = new DateTime($promotion->getEndDate());
+            $endDate = new DateTime($promotion->getEndDate());
 
 
-                    echo('
+            echo('
+                    <div class="col-md-4">
                             <div style="background-image: url(' . $promotionImage[0]->getImagePath() . '); background-size: cover;" class="col-md-12 promotionboxtop divbutton text-center container-fluid">
-                                    <a href="" style="display: none; background-color: rgba(255,255,255,0.5); color: #ffffff" class="viewpromotion btn btn-default">View Promotion</a>
+                                    <a href="promotion.php?promotionId=' . $promotion->getPromotionId() . '" style="display: none; background-color: rgba(255,255,255,0.5); color: #ffffff" class="viewpromotion btn btn-default">View Promotion</a>
                             </div>
                             <div class="col-md-12 promotionboxbtm text-center">
                                 <p class="textinpromotionbox">' . $promotion->getName() . '</p>
                                 <p>' . $startDate->format('D M j Y') . ' - ' . $endDate->format('D M j Y') . '</p>
                             </div>
+                    </div>
                         ');
-                }
-                ?>
-            </div>
-        </div>
+        }
+        ?>
     </div>
-    <!--row-->
 </div>
+
+<div class="container-fluid text-center">
+    <p>Copyright &copy; nettanawat 2015 All rights reserved</p>
+</div>
+
+<nav class="navbar navbar-fixed-bottom">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#top"><strong style="text-decoration: none; color: orangered">Back to top</strong></a></li>
+        </ul>
+    </div>
+</nav>
 <!--container-->
 <script>
     $(document).ready(function () {
@@ -158,5 +188,7 @@ if (isset($_GET['accountId'])) {
 
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>
+<script src="../js/jquery-1.11.0.min.js"></script>
+<script src="../js/lightbox.js"></script>
 </body>
 </html>

@@ -31,6 +31,7 @@ class AccountDAOImpl implements AccountDAO {
         $now = new DateTime();
         $now->setTimezone(new DateTimeZone('Asia/Bangkok'));    // Another way
         $account->setJoinDate($now->format('Y-m-d H:i:s'));
+
             $data = [
             'email' => $account->getEmail(),
             'password' => md5($account->getPassword()),

@@ -53,7 +53,7 @@ if('user' == $user_type){
                 echo('<tr>
                     <td>'.$promotion->getPromotionId().'</td>
                     <td>'.$promotion->getName().'</td>
-                    <td><a href="edit_account.php?userId='.$shopInfo->getAccountId().'">'.$shopInfo->getName().'</a></td>
+                    <td><a href="profile.php?accountId='.$shopInfo->getAccountId().'">'.$shopInfo->getName().'</a></td>
                     <td>'.$promotion->getStartDate().'</td>
                     <td>'.$promotion->getEndDate().'</td>
                     <td class="col-md-4">');

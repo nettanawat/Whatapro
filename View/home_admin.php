@@ -150,7 +150,5 @@ if ('admin' != $user_type) {
         </div>
     </div> <!--row-->
 </div><!--container-->
-
-
 </body>
 </html>

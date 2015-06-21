@@ -5,8 +5,10 @@ include_once 'session.php';
 <html>
 <head>
     <title>WAP / Add Promotion</title>
+    <script src="../jquery.js"></script>
     <link href="../style.css" rel="stylesheet" type="text/css">
     <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -110,12 +112,5 @@ include_once 'session.php';
 </div>
 
 </div> <!-- /container -->
-
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="../bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

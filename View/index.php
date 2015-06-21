@@ -1,3 +1,20 @@
+<?php
+
+session_start();
+
+include_once '../Config.php';
+
+if(isset($_SESSION['userId'])){
+    $account = AccountController::getAccountById($_SESSION['userId']);
+    if('admin' == $account->getRole()) {
+        header('Location: home_admin.php');
+    } elseif('user' == $account->getRole()) {
+        header('Location: home.php');
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -53,11 +70,5 @@
                 </div>
 
         </div> <!-- /container -->
-
-
-        <!-- Bootstrap core JavaScript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     </body>
 </html>

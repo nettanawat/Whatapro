@@ -27,6 +27,7 @@ class Config {
         'RequestSignupController' => 'src/controller/RequestSignupController',
         'ShopImageController' => 'src/controller/ShopImageController',
         'PromotionImageController' => 'src/controller/PromotionImageController',
+        'RedeemCodeController' => 'src/controller/RedeemCodeController',
         'Adaptor' => 'library/Adaptor',
         'AccountDAO' => 'src/dao/AccountDAO',
         'AccountDAOImpl' => 'src/dao/AccountDAOImpl',
@@ -44,6 +45,8 @@ class Config {
         'ShopInformationDAOImpl' => 'src/dao/ShopInformationDAOImpl',
         'PromotionImageDAO' => 'src/dao/PromotionImageDAO',
         'PromotionImageDAOImpl' => 'src/dao/PromotionImageDAOImpl',
+        'RedeemCodeDAO' => 'src/dao/RedeemCodeDAO',
+        'RedeemCodeDAOImpl' => 'src/dao/RedeemCodeDAOImpl',
         'AccountInfo' => 'src/entity/AccountInfo',
         'ActivitiesLog' => 'src/entity/ActivitiesLog',
         'CheckInCode' => 'src/entity/CheckInCode',
@@ -52,7 +55,8 @@ class Config {
         'ShopInformation' => 'src/entity/ShopInformation',
         'ShopImage' => 'src/entity/ShopImage',
         'PromotionImage' => 'src/entity/PromotionImage',
-        'SQLConnector' => 'Library/SQLConnector'
+        'RedeemCode' => 'src/entity/RedeemCode',
+        'SQLConnector' => 'Library/SQLConnector',
     );
 }
 
@@ -68,3 +72,4 @@ ActivitiesLogController::loadClass();
 PromotionController::loadClass();
 RequestSignupController::loadClass();
 ShopInformationController::loadClass();
+RedeemCodeController::loadClass();

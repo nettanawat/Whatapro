@@ -31,6 +31,8 @@ if (isset($_POST['add'])) {
             $target_dir = $folderPath;
             umask($old);
             $target_file = array();
+
+
             foreach ($_FILES["files"]["name"] as $aImage) {
                 $target_file[] = $target_dir . basename($aImage);
             }
@@ -42,6 +44,7 @@ if (isset($_POST['add'])) {
                 }
                 $i++;
             }
+
             //add image
 
             foreach($uploadPath as $image){

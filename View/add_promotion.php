@@ -35,10 +35,33 @@
 
         }
         if('admin' == $user_type){
-            //$promotionId = PromotionController::addPromotion(new Promotion("", $logInAccount->getAccountId(), $_POST['inputName'], $_POST['inputDescription'],"",$_POST['inputStartDate'],$_POST['inputEndDate'], 1));
+            $promotionId = PromotionController::addPromotion(new Promotion("", $_POST['selectedShopId'], $_POST['inputName'], $_POST['inputDescription'],"",$_POST['inputStartDate'],$_POST['inputEndDate'], 1));
 
-            $detail = "add new promotion to system [ name =  ".$_POST['inputName']."]";
-            ActivitiesLogController::addLog(new ActivitiesLog("", $logInAccount->getAccountId(), "add", "promotion", $detail,""));
+            //uplaod images
+            $accountId = $_POST['selectedShopId'];
+            $old = umask(0);
+            $folderPath = "../user_upload/".$accountId."/promotions/".$promotionId."/";
+            mkdir($folderPath, 0777,true);
+            $target_dir = $folderPath;
+            umask($old);
+            $target_file = array();
+            foreach ($_FILES["files"]["name"] as $aImage) {
+                $target_file[] = $target_dir . basename($aImage);
+            }
+            $i = 0;
+            $uploadPath = array();
+            foreach ($_FILES["files"]["tmp_name"] as $imageTmp) {
+                if (move_uploaded_file($imageTmp, $target_file[$i])) {
+                    $uploadPath[] = $target_file[$i];
+                }
+                $i++;
+            }
+
+            //add image
+            foreach($uploadPath as $image){
+                $promotionImageController = new PromotionImageController();
+                $promotionImageController->addImage(new PromotionImage("", $promotionId, $image,""));
+            }
         }
         header("Location: promotion_list.php");
     }
@@ -52,6 +75,7 @@
     <link href="../style.css" rel="stylesheet" type="text/css">
     <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
     <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../lightbox.js"></script>
 </head>
 <body>
 <div style="margin: 80px;" class="container-fluid">
@@ -73,10 +97,11 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="inputEmail">Select shop</label>
-                            <div class="form-inline"  id="result">
-                                <button type="button" class="btn btn-default" data-toggle="modal" data-target=".bs-example-modal-lg">Select Shop</button>
+                            <div class="form-group">
+                                <button id="clickSelectShop" type="button" class="btn btn-default" data-toggle="modal" data-target=".bs-example-modal-lg">Select Shop</button>
+                                <label id="show"></label>
+                                <input type="hidden" id="selectedShopId" name="selectedShopId">
                             </div>
-                            <input type="hidden" id="inputShop" name="inputShop">
                         </div>
                     </div>';
             }
@@ -138,7 +163,7 @@
                 <tr>
                     <td>' . $shop->getName() . '</td>
                     <td>' . $shop->getAddress() . '</td>
-                    <td><input type="hidden" id="selectedShopId" value="' . $shop->getName() . '"><button onclick="selectShop()" data-dismiss="modal" class="btn btn-default">Select</button></td>
+                    <td id="wth"><input type="hidden" id="' . $shop->getAccountId() . '" value="' . $shop->getName() . '"><button id="' . $shop->getAccountId() . '" data-dismiss="modal" class="btn btn-default">Select</button></td>
                 </tr>');
                     }
                     ?>
@@ -180,14 +205,19 @@
 //            console.log(“Your browser does not support File API”);
         }
     }
+    $(document).ready(function () {
+        $("button").click(function() {
+            if(this.id == "clickSelectShop"){
 
-    function selectShop() {
-        var shopId = document.getElementById("selectedShopId").value;
-        var output = document.getElementById("result");
-        var div = document.createElement("div");
-        div.innerHTML = "<input class='form-control' type='text' readonly name='showSelectedShop' value='"+shopId+"'>";
-        output.insertBefore(div, null);
-    }
+            } else {
+                $.get('find_shop_name.php?shopId='+this.id, function (result,data) {
+                    document.getElementById("show").innerHTML = "You selected "+result;
+                });
+                document.getElementById("selectedShopId").value = this.id;
+            }
+        });
+
+    });
 </script>
 </body>
 </html>

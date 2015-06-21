@@ -122,6 +122,17 @@ if (isset($_SESSION['manageAccountStatus']) && isset($_SESSION['manageAccountAct
 <div class="container-fluid">
     <h2 class="col-md-11">Accounts</h2>
     <a class="btn btn-default col-md-1" href="add_account.php" role="button">New Account</a>
+
+    <!--    search-->
+    <div style="padding-bottom: 20px;" class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control" id="inputSearch" placeholder="What is in your mind?">
+        </div>
+        <div class="form-group">
+            <button class="form-control btn btn-default" id="btnSearch"><span class="glyphicon glyphicon-search"></span> Search</button>
+        </div>
+    </div>
+
     <table class="col-md-12 table table-condensed table-hover">
         <tr>
             <th>Id</th>
