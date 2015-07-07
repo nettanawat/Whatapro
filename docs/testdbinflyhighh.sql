@@ -158,6 +158,35 @@ CREATE  TABLE IF NOT EXISTS `WAP`.`PromotionImage` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
+-- -----------------------------------------------------
+-- Table `WAP`.`MobileUsers`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `WAP`.`MobileUsers` ;
+
+CREATE  TABLE IF NOT EXISTS `WAP`.`MobileUsers` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `facebook_id` VARCHAR(250) NULL ,
+  `totalPoint` VARCHAR(45) NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `WAP`.`Codes`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `WAP`.`Codes` ;
+
+CREATE  TABLE IF NOT EXISTS `WAP`.`Codes` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `point_amount` INT NULL ,
+  `code` VARCHAR(45) NULL ,
+  `barcode_path` VARCHAR(100) NULL ,
+  `generate_date` DATETIME NULL ,
+  `status` TINYINT(1) NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
 USE `WAP` ;
 
 

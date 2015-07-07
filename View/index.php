@@ -7,9 +7,9 @@ include_once '../Config.php';
 if(isset($_SESSION['userId'])){
     $account = AccountController::getAccountById($_SESSION['userId']);
     if('admin' == $account->getRole()) {
-        header('Location: home_admin.php');
+        header('Location: '.Config::PATH.'/admin');
     } elseif('user' == $account->getRole()) {
-        header('Location: home.php');
+        header('Location: '.Config::PATH.'/user');
     }
 }
 
@@ -19,10 +19,12 @@ if(isset($_SESSION['userId'])){
 <html>
     <head>
         <title>WAP / Index</title>
-        <script src="../jquery.js"></script>
-        <link href="../style.css" rel="stylesheet" type="text/css">
-        <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
-        <script src="../bootstrap/js/bootstrap.min.js"></script>
+        <?php
+
+            $assetPath = Config::PATH;
+
+            include_once '../assets.php';
+        ?>
     </head>
     <body class="adminBackground">
         <div style="margin-top: 150px; color: #ffffff" class="container">
@@ -34,11 +36,11 @@ if(isset($_SESSION['userId'])){
                     <div class="col-md-6">
                         <p>Welcome to What a pro.<br> Start a promotion, give them your offer, and be in the know.</p>
                         <p>
-                            <a class="btn btn-lg btn-primary" href="../View/register_request.php" role="button">Join WAP &raquo;</a>
+                            <a class="btn btn-lg btn-primary" href="<?php echo Config::PATH; ?>/register" role="button">Join WAP &raquo;</a>
                         </p>
                     </div>
                     <div class="col-md-6">
-                        <form class="form-horizontal" role="form" method="post" action="take_login.php" name="loginform">
+                        <form class="form-horizontal" role="form" method="post" action="<?php echo Config::PATH; ?>/login" name="loginform">
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
                                 <div class="col-sm-10">

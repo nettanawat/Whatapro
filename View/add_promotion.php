@@ -1,11 +1,10 @@
 <?php
     include_once 'session.php';
-
     if(isset($_POST['add'])){
+
         if('user' == $user_type){
             $promotionId = PromotionController::addPromotion(new Promotion("", $logInAccount->getAccountId(), $_POST['inputName'], $_POST['inputDescription'],"",$_POST['inputStartDate'],$_POST['inputEndDate'], 1));
-            $detail = "add new promotion to system [ name =  ".$_POST['inputName']."]";
-            ActivitiesLogController::addLog(new ActivitiesLog("", $logInAccount->getAccountId(), "add", "promotion", $detail,""));
+            ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"add","promotion","add promotion into database [ promotion id : ".$promotionId." ]",null));
 
             //uplaod images
             $accountId = $logInAccount->getAccountId();
@@ -32,11 +31,12 @@
                 $promotionImageController = new PromotionImageController();
                 $promotionImageController->addImage(new PromotionImage("", $promotionId, $image,""));
             }
-
         }
+
+
         if('admin' == $user_type){
             $promotionId = PromotionController::addPromotion(new Promotion("", $_POST['selectedShopId'], $_POST['inputName'], $_POST['inputDescription'],"",$_POST['inputStartDate'],$_POST['inputEndDate'], 1));
-
+            ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"add","promotion","add promotion into database [ promotion id : ".$promotionId." ]",null));
             //uplaod images
             $accountId = $_POST['selectedShopId'];
             $old = umask(0);
@@ -62,8 +62,12 @@
                 $promotionImageController = new PromotionImageController();
                 $promotionImageController->addImage(new PromotionImage("", $promotionId, $image,""));
             }
+
         }
-        header("Location: promotion_list.php");
+        $_SESSION['managePromotionStatus']= "true";
+        $_SESSION['managePromotionAction'] = "add";
+        header('Location: '.Config::PATH.'/promotions');
+        exit;
     }
 ?>
 
@@ -71,16 +75,18 @@
 <html>
 <head>
     <title>WAP / Add Promotion</title>
-    <script src="../jquery.js"></script>
-    <link href="../style.css" rel="stylesheet" type="text/css">
-    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
-    <script src="../lightbox.js"></script>
+    <?php
+
+    $assetPath = Config::PATH.'';
+
+    include_once '../assets.php';
+    ?>
+<!--    <script src="../lightbox.js"></script>-->
 </head>
 <body>
 <div style="margin: 80px;" class="container-fluid">
     <div class="row">
-        <form name="inputeditaccount" action="" method="post" enctype="multipart/form-data">
+        <form id="addPromotionForm" action="" method="post" enctype="multipart/form-data">
 
             <div class="col-md-12">
                 <label class="titleFontSize">New promotion</label>
@@ -106,19 +112,19 @@
                     </div>';
             }
             ?>
-            <div class="col-md-6">
+            <div id="sDateDiv" class="col-md-6">
                 <div class="form-group">
-                    <label for="inputStartDate">Start date</label>
-                    <input type="date" class="form-control" name="inputStartDate"required>
+                    <label class="control-label" for="inputStartDate">Start date</label>
+                    <input id="startDateId" type="date" class="form-control" name="inputStartDate" required>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div id="eDateDiv" class="col-md-6">
                 <div class="form-group">
-                    <label for="inputEndDate">End date</label>
-                    <input type="date" class="form-control" name="inputEndDate"required>
+                    <label class="control-label" for="inputEndDate">End date</label>
+                    <input id="endDateId" type="date" class="form-control" name="inputEndDate" required">
                 </div>
             </div>
-            <div class="col-md-6">
+            <div id="selectImageDiv" class="col-md-6">
                 <div class="form-group">
                     <label for="files">Select image(s)</label>
                     <input class="form-control" id="files" name="files[]" type="file" multiple/>
@@ -133,7 +139,7 @@
             <div class="col-md-12" id="result"></div>
             <div class="col-md-12">
                 <a class="btn btn-default" href="account_list.php" role="button">Back</a>
-                <input type="submit" value="Submit" name="add" class="btn btn-default"/>
+                <button type="submit" id="clickSubmit" name="add" class="btn btn-default">Submit</button>
             </div>
         </form>
         <!-- /row -->
@@ -206,18 +212,34 @@
         }
     }
     $(document).ready(function () {
-        $("button").click(function() {
+        $("button").click(function(e) {
             if(this.id == "clickSelectShop"){
 
-            } else {
-                $.get('find_shop_name.php?shopId='+this.id, function (result,data) {
+            }
+            else if(this.id == "clickSubmit") {
+                var startDate = document.getElementById("startDateId").value;
+                var endDate = document.getElementById("endDateId").value;
+                if(startDate > endDate) {
+                    e.preventDefault();
+                    $( "#sDateDiv" ).addClass("has-error");
+                    $( "#eDateDiv" ).addClass("has-error");
+                    $( "#selectImageDiv" ).before( "<p style='font-size: 18; color: #eb3624' class='col-md-12 has-error'>Waring: Start date must lower than end date</p>" );
+                } else {
+                    $("form").submit(function(){
+
+                    });
+                }
+            }
+            else {
+                $.get('whatapro/View/find_shop_name.php?shopId='+this.id, function (result,data) {
                     document.getElementById("show").innerHTML = "You selected "+result;
                 });
                 document.getElementById("selectedShopId").value = this.id;
             }
         });
-
     });
+
+
 </script>
 </body>
 </html>

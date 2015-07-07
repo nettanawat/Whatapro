@@ -16,7 +16,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="home.php">Dashboard</a></li>
                         <li class="dropdown">
-                                <li><a href="promotion_list.php">Manage Promotion</a></li>
+                                <li><a href="promotions">Manage Promotion</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -27,9 +27,9 @@
                             ?>
                             <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="change_password.php">Change Password</a></li>
-                                <li><a href="edit_profile.php">Edit profile</a></li>
-                                <li><a href="take_logout.php">Logout</a></li>
+                                <li><a href="changepassword">Change Password</a></li>
+                                <li><a href="profile/edit.php">Edit profile</a></li>
+                                <li><a href="logout.php">Logout</a></li>
                             </ul>
                         </li>
                     </ul>

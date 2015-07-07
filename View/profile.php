@@ -13,14 +13,16 @@ if (isset($_GET['accountId'])) {
 ?>
 <html>
 <head>
-    <script src="../jquery.js"></script>
-    <link href="../style.css" rel="stylesheet" type="text/css">
-    <!--    <link rel="stylesheet" href="../screen.css">-->
-    <link rel="stylesheet" href="../lightbox.css">
-    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../google_jsapi.js"></script>
+    <?php
 
+    $assetPath = Config::PATH.'';
+
+    include_once '../assets.php'
+
+    ?>
+
+    <link rel="stylesheet" href="<?php echo Config::PATH.'/' ?>lightbox.css">
+    <script type="text/javascript" src="<?php echo Config::PATH.'/' ?>google_jsapi.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
 
 </head>
@@ -36,38 +38,38 @@ if (isset($_GET['accountId'])) {
 
 
     <h1 class="text-center"><?php echo $shopInfo->getName(); ?></h1>
-    <div class="col-md-12">
+        <div style="padding-bottom: 30px;" class="text-center col-md-12">
     <?php
     if ('admin' == $user_type) {
 
-        echo '<a style="margin-top: 30px;" href="edit_account.php?userId=' . $shopInfo->getAccountId() . '" class="btn btn-default">Edit this shop</a>';
+        echo '<a style="margin-top: 30px;" href="'.Config::PATH.'/account/edit/' . $shopInfo->getAccountId() . '" class="btn btn-default">Edit this shop</a>';
     }
     ?>
     </div>
-    <div class="form-group col-md-2">
+    <div class="form-group col-md-3">
         <strong>Email : </strong>
 
-        <p class="col-md-12"><?php echo $account->getEmail(); ?></p>
+        <p class="col-md-12"><span class="glyphicon glyphicon-earphone"></span> <?php echo $account->getEmail(); ?></p>
     </div>
     <div class="form-group col-md-2">
         <strong>Phone number : </strong>
 
-        <p class="col-md-12"><?php echo $shopInfo->getPhoneNumber(); ?></p>
+        <p class="col-md-12"><span class="glyphicon glyphicon-phone-alt"></span> <?php echo $shopInfo->getPhoneNumber(); ?></p>
     </div>
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-3">
         <strong>Open and close time : </strong>
 
-        <p class="col-md-12"><?php echo $shopInfo->getOpenTime(); ?></p>
+        <p class="col-md-12"><span class="glyphicon glyphicon-time"></span> <?php echo $shopInfo->getOpenTime(); ?></p>
     </div>
     <div class="form-group col-md-4">
         <strong>Address : </strong>
 
-        <p class="col-md-12"><?php echo $shopInfo->getAddress(); ?></p>
+        <p class="col-md-12"><span class="glyphicon glyphicon-map-marker"></span> <?php echo $shopInfo->getAddress(); ?></p>
     </div>
     <div class="form-group col-md-12">
         <strong>Description</strong>
 
-        <p class="col-md-12"><?php echo $shopInfo->getDescription(); ?></p>
+        <p class="col-md-12"><span class="glyphicon glyphicon-book"></span> <?php echo $shopInfo->getDescription(); ?></p>
     </div>
 </div>
 <div class="container-fluid text-center">
@@ -75,13 +77,17 @@ if (isset($_GET['accountId'])) {
     <div class="image-row">
         <div class="image-set">
             <?php
-            foreach ($shopImage as $image) {
-                echo '
+            if($shopImage == null){
+                    echo '<div class="col-md-12 text-center"> <img width="100%" class="col-md-4" src="'.Config::PATH.'/img/noimage.png"> </div>';
+            } else {
+                foreach ($shopImage as $image) {
+                    echo '
                     <div class="col-md-3">
-                        <a class="example-image-link" href="' . $image->getImagePath() . '" data-lightbox="example-set">
-                        <img width="100%" class="example-image" src="' . $image->getImagePath() . '" alt=""/></a>
+                        <a class="example-image-link" href="'. Config::PATH.'/whatapro/' . $image->getImagePath() . '" data-lightbox="example-set">
+                        <img width="100%" class="example-image" src="'. Config::PATH.'/whatparo/' . $image->getImagePath() . '" alt=""/></a>
                     </div>
                     ';
+                }
             }
             ?>
         </div>
@@ -100,11 +106,18 @@ if (isset($_GET['accountId'])) {
 
             $endDate = new DateTime($promotion->getEndDate());
 
+            $imagePromotionBackground = '';
+
+            if($promotionImage == null) {
+                $imagePromotionBackground = Config::PATH.'/img/noimage.png';
+            } else {
+                $imagePromotionBackground = Config::PATH.'/whatapro/'.$promotionImage[0]->getImagePath();
+            }
 
             echo('
                     <div class="col-md-4">
-                            <div style="background-image: url(' . $promotionImage[0]->getImagePath() . '); background-size: cover;" class="col-md-12 promotionboxtop divbutton text-center container-fluid">
-                                    <a href="promotion.php?promotionId=' . $promotion->getPromotionId() . '" style="display: none; background-color: rgba(255,255,255,0.5); color: #ffffff" class="viewpromotion btn btn-default">View Promotion</a>
+                            <div style="background-image: url(' . $imagePromotionBackground . '); background-size: cover;" class="col-md-12 promotionboxtop divbutton text-center container-fluid">
+                                    <a href="'.Config::PATH.'/promotion/'. $promotion->getPromotionId() . '" style="display: none; background-color: rgba(255,255,255,0.5); color: #ffffff" class="viewpromotion btn btn-default">View Promotion</a>
                             </div>
                             <div class="col-md-12 promotionboxbtm text-center">
                                 <p class="textinpromotionbox">' . $promotion->getName() . '</p>
@@ -123,8 +136,11 @@ if (isset($_GET['accountId'])) {
 
 <nav class="navbar navbar-fixed-bottom">
     <div class="container-fluid">
+        <ul class="nav navbar-nav navbar-left">
+            <li><a href="<?php echo Config::PATH.'/accounts';?>"><strong style="text-decoration: none; color: orangered">Back</strong></a></li>
+        </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#top"><strong style="text-decoration: none; color: orangered">Back to top</strong></a></li>
+            <li><a href="<?php echo Config::PATH.'/account/'.$shopInfo->getAccountId();?>#top"><strong style="text-decoration: none; color: orangered">Back to top</strong></a></li>
         </ul>
     </div>
 </nav>
@@ -188,7 +204,9 @@ if (isset($_GET['accountId'])) {
 
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>
-<script src="../js/jquery-1.11.0.min.js"></script>
-<script src="../js/lightbox.js"></script>
+<script src="<?php echo Config::PATH.'/' ?>js/jquery-1.11.0.min.js"></script>
+<script src="<?php echo Config::PATH.'/' ?>js/lightbox.js"></script>
 </body>
 </html>
+
+

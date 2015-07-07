@@ -3,11 +3,14 @@
 <html>
     <head>
         <title>WAP</title>
-        <script src="../jquery.js"></script>
-        <link href="../style.css" rel="stylesheet" type="text/css">
-        <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
-        <script src="../bootstrap/js/bootstrap.min.js"></script>
-        <meta http-equiv="refresh" content="3;url=index.php">
+        <?php
+
+        $assetPath = '/whatapro';
+
+        include_once '../assets.php'
+
+        ?>
+        <meta http-equiv="refresh" content="3; url=whatapro/">
     </head>
     <body>
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">

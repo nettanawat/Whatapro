@@ -36,14 +36,25 @@ class PromotionImageDAOImpl implements PromotionImageDAO {
             return null;
         }else{
             foreach ($this->database->select($this->table,'*',['AND'=>['promotion_id'=>$promotionId]]) as $row){
-                $promotionImageList[] = new ShopImage($row['id'], $row['promotion_id'], $row['image_path'], $row['add_date']);
+                $promotionImageList[] = new PromotionImage($row['id'], $row['promotion_id'], $row['image_path'], $row['add_date']);
             }
             return $promotionImageList;
         }
     }
 
+
+    public function getImageById($id){
+        $row = $this->database->get($this->table,'*',['AND'=>['id'=>$id]]);
+        return new PromotionImage($row['id'], $row['promotion_id'], $row['image_path'], $row['add_date']);
+    }
+
     public function deleteImageByPromotionId($promotionId)
     {
         $this->database->delete($this->table,['AND'=>['promotion_id'=>$promotionId]]);
+    }
+
+    public function deleteImageById($id)
+    {
+        $this->database->delete($this->table,['AND'=>['id'=>$id]]);
     }
 }

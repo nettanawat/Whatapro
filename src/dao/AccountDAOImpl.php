@@ -57,8 +57,11 @@ class AccountDAOImpl implements AccountDAO {
     }
 
     public function getAccountByEmail($email) {
-        $row = $this->database->get($this->table,'*',['AND'=>['email'=>$email]]);
-        return new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);
+        $accountList = array();
+        foreach ($this->database->select($this->table,'*',['AND'=>['email'=>$email]]) as $row) {
+            $accountList[] = new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);
+        }
+        return $accountList;
     }
 
     public function getAllAccounts() {
@@ -80,6 +83,14 @@ class AccountDAOImpl implements AccountDAO {
 
     public function deleteAccount($id){
         $this->database->delete($this->table, ["AND" => ["id" => $id]]);
+    }
+
+    public function getLastFiveAccount(){
+        $accountList = array();
+        foreach ($this->database->select($this->table,'*',['LIMIT' => 5, 'ORDER' => 'join_date DESC']) as $row) {
+            $accountList[] = new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);
+        }
+        return $accountList;
     }
 }
 

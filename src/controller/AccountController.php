@@ -57,4 +57,8 @@ class AccountController {
         return self::$accountDaoImpl->deleteAccount($id);
     }
 
+    static function getLastFiveAccount(){
+        return self::$accountDaoImpl->getLastFiveAccount();
+    }
+
 }

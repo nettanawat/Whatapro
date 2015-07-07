@@ -17,8 +17,18 @@ class PromotionImageController {
         return $promotionImageDAOImpl->getImageByPromotionId($promotionId);
     }
 
+    public function getImageById($id){
+        $promotionImageDAOImpl = new PromotionImageDAOImpl();
+        return $promotionImageDAOImpl->getImageById($id);
+    }
+
     public function deleteImageByPromotionId($promotionId){
         $promotionImageDAOImpl = new PromotionImageDAOImpl();
         return $promotionImageDAOImpl->deleteImageByPromotionId($promotionId);
+    }
+
+    public function deleteImageById($id){
+        $promotionImageDAOImpl = new PromotionImageDAOImpl();
+        return $promotionImageDAOImpl->deleteImageById($id);
     }
 } 

@@ -1,0 +1,33 @@
+RewriteEngine On
+
+RewriteRule    ^$    View/index.php    [NC,L]
+#account
+RewriteRule    ^accounts$    View/account_list.php    [NC,L]
+RewriteRule    ^account/add$    View/add_account.php    [NC,L]
+RewriteRule    ^account/edit/(.*)$    View/edit_account.php?userId=$1    [NC,L]
+RewriteRule    ^account/(.*)$    View/profile.php?accountId=$1    [NC,L]
+#promotion
+RewriteRule    ^promotions$    View/promotion_list.php    [NC,L]
+RewriteRule    ^promotion/add$    View/add_promotion.php    [NC,L]
+RewriteRule    ^promotion/edit/(.*)$    View/edit_promotion.php?promotionId=$1    [NC,L]
+RewriteRule    ^promotion/(.*)$    View/promotion.php?promotionId=$1    [NC,L]
+
+#profile
+RewriteRule    ^profile    View/profile.php    [NC,L]
+RewriteRule    ^profile/edit    View/edit_profile.php    [NC,L]
+
+#redeem
+RewriteRule    ^redeemcodes$   View/redeem_list.php    [NC,L]
+RewriteRule    ^searchaccount   View/search_account.php    [NC,L]
+RewriteRule    ^searchpromotion   View/search_promotion.php    [NC,L]
+RewriteRule    ^register$   View/register_request.php    [NC,L]
+RewriteRule    ^requests$   View/request_signup_list.php    [NC,L]
+RewriteRule    ^request/(.*)$    View/request_detail.php?requestId=$1    [NC,L]
+RewriteRule    ^admin$    View/home_admin.php    [NC,L]
+RewriteRule    ^user$    View/home.php    [NC,L]
+RewriteRule    ^logs$    View/logs.php    [NC,L]
+RewriteRule    ^errorlogin    View/error_login.php    [NC,L]
+RewriteRule    ^errormessage    View/error_message.php    [NC,L]
+RewriteRule    ^login    View/take_login.php    [NC,L]
+RewriteRule    ^logout    View/take_logout.php    [NC,L]
+RewriteRule    ^changepassword    View/change_password.php    [NC,L]

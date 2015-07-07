@@ -15,7 +15,7 @@ class Config {
     const USERNAME = 'root';
     const PASSWORD = '';
     const CHARSET = 'utf8';
-
+    const PATH = '/whatapro';
     const ADMIN_USERNAME ='nettanawat@gmail.com';
     const ADMIN_PASSWORD ='bf6c860ad48fbc85df0195698f6dec5b';
 

@@ -161,6 +161,7 @@ class medoo
 
             return false;
         }
+
         array_push($this->logs, $query);
         return $this->pdo->exec($query);
     }

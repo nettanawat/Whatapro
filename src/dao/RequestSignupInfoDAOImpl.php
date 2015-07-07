@@ -21,45 +21,40 @@ class RequestSignupInfoDAOImpl implements RequestSignupInfoDAO {
 
     //put your code herepublic function addNewRequest(){
     public function deleteRequest($id) {
-        $sqlConnector = new SQLConnector();
-        $sqlConnector->disableARow("RequestingSignup", $id);
+
     }
 
     public function getAllRequest() {
         $requestList = array();
-        foreach ($this->database->select($this->table,'*') as $row) {
-            $requestList[] = new RequestSignupInfo($row['id'], $row['email'], $row['password'], $row['name'],$row['address'], $row['phone_number'], $row['sub_district'], $row['latitude'], $row['longitude'], $row['open_time'], $row['description'],$row['request_date'], $row['approve_date'], $row['manage_by'], $row['status']);
+        foreach ($this->database->select($this->table,'*',["ORDER" => "request_date DESC"]) as $row) {
+            $requestList[] = new RequestSignupInfo($row['id'], $row['email'], $row['password'], $row['name'],$row['address'], $row['phone_number'], $row['sub_district'], $row['latitude'], $row['longtitude'], $row['open_time'], $row['description'],$row['request_date'], $row['approve_date'], $row['manage_by'], $row['status']);
         }
         return $requestList;
     }
 
     public function getRequesSignupById($id){
-        foreach($this->getAllRequest() as $request){
-            if($id == $request->getId()){
-                return $request;
-            }
-        }
-        return null;
+        $row = $this->database->get($this->table,'*', ['id' => $id]);
+        return new RequestSignupInfo($row['id'], $row['email'], $row['password'], $row['name'],$row['address'], $row['phone_number'], $row['sub_district'], $row['latitude'], $row['longtitude'], $row['open_time'], $row['description'],$row['request_date'], $row['approve_date'], $row['manage_by'], $row['status']);
     }
 
     public function getRequestByStatus($status) {
-        foreach($this->getAllRequest() as $request){
-            if($status == $request->getStatus()){
-                return $request;
-            }
-        }
-        return null;
+
     }
 
-    public function updateRequest($id) {
-        $sqlConnector = new SQLConnector();
-        $sqlConnector->updateStatusDataToDatabase("RequestingSignup", $id, "");
+    public function updateRequest($id,$status) {
+        if ($status == true){
+            $this->database->update($this->table,['status'=>1],['id'=>$id]);
+        } elseif ($status == false) {
+            $this->database->update($this->table,['status'=>0],['id'=>$id]);
+        } else {
+
+        }
     }
 
     public function addNewRequest(RequestSignupInfo $requestingSingup) {
 
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Asia/Bangkok'));    // Another way
+        $now->setTimezone(new DateTimeZone('Asia/Bangkok'));
         $requestingSingup->setRequestDate($now->format('Y-m-d H:i:s'));
         $data = [
             'email' => $requestingSingup->getEmail(),
@@ -69,7 +64,7 @@ class RequestSignupInfoDAOImpl implements RequestSignupInfoDAO {
             'phone_number' => $requestingSingup->getPhoneNumber(),
             'sub_district' => $requestingSingup->getSubDistrict(),
             'latitude' => $requestingSingup->getLatitude(),
-            'longitude' => $requestingSingup->getLongitude(),
+            'longtitude' => $requestingSingup->getLongitude(),
             'open_time' => $requestingSingup->getOpenTime(),
             'description' => $requestingSingup->getDescription(),
             'request_date' => $requestingSingup->getRequestDate(),
@@ -77,7 +72,9 @@ class RequestSignupInfoDAOImpl implements RequestSignupInfoDAO {
             'manage_by' => $requestingSingup->getManageBy(),
             'status' => $requestingSingup->getStatus(),
         ];
-        return $this->database->insert($this->table, $data);
+        $query ="INSERT INTO `RequestingSignup` (`email`, `password`, `name`, `address`, `phone_number`, `sub_district`, `latitude`, `longtitude`, `open_time`, `description`, `request_date` , `status`)".
+            " VALUES ('".$requestingSingup->getEmail()."' , '".md5($requestingSingup->getPassword())."' , '".$requestingSingup->getName()."' , '".$requestingSingup->getAddress()."' , '".$requestingSingup->getPhoneNumber()."' , '".$requestingSingup->getSubDistrict()."' , '".$requestingSingup->getLatitude()."' , '".$requestingSingup->getLongitude()."' , '".$requestingSingup->getOpenTime()."' , '".$requestingSingup->getDescription()."' , '".$requestingSingup->getRequestDate()."' , '".$requestingSingup->getStatus()."')";
+        $this->database->exec($query);
     }
 
     public function approveRequest($id)

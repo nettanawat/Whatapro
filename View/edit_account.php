@@ -4,7 +4,7 @@ include_once 'session.php';
 if ('admin' != $user_type) {
     $_SESSION['redirect'] = "<meta http-equiv='refresh' content='3;url=home.php'>";
     $_SESSION['error_info'] = "You do not have sufficient permissions to access this page";
-    header('Location: error_message.php');
+    header('Location: '.Config::PATH.'/errormessage');
     exit;
 }
 
@@ -23,7 +23,7 @@ if (isset($_POST['edit'])) {
     $description = $_POST['inputDescription'];
     AccountController::editAccount(new AccountInfo($id, $email, null, null, null, null));
     ShopInformationController::editShopInformation(new ShopInformation($id, $name, $address, $phone, "", $latitude, $longitude, $openTime, $description, $category));
-
+    ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"edit","account","edit account information [ account id : ".$id." ]",null));
     //uplaod images
     $folderPath = "../user_upload/".$id."/shop_images/";
     $target_dir = $folderPath;
@@ -49,7 +49,7 @@ if (isset($_POST['edit'])) {
     }
     $_SESSION['manageAccountStatus']= "true";
     $_SESSION['manageAccountAction'] = "edit";
-    header('Location: account_list.php');
+    header('Location: '.Config::PATH.'/accounts');
     exit;
 }
 ?>
@@ -58,10 +58,13 @@ if (isset($_POST['edit'])) {
 <html>
 <head>
     <title>WAP / Edit account</title>
-    <script src="../jquery.js"></script>
-    <link href="../style.css" rel="stylesheet" type="text/css">
-    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <?php
+
+    $assetPath = Config::PATH.'';
+
+    include_once '../assets.php'
+
+    ?>
 </head>
 <body>
 <div style="margin: 80px;" class="container-fluid" id="top">
@@ -85,7 +88,7 @@ if (isset($_POST['edit'])) {
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="inputEmail">Email address</label>
-                    <input type="email" class="form-control" name="inputEmail" required
+                    <input type="email" class="form-control" name="inputEmail" readonly required
                            value="<?php echo($account->getEmail()); ?>">
                 </div>
             </div>
@@ -154,15 +157,15 @@ if (isset($_POST['edit'])) {
                             <div id="showImage'.$shopImage->getId().'" style="padding-bottom: 20px;" class="col-md-3">
                                 <div class="panel panel-default">
                                     <div class="panel-body text-right">
-                                        <a href="take_delete_shop_image.php?shopImageId=' . $shopImage->getId() . '" class="deleteImage btn btn-danger btn-sm">remove</a>
+                                        <a href="'.Config::PATH.'/View/take_delete_shop_image.php?shopImageId=' . $shopImage->getId() . '" onclick="return false;" class="deleteImage btn btn-danger btn-sm">remove</a>
                                     </div>
-                                    <img width="100%" src="' . $shopImage->getImagePath() . '">
+                                    <img width="100%" src="'.Config::PATH.'/whatapro/' . $shopImage->getImagePath() . '">
                                 </div>
                             </div>
                         ');
                 }
             } else {
-                echo ('<img class="col-md-6" width="100%" src="../img/youhavenoimage.png">');
+                echo ('<img class="col-md-6" width="100%" src="'.Config::PATH.'/img/noimage.png">');
             }
             ?>
             <div class="col-md-12">
@@ -175,7 +178,7 @@ if (isset($_POST['edit'])) {
             <div class="col-md-12" id="result"></div>
 
             <div style="margin-top: 20px;" class="col-md-12">
-                <a class="btn btn-default" href="account_list.php" role="button">Back</a>
+                <a class="btn btn-default" href="<?php echo Config::PATH.'/accounts'; ?>" role="button">Back</a>
                 <button type="submit" name="edit" class="btn btn-default">Update</button>
             </div>
         </form>
@@ -201,9 +204,6 @@ if (isset($_POST['edit'])) {
             $.get($(this).attr('href'), function (result,data) {
                 $('#showImage'+result).remove();
             });
-        }
-        else{
-
         }
     });
 

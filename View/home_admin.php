@@ -10,67 +10,15 @@ if ('admin' != $user_type) {
 ?>
 <html>
 <head>
-    <script src="../jquery.js"></script>
-    <link href="../style.css" rel="stylesheet" type="text/css">
-    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../google_jsapi.js"></script>
+    <?php
 
+    $assetPath = Config::PATH.'/';
+
+    include_once '../assets.php'
+
+    ?>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
-    <script>
-        // If you're adding a number of markers, you may want to drop them on the map
-        // consecutively rather than all at once. This example shows how to use
-        // window.setTimeout() to space your markers' animation.
-
-        var berlin = new google.maps.LatLng(52.520816, 13.410186);
-
-        var neighborhoods = [
-            new google.maps.LatLng(52.511467, 13.447179),
-            new google.maps.LatLng(52.549061, 13.422975),
-            new google.maps.LatLng(52.497622, 13.396110),
-            new google.maps.LatLng(52.517683, 13.394393)
-        ];
-
-        var markers = [];
-        var map;
-
-        function initialize() {
-            var mapOptions = {
-                zoom: 12,
-                center: berlin
-            };
-
-            map = new google.maps.Map(document.getElementById('map-canvas'),
-                mapOptions);
-            drop();
-        }
-
-        function drop() {
-            clearMarkers();
-            for (var i = 0; i < neighborhoods.length; i++) {
-                addMarkerWithTimeout(neighborhoods[i], i * 200);
-            }
-        }
-
-        function addMarkerWithTimeout(position, timeout) {
-            window.setTimeout(function() {
-                markers.push(new google.maps.Marker({
-                    position: position,
-                    map: map,
-                    animation: google.maps.Animation.DROP
-                }));
-            }, timeout);
-        }
-
-        function clearMarkers() {
-            for (var i = 0; i < markers.length; i++) {
-                markers[i].setMap(null);
-            }
-            markers = [];
-        }
-
-        google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
+    <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['bar']}]}"></script>
 </head>
 <body>
 <div style="margin: 55px;"></div>
@@ -90,8 +38,20 @@ if ('admin' != $user_type) {
                     <th>Status</th>
                 </tr>
                 <?php
-                $amountOfAccounts = sizeof(AccountController::getAllAccount());
-                $lastFiveAccounts = array_slice(AccountController::getAllAccount(), -5);
+
+                $shopInformationList = ShopInformationController::getAllShopInformation();
+                $latitudes = array();
+                $longitudes = array();
+                $shopNames = array();
+                $promotionAmount = array();
+                foreach($shopInformationList as $shop) {
+                    $latitudes[] = $shop->getLatitude();
+                    $longitudes[] = $shop->getLongitude();
+                    $shopNames[] = $shop->getName();
+                    $promotionAmount[] = sizeof(PromotionController::getPromotionByShopId($shop->getAccountId()));
+                }
+
+                $lastFiveAccounts = AccountController::getLastFiveAccount();
                 $adaptor = new Adaptor();
                 foreach ($lastFiveAccounts as $account) {
                     $adaptor->setStatus($account->getStatus());
@@ -110,7 +70,7 @@ if ('admin' != $user_type) {
                 } ?>
             </table>
             <div style="margin-top: -10px;" class="text-right">
-                <a href="account_list.php" class="btn btn-default btn-sm">see more</a>
+                <a href="<?php echo Config::PATH."/accounts"; ?>" class="btn btn-default btn-sm">see more</a>
             </div>
         </div>
 
@@ -148,7 +108,107 @@ if ('admin' != $user_type) {
                 <a href="account_list.php" class="btn btn-default btn-sm">see more</a>
             </div>
         </div>
+        <div style="padding-top: 20px" class="col-md-12 text-center">
+            <h2>Overall promotion in system</h2>
+        </div>
+        <div class="col-md-12" id="chart_div" style="width: 100%; height: 500px;"></div>
     </div> <!--row-->
 </div><!--container-->
+<script>
+
+    var latitudes= <?php echo json_encode($latitudes ); ?>;
+    var longitude= <?php echo json_encode($longitudes ); ?>;
+
+
+
+    // If you're adding a number of markers, you may want to drop them on the map
+    // consecutively rather than all at once. This example shows how to use
+    // window.setTimeout() to space your markers' animation.
+
+    var berlin = new google.maps.LatLng(18.789570, 98.974244);
+    var neighborhoods =[];
+    for(var i=0; i<longitude.length; i++){
+        neighborhoods[i] = new google.maps.LatLng(latitudes[i], longitude[i]);
+    }
+
+    var markers = [];
+    var map;
+
+    function initialize() {
+        var mapOptions = {
+            zoom: 14,
+            center: berlin
+        };
+
+        map = new google.maps.Map(document.getElementById('map-canvas'),
+            mapOptions);
+        drop();
+    }
+
+    function drop() {
+        clearMarkers();
+        for (var i = 0; i < neighborhoods.length; i++) {
+            addMarkerWithTimeout(neighborhoods[i], i * 200);
+        }
+    }
+
+    function addMarkerWithTimeout(position, timeout) {
+        window.setTimeout(function() {
+            markers.push(new google.maps.Marker({
+                position: position,
+                map: map,
+                animation: google.maps.Animation.DROP
+
+            }));
+        }, timeout);
+    }
+
+    function clearMarkers() {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(null);
+        }
+        markers = [];
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+<script type="text/javascript">
+        google.load('visualization', '1', {packages: ['corechart', 'bar']});
+        google.setOnLoadCallback(drawBasic);
+        var shopNames= <?php echo json_encode($shopNames ); ?>;
+        var promotionAmount = <?php echo json_encode($promotionAmount ); ?>;
+        var shop;
+        for(var i=0; i<shopNames.length;i++){
+            shop = [shopNames[i], promotionAmount[i]];
+        }
+
+        function drawBasic() {
+            var data = google.visualization.arrayToDataTable(
+                [
+                    ['Shop name', 'Currently promotion'],
+                    ['Coffee smith', 2],
+                    ['Warm up cafe', 3],
+                    ['iLike ice cream', 5],
+                    ['Ristr8to', 0],
+                    ['madbar', 2]
+                ]
+            );
+
+            var options = {
+                chartArea: {width: '70%'},
+                hAxis: {
+                    title: 'Total Promotion',
+                    minValue: 0
+                },
+                vAxis: {
+                    title: 'Shop'
+                }
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+
+            chart.draw(data, options);
+        }
+</script>
 </body>
 </html>

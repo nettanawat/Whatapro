@@ -16,20 +16,23 @@ if (isset($_POST['inputEmail'])) {
     $requestDate = '';
     $approveDate = null;
     $manageBy = null;
-    $status = 0;
+    $status = 2;
 
     RequestSignupController::addRequest(new RequestSignupInfo("",$email,$password,$name,$address,$phoneNumber,$subDistrict,$latitude,$longitude,$openTime,$description,$requestDate,$approveDate,$manageBy,$status));
-    header('Location: index.php');
+    header('Location: '.Config::PATH);
     exit;
 }
 ?>
 <html>
 <head>
     <title>WAP / Request sign up</title>
-    <script src="../jquery.js"></script>
-    <link href="../style.css" rel="stylesheet" type="text/css">
-    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <?php
+
+    $assetPath = Config::PATH.'';
+
+    include_once '../assets.php'
+
+    ?>
     <style>
         #googleMap {
             width: 100%;

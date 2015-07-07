@@ -10,13 +10,10 @@ if ('admin' != $user_type) {
 }
 if ('admin' == $user_type) {
     if (isset($_POST['edit'])) { //edit account
-        header("Location: edit_account.php?userId=" . $_POST['userId']);
+        header("Location: " .Config::PATH. "/account/edit/" . $_POST['userId']);
     } else if (isset($_POST['delete'])) { //delete account
 
         $account = AccountController::getAccountById($_POST['userId']);
-//        log
-        $actionDetail = "delete account in account list [" . $account->getEmail() . "]";
-        ActivitiesLogController::addLog(new ActivitiesLog('', $logInAccount->getAccountId(), 'delete', 'account', $actionDetail, ''));
         /*
          * if delete account
          * 1. delete promotion image
@@ -26,6 +23,7 @@ if ('admin' == $user_type) {
          * 5. log
          * 6. account
          * */
+
         $promotionImageController = new PromotionImageController();
         $promotionList = PromotionController::getPromotionByShopId($account->getAccountId());
         foreach ($promotionList as $promotion) {
@@ -63,6 +61,8 @@ if ('admin' == $user_type) {
             $_SESSION['manageAccountStatus'] = "true";
             $_SESSION['manageAccountAction'] = "delete";
         }
+
+        ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"delete","account","delete account from database [ account id : ".$account->getAccountId()." ]",null));
         header("Refresh:0");
         exit;
     } else if (isset($_POST['enable'])) {
@@ -76,10 +76,13 @@ if ('admin' == $user_type) {
 
 <html>
 <head>
-    <script src="../jquery.js"></script>
-    <link href="../style.css" rel="stylesheet" type="text/css">
-    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <?php
+
+    $assetPath = Config::PATH.'';
+
+    include_once '../assets.php'
+
+    ?>
 </head>
 <body>
 <div style="margin-top: 80px;">
@@ -120,21 +123,18 @@ if (isset($_SESSION['manageAccountStatus']) && isset($_SESSION['manageAccountAct
 
 ?>
 <div class="container-fluid">
-    <h2 class="col-md-11">Accounts</h2>
-    <a class="btn btn-default col-md-1" href="add_account.php" role="button">New Account</a>
-
-    <!--    search-->
-    <div style="padding-bottom: 20px;" class="form-inline">
-        <div class="form-group">
-            <input type="text" class="form-control" id="inputSearch" placeholder="What is in your mind?">
-        </div>
-        <div class="form-group">
-            <button class="form-control btn btn-default" id="btnSearch"><span class="glyphicon glyphicon-search"></span> Search</button>
-        </div>
+    <div class="col-md-12">
+        <h2>Accounts</h2>
+    </div>
+    <form class="col-md-6" action="" style="padding-bottom: 20px;">
+        <input type="text" class="form-control" id="inputSearch" onkeyup="searchData(this.value)" placeholder="Search account by email, shop name or account id">
+    </form>
+    <div class="col-md-6 text-right">
+        <a class="btn btn-default" href="<?php echo Config::PATH.'/account/add'; ?>" role="button"><span class="glyphicon glyphicon-plus"></span> New Account</a>
     </div>
 
     <table class="col-md-12 table table-condensed table-hover">
-        <tr>
+        <tr id="tableHeader">
             <th>Id</th>
             <th>Email</th>
             <th>Role</th>
@@ -154,7 +154,7 @@ if (isset($_SESSION['manageAccountStatus']) && isset($_SESSION['manageAccountAct
 
 
             if ($shopInfo->getName() != null) {
-                $shopName = "<a href='profile.php?accountId=".$shopInfo->getAccountId()."' >".$shopInfo->getName()."</a>";
+                $shopName = "<a href='".Config::PATH."/account/".$shopInfo->getAccountId()."' >".$shopInfo->getName()."</a>";
             }
             $imageList = $shopImageController->getImageByAccountId($account->getAccountId());
             if ($shopImageController->getImageByAccountId($account->getAccountId()) != null) {
@@ -163,8 +163,9 @@ if (isset($_SESSION['manageAccountStatus']) && isset($_SESSION['manageAccountAct
                 }
             }
 
+
             Adaptor::setStatus($account->getStatus());
-            echo '<tr>
+            echo '<tr class="tableData">
                 <td>' . $account->getAccountId() . '</td>
                 <td>' . $account->getEmail() . '</td>
                 <td>' . $account->getRole() . '</td>
@@ -172,12 +173,13 @@ if (isset($_SESSION['manageAccountStatus']) && isset($_SESSION['manageAccountAct
                 <td>' . $shopName . '</td>
                 <td class="col-md-4">';
             foreach ($shopImageList as $aImage) {
-                echo '<img class="col-md-3" src="' . $aImage . '">';
+                //change path
+                echo '<img class="col-md-3" src="' .Config::PATH.'/whatapro/' .$aImage . '">';
             }
             echo '</td><td>' . Adaptor::getStatus() . '</td>';
             if ('admin' == $account->getRole()) {
                 echo '<td>
-                            <form name=deleteuser action=""method="post">
+                            <form name=deleteuser action="" method="post">
                                 <input type=hidden value=' . $account->getAccountId() . ' name="userId" >
                                 <button style="color: lightgrey;" type=submit disabled><span class="glyphicon glyphicon-edit"></span></button>
                                 <button style="color: lightgrey;" name="delete" type=submit disabled><span class="glyphicon glyphicon-remove-circle"></span></button>
@@ -185,7 +187,7 @@ if (isset($_SESSION['manageAccountStatus']) && isset($_SESSION['manageAccountAct
                             </td>';
             } else if (0 == $account->getStatus()) {
                 echo '<td>
-                            <form name=deleteuser action=""method="post">
+                            <form name=deleteuser action="" method="post">
                                 <input type=hidden value=' . $account->getAccountId() . ' name="userId" >
                                 <button style="color: lightgrey;" type=submit disabled><span class="glyphicon glyphicon-edit"></span></button>
                                 <button type=submit name="enable" class="btn btn-success btn-xs">Enable</button>
@@ -194,10 +196,10 @@ if (isset($_SESSION['manageAccountStatus']) && isset($_SESSION['manageAccountAct
             } else if (1 == $account->getStatus()) {
                 echo '
                         <td>
-                            <form name=deleteuser action=""method="post">
+                            <form name=deleteuser action="" method="post">
                                 <input type=hidden value=' . $account->getAccountId() . ' name="userId" >
                                 <button name="edit" type=submit><span class="glyphicon glyphicon-edit"></span></button>
-                                <button  onclick="show_alert();" name="delete" type=submit><span class="glyphicon glyphicon-remove-circle"></span></button>
+                                <button onclick="show_alert(); ; return false;" name="delete" type=submit><span class="glyphicon glyphicon-remove-circle"></span></button>
                             </form>
                         </td>';
             }
@@ -207,10 +209,21 @@ if (isset($_SESSION['manageAccountStatus']) && isset($_SESSION['manageAccountAct
 </div>
 <script>
     function show_alert() {
-        if (confirm("Do you really want to delete this account?"))
+        if (confirm("Do you really want to delete this account?")) {
             document.forms.name("deleteuser").submit();
-        else
-            return false;
+        }
+    }
+
+    function searchData(data) {
+        $.ajax({
+            method: "GET",
+            url: "whatapro/searchaccount",
+            data: { key: data}
+        })
+            .done(function( msg ) {
+                $('.tableData').remove();
+                $( "#tableHeader" ).after(msg);
+            });
     }
 </script>
 </body>

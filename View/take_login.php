@@ -9,16 +9,16 @@ if(isset($_POST['inputEmail']) && isset($_POST['inputPassword'])){
     $_SESSION['userId'] = $loginAccount->getAccountId();
     if ($loginAccount != null ) {
         if ('admin' == $loginAccount->getRole()) {
-            $actionDetail = "log in to system by [" . $loginAccount->getEmail() . "]";
+            $actionDetail = "logged in to system";
             ActivitiesLogController::addLog(new ActivitiesLog('', $loginAccount->getAccountId(), 'login', 'account', $actionDetail, ''));
-            header('Location: home_admin.php');
+            header('Location: '.Config::PATH.'/admin');
         } else {
-            $actionDetail = "log in to system by [" . $loginAccount->getEmail() . "]";
+            $actionDetail = "logged in to system";
             ActivitiesLogController::addLog(new ActivitiesLog('', $loginAccount->getAccountId(), 'login', 'account', $actionDetail, ''));
-            header('Location: home.php');
+            header('Location: '.Config::PATH.'/user');
         }
     } else {
-        header('Location: error_login.php');
+        header('Location: errorlogin.php');
         exit;
     }
 }

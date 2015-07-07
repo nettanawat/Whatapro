@@ -2,66 +2,47 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4a0272d8-7a4e-467e-8622-fca18ac2648d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/entity/RedeemCode.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/controller/RedeemCodeController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/dao/RedeemCodeDAO.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/dao/RedeemCodeDAOImpl.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/barcode.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/View/find_shop_name.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/jquery-1.11.0.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/jquery-1.11.0.min.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lightbox.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/lightbox.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/lightbox.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/lightbox.min.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/View/promotion.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsonapi/promotion.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/View/redeem_list.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/screen.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsonapi/shopinformation.php" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/img/mockimage.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/img/mockimage1.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/img/warm.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/img/youhavenoimage.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/json_api/GetAllPromotion.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/json_api/GetAllShopInformation.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/user_upload/10/shop_images/computer_login.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/user_upload/10/shop_images/computer_login2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/user_upload/10/shop_images/contactus_btn.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/user_upload/10/shop_images/contactusmouseover_btn.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/user_upload/10/shop_images/homecontent1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/user_upload/10/shop_images/homecontent2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/user_upload/10/shop_images/homecontent3.png" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/json_api/.idea/.name" afterPath="$PROJECT_DIR$/jsonapi/.idea/.name" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/json_api/.idea/encodings.xml" afterPath="$PROJECT_DIR$/jsonapi/.idea/encodings.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/json_api/.idea/json_api.iml" afterPath="$PROJECT_DIR$/jsonapi/.idea/json_api.iml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/json_api/.idea/misc.xml" afterPath="$PROJECT_DIR$/jsonapi/.idea/misc.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/json_api/.idea/modules.xml" afterPath="$PROJECT_DIR$/jsonapi/.idea/modules.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/json_api/.idea/scopes/scope_settings.xml" afterPath="$PROJECT_DIR$/jsonapi/.idea/scopes/scope_settings.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/json_api/.idea/vcs.xml" afterPath="$PROJECT_DIR$/jsonapi/.idea/vcs.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/json_api/.idea/workspace.xml" afterPath="$PROJECT_DIR$/jsonapi/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/json_api/GetPromotionById.php" afterPath="$PROJECT_DIR$/jsonapi/GetPromotionById.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/json_api/GetShopInformationById.php" afterPath="$PROJECT_DIR$/jsonapi/GetShopInformationById.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.htaccess" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/View/search_account.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/View/search_promotion.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/View/take_delete_promotion_image.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jsonapi/testjson.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/AccountController.php" afterPath="$PROJECT_DIR$/src/controller/AccountController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dao/AccountDAOImpl.php" afterPath="$PROJECT_DIR$/src/dao/AccountDAOImpl.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Config.php" afterPath="$PROJECT_DIR$/Config.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dao/PromotionDAOImpl.php" afterPath="$PROJECT_DIR$/src/dao/PromotionDAOImpl.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/PromotionImageController.php" afterPath="$PROJECT_DIR$/src/controller/PromotionImageController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dao/PromotionImageDAOImpl.php" afterPath="$PROJECT_DIR$/src/dao/PromotionImageDAOImpl.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/RequestSignupController.php" afterPath="$PROJECT_DIR$/src/controller/RequestSignupController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dao/RequestSignupInfoDAOImpl.php" afterPath="$PROJECT_DIR$/src/dao/RequestSignupInfoDAOImpl.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/account_list.php" afterPath="$PROJECT_DIR$/View/account_list.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/add_account.php" afterPath="$PROJECT_DIR$/View/add_account.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/add_promotion.php" afterPath="$PROJECT_DIR$/View/add_promotion.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/change_password.php" afterPath="$PROJECT_DIR$/View/change_password.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/edit_account.php" afterPath="$PROJECT_DIR$/View/edit_account.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/edit_profile.php" afterPath="$PROJECT_DIR$/View/edit_profile.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/edit_promotion.php" afterPath="$PROJECT_DIR$/View/edit_promotion.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/error_login.php" afterPath="$PROJECT_DIR$/View/error_login.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/error_message.php" afterPath="$PROJECT_DIR$/View/error_message.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/home.php" afterPath="$PROJECT_DIR$/View/home.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/home_admin.php" afterPath="$PROJECT_DIR$/View/home_admin.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/index.php" afterPath="$PROJECT_DIR$/View/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/map.php" afterPath="$PROJECT_DIR$/map.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/logs.php" afterPath="$PROJECT_DIR$/View/logs.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Library/medoo.php" afterPath="$PROJECT_DIR$/Library/medoo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/menus.php" afterPath="$PROJECT_DIR$/View/menus.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/menus_admin.php" afterPath="$PROJECT_DIR$/View/menus_admin.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/profile.php" afterPath="$PROJECT_DIR$/View/profile.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/promotion.php" afterPath="$PROJECT_DIR$/View/promotion.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/promotion_list.php" afterPath="$PROJECT_DIR$/View/promotion_list.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/redeem_list.php" afterPath="$PROJECT_DIR$/View/redeem_list.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/register_request.php" afterPath="$PROJECT_DIR$/View/register_request.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/request_detail.php" afterPath="$PROJECT_DIR$/View/request_detail.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/request_signup_list.php" afterPath="$PROJECT_DIR$/View/request_signup_list.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/session.php" afterPath="$PROJECT_DIR$/View/session.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/take_delete_promotion.php" afterPath="$PROJECT_DIR$/View/take_delete_promotion.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/take_login.php" afterPath="$PROJECT_DIR$/View/take_login.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/View/take_logout.php" afterPath="$PROJECT_DIR$/View/take_logout.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/testdbinflyhighh.sql" afterPath="$PROJECT_DIR$/docs/testdbinflyhighh.sql" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="PromotionProvider.iws" />
@@ -85,55 +66,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="RedeemCodeController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/controller/RedeemCodeController.php">
+      <file leaf-file-name="promotion_list.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/View/promotion_list.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="0" selection-start="856" selection-end="856" vertical-scroll-proportion="-14.375" vertical-offset="0" max-vertical-offset="570">
-              <folding>
-                <element signature="n#cryptToRandomSecure#0;n#RedeemCodeController#0;n#!!top" expanded="false" />
-                <element signature="n#getToken#0;n#RedeemCodeController#0;n#!!top" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="redeem_list.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/View/redeem_list.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="0" selection-start="752" selection-end="752" vertical-scroll-proportion="-11.875" vertical-offset="165" max-vertical-offset="1170">
-              <folding>
-                <marker date="1434709974000" expanded="true" signature="1630:2103" placeholder="..." />
-                <marker date="1434709974000" expanded="true" signature="1630:1655" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="map.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/map.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="0" selection-start="252" selection-end="252" vertical-scroll-proportion="0.17595308" vertical-offset="0" max-vertical-offset="682">
+            <state line="98" column="34" selection-start="3872" selection-end="3872" vertical-scroll-proportion="0.44843048" vertical-offset="1170" max-vertical-offset="2580">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="barcode.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/barcode.php">
+      <file leaf-file-name="account_list.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/View/account_list.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="75" column="23" selection-start="5793" selection-end="5793" vertical-scroll-proportion="-14.423077" vertical-offset="0" max-vertical-offset="1545">
+            <state line="129" column="159" selection-start="5448" selection-end="5448" vertical-scroll-proportion="-8.583333" vertical-offset="1729" max-vertical-offset="3540">
               <folding>
-                <element signature="e#6#183#0" expanded="true" />
+                <element signature="n#style#0;n#form#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <marker date="1436286373000" expanded="true" signature="3943:4169" placeholder="..." />
+                <marker date="1436286373000" expanded="true" signature="4348:4572" placeholder="..." />
+                <marker date="1436286373000" expanded="true" signature="4752:4978" placeholder="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RedeemCodeDAOImpl.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/dao/RedeemCodeDAOImpl.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="163" selection-start="594" selection-end="594" vertical-scroll-proportion="-4.125" vertical-offset="141" max-vertical-offset="810">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -151,57 +102,57 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/View/take_delete_shop_image.php" />
-        <option value="$PROJECT_DIR$/View/take_change_password.php" />
-        <option value="$PROJECT_DIR$/src/dao/AccountDAO.php" />
-        <option value="$PROJECT_DIR$/src/controller/AccountController.php" />
-        <option value="$PROJECT_DIR$/View/change_password.php" />
-        <option value="$PROJECT_DIR$/View/error_login.php" />
-        <option value="$PROJECT_DIR$/json_api/GetAllPromotion.php" />
-        <option value="$PROJECT_DIR$/json_api/getAllShopInformation.php" />
-        <option value="$PROJECT_DIR$/View/take_request_signup.php" />
-        <option value="$PROJECT_DIR$/src/dao/RequestSignupInfoDAO.php" />
-        <option value="$PROJECT_DIR$/src/controller/RequestSignupController.php" />
-        <option value="$PROJECT_DIR$/src/entity/RequestSignupInfo.php" />
-        <option value="$PROJECT_DIR$/src/dao/RequestSignupInfoDAOImpl.php" />
-        <option value="$PROJECT_DIR$/google_jsapi.js" />
-        <option value="$PROJECT_DIR$/style.css" />
-        <option value="$PROJECT_DIR$/jsonapi/getAllPromotion.php" />
-        <option value="$PROJECT_DIR$/jsonapi/promotion.php" />
-        <option value="$PROJECT_DIR$/src/dao/AccountDAOImpl.php" />
-        <option value="$PROJECT_DIR$/jsonapi/shopinformation.php" />
-        <option value="$PROJECT_DIR$/View/find_shop_name.php" />
-        <option value="$PROJECT_DIR$/View/redirect_management.php" />
-        <option value="$PROJECT_DIR$/View/take_login.php" />
-        <option value="$PROJECT_DIR$/View/session.php" />
         <option value="$USER_HOME$/Downloads/Jssor/demos-jquery/full-width-slider.source.html" />
         <option value="$PROJECT_DIR$/lightbox.js" />
-        <option value="$PROJECT_DIR$/View/add_promotion.php" />
         <option value="$PROJECT_DIR$/lightbox.css" />
         <option value="$PROJECT_DIR$/screen.css" />
-        <option value="$PROJECT_DIR$/View/promotion.php" />
-        <option value="$PROJECT_DIR$/View/index.php" />
-        <option value="$PROJECT_DIR$/View/home_admin.php" />
-        <option value="$PROJECT_DIR$/View/edit_promotion.php" />
-        <option value="$PROJECT_DIR$/View/edit_profile.php" />
-        <option value="$PROJECT_DIR$/View/request_signup_list.php" />
-        <option value="$PROJECT_DIR$/View/register_request.php" />
-        <option value="$PROJECT_DIR$/View/request_detail.php" />
-        <option value="$PROJECT_DIR$/View/promotion_list.php" />
-        <option value="$PROJECT_DIR$/View/home.php" />
-        <option value="$PROJECT_DIR$/View/profile.php" />
-        <option value="$PROJECT_DIR$/View/edit_account.php" />
-        <option value="$PROJECT_DIR$/View/add_account.php" />
-        <option value="$PROJECT_DIR$/View/account_list.php" />
         <option value="$PROJECT_DIR$/src/entity/RedeemCode.php" />
-        <option value="$PROJECT_DIR$/View/menus_admin.php" />
-        <option value="$PROJECT_DIR$/Config.php" />
         <option value="$PROJECT_DIR$/src/dao/RedeemCodeDAO.php" />
         <option value="$PROJECT_DIR$/src/controller/RedeemCodeController.php" />
         <option value="$PROJECT_DIR$/src/dao/RedeemCodeDAOImpl.php" />
-        <option value="$PROJECT_DIR$/View/redeem_list.php" />
         <option value="$PROJECT_DIR$/barcode.php" />
         <option value="$PROJECT_DIR$/map.php" />
+        <option value="$PROJECT_DIR$/View/error_message.php" />
+        <option value="$PROJECT_DIR$/View/home.php" />
+        <option value="$PROJECT_DIR$/View/menus.php" />
+        <option value="$PROJECT_DIR$/Config.php" />
+        <option value="$PROJECT_DIR$/assets.php" />
+        <option value="$PROJECT_DIR$/View/menus_admin.php" />
+        <option value="$PROJECT_DIR$/View/redeem_list.php" />
+        <option value="$PROJECT_DIR$/View/request_detail.php" />
+        <option value="$PROJECT_DIR$/View/error_login.php" />
+        <option value="$PROJECT_DIR$/View/logs.php" />
+        <option value="$PROJECT_DIR$/Library/medoo.php" />
+        <option value="$PROJECT_DIR$/View/edit_profile.php" />
+        <option value="$PROJECT_DIR$/View/profile.php" />
+        <option value="$PROJECT_DIR$/src/controller/PromotionImageController.php" />
+        <option value="$PROJECT_DIR$/View/promotion.php" />
+        <option value="$PROJECT_DIR$/src/dao/PromotionImageDAOImpl.php" />
+        <option value="$PROJECT_DIR$/View/take_delete_shop_image.php" />
+        <option value="$PROJECT_DIR$/View/take_delete_promotion_image.php" />
+        <option value="$PROJECT_DIR$/View/take_delete_promotion.php" />
+        <option value="$PROJECT_DIR$/View/index.php" />
+        <option value="$PROJECT_DIR$/View/register_request.php" />
+        <option value="$PROJECT_DIR$/src/controller/RequestSignupController.php" />
+        <option value="$PROJECT_DIR$/src/dao/RequestSignupInfoDAOImpl.php" />
+        <option value="$PROJECT_DIR$/src/dao/PromotionDAOImpl.php" />
+        <option value="$PROJECT_DIR$/View/request_signup_list.php" />
+        <option value="$PROJECT_DIR$/View/take_login.php" />
+        <option value="$PROJECT_DIR$/View/take_logout.php" />
+        <option value="$PROJECT_DIR$/View/add_account.php" />
+        <option value="$PROJECT_DIR$/View/change_password.php" />
+        <option value="$PROJECT_DIR$/View/edit_account.php" />
+        <option value="$PROJECT_DIR$/View/edit_promotion.php" />
+        <option value="$PROJECT_DIR$/View/add_promotion.php" />
+        <option value="$PROJECT_DIR$/src/dao/AccountDAOImpl.php" />
+        <option value="$PROJECT_DIR$/src/controller/AccountController.php" />
+        <option value="$PROJECT_DIR$/jsonapi/testjson.php" />
+        <option value="$PROJECT_DIR$/View/home_admin.php" />
+        <option value="$PROJECT_DIR$/.htaccess" />
+        <option value="$PROJECT_DIR$/View/search_promotion.php" />
+        <option value="$PROJECT_DIR$/View/search_account.php" />
+        <option value="$PROJECT_DIR$/View/promotion_list.php" />
+        <option value="$PROJECT_DIR$/View/account_list.php" />
       </list>
     </option>
   </component>
@@ -288,6 +239,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="View" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Whatapro" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Whatapro" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -327,6 +292,10 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -338,7 +307,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Library" />
+              <option name="myItemId" value="jsonapi" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -352,13 +321,13 @@
     <property name="LayoutCode.rearrangeEntriesPHP" value="true" />
     <property name="LayoutCode.rearrangeEntriesJavaScript" value="false" />
     <property name="recentsLimit" value="5" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../barcode" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../testlaravel" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="options.lastSelected" value="Configurable.PHP.PHPUnit" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
-    <property name="SearchEverywhereHistory" value="$pro&#10;self&#10;S&#10;Settings&#10;settings" />
+    <property name="SearchEverywhereHistory" value="promo&#10;$pro&#10;self&#10;S&#10;Settings&#10;settings" />
     <property name="LayoutCode.rearrangeEntriesCSS" value="false" />
   </component>
   <component name="RecentsManager">
@@ -472,7 +441,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25773993" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23247497" sideWeight="0.4992764" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2846924" sideWeight="0.4992764" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3997006" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18290855" sideWeight="0.5007236" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -502,9 +471,9 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25773993" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24749643" sideWeight="0.4992764" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32970026" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39942113" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39942113" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32970026" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -526,281 +495,278 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/dao/RequestSignupInfoDAOImpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="198" selection-start="944" selection-end="944" vertical-scroll-proportion="0.13452914" vertical-offset="315" max-vertical-offset="1365" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/RequestSignupController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="5" selection-start="532" selection-end="532" vertical-scroll-proportion="0.0" vertical-offset="330" max-vertical-offset="435" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/google_jsapi.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="183" column="9" selection-start="7538" selection-end="7538" vertical-scroll-proportion="3.961039" vertical-offset="0" max-vertical-offset="6135" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/entity/PromotionImage.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="32" selection-start="1092" selection-end="1104" vertical-scroll-proportion="0.3621701" vertical-offset="653" max-vertical-offset="1335" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/entity/ShopInformation.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="23" selection-start="360" selection-end="360" vertical-scroll-proportion="0.35874438" vertical-offset="0" max-vertical-offset="3060" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/entity/Promotion.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="38" selection-start="709" selection-end="709" vertical-scroll-proportion="0.5718475" vertical-offset="0" max-vertical-offset="1530" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dao/AccountDAO.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="0" selection-start="580" selection-end="580" vertical-scroll-proportion="0.41788855" vertical-offset="0" max-vertical-offset="682" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/entity/ActivitiesLog.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="32" selection-start="419" selection-end="419" vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="1920" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="251" column="35" selection-start="4778" selection-end="4778" vertical-scroll-proportion="0.36260623" vertical-offset="3509" max-vertical-offset="4215" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsonapi/GetShopInformationById.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="706" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsonapi/promotion.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="0" selection-start="1618" selection-end="1618" vertical-scroll-proportion="0.29618767" vertical-offset="413" max-vertical-offset="1095" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsonapi/shopinformation.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="25" selection-start="1795" selection-end="1795" vertical-scroll-proportion="0.20333838" vertical-offset="466" max-vertical-offset="1125" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/take_edit_promotion.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="6" selection-end="51" vertical-scroll-proportion="0.022421524" vertical-offset="0" max-vertical-offset="669" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/find_shop_name.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="45" selection-start="139" selection-end="139" vertical-scroll-proportion="0.15395895" vertical-offset="0" max-vertical-offset="682" />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/standard_4.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="623" column="0" selection-start="21051" selection-end="21051" vertical-scroll-proportion="0.36656892" vertical-offset="9095" max-vertical-offset="16320" />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/_superglobals.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="173" column="0" selection-start="5549" selection-end="5549" vertical-scroll-proportion="0.34457478" vertical-offset="2360" max-vertical-offset="3480" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/take_login.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="55" selection-start="335" selection-end="335" vertical-scroll-proportion="0.17595308" vertical-offset="0" max-vertical-offset="682" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/session.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="18" selection-start="292" selection-end="302" vertical-scroll-proportion="0.2639296" vertical-offset="0" max-vertical-offset="682" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/lightbox.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="46" selection-start="517" selection-end="517" vertical-scroll-proportion="0.34632036" vertical-offset="0" max-vertical-offset="6255" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lightbox.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="10" selection-start="215" selection-end="215" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3240" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screen.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="16" selection-start="310" selection-end="310" vertical-scroll-proportion="0.3611898" vertical-offset="30" max-vertical-offset="8700" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/add_promotion.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="193" column="24" selection-start="8517" selection-end="8517" vertical-scroll-proportion="0.2600897" vertical-offset="2721" max-vertical-offset="3420" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/edit_promotion.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="114" column="0" selection-start="5168" selection-end="5168" vertical-scroll-proportion="0.84304935" vertical-offset="1146" max-vertical-offset="1815" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/edit_profile.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="195" column="10" selection-start="8536" selection-end="8536" vertical-scroll-proportion="0.29147983" vertical-offset="2730" max-vertical-offset="4155" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/menus.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="706" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/request_signup_list.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="96" column="0" selection-start="3467" selection-end="3467" vertical-scroll-proportion="0.49924126" vertical-offset="1111" max-vertical-offset="1770" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/register_request.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="4" selection-start="903" selection-end="1146" vertical-scroll-proportion="0.4643963" vertical-offset="120" max-vertical-offset="4110" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/promotion.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="6" selection-start="2113" selection-end="2113" vertical-scroll-proportion="0.8020528" vertical-offset="278" max-vertical-offset="960" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="0" selection-start="3296" selection-end="3296" vertical-scroll-proportion="1.5835778" vertical-offset="0" max-vertical-offset="1185" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/home_admin.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="152" column="0" selection-start="6034" selection-end="6034" vertical-scroll-proportion="3.3431084" vertical-offset="0" max-vertical-offset="2400" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/View/request_detail.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="60" selection-start="639" selection-end="639" vertical-scroll-proportion="0.38116592" vertical-offset="0" max-vertical-offset="3480" />
+        <state line="16" column="30" selection-start="433" selection-end="433" vertical-scroll-proportion="0.16253869" vertical-offset="135" max-vertical-offset="3525" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/View/promotion_list.php">
+    <entry file="file://$PROJECT_DIR$/View/error_login.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="0" selection-start="3236" selection-end="3236" vertical-scroll-proportion="1.6715542" vertical-offset="0" max-vertical-offset="1275" />
+        <state line="5" column="13" selection-start="75" selection-end="75" vertical-scroll-proportion="0.1138088" vertical-offset="0" max-vertical-offset="735" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/View/home.php">
+    <entry file="file://$PROJECT_DIR$/View/logs.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="7" selection-start="582" selection-end="582" vertical-scroll-proportion="0.41788855" vertical-offset="0" max-vertical-offset="682" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/change_password.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="0" selection-start="2523" selection-end="2523" vertical-scroll-proportion="0.32735425" vertical-offset="711" max-vertical-offset="1380" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/edit_account.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="183" column="6" selection-start="7922" selection-end="7922" vertical-scroll-proportion="-0.0" vertical-offset="2745" max-vertical-offset="4095" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/profile.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="116" column="10" selection-start="4777" selection-end="4777" vertical-scroll-proportion="0.17040358" vertical-offset="1626" max-vertical-offset="3000" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/add_account.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="117" column="24" selection-start="5007" selection-end="5140" vertical-scroll-proportion="0.22122571" vertical-offset="1607" max-vertical-offset="4620" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1620" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/account_list.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="78" column="40" selection-start="0" selection-end="9833" vertical-scroll-proportion="0.33632287" vertical-offset="0" max-vertical-offset="1965" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/View/menus_admin.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="52" selection-start="1324" selection-end="1324" vertical-scroll-proportion="0.4398827" vertical-offset="0" max-vertical-offset="682" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="0" selection-start="2681" selection-end="2681" vertical-scroll-proportion="0.7735294" vertical-offset="284" max-vertical-offset="1125" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/AccountController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="53" selection-start="317" selection-end="317" vertical-scroll-proportion="0.2867647" vertical-offset="0" max-vertical-offset="945" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dao/RedeemCodeDAO.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="53" selection-start="214" selection-end="214" vertical-scroll-proportion="0.11029412" vertical-offset="0" max-vertical-offset="680">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/entity/RedeemCode.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="18" selection-start="170" selection-end="170" vertical-scroll-proportion="0.2647059" vertical-offset="0" max-vertical-offset="2190" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dao/AccountDAOImpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="8" selection-start="2223" selection-end="2495" vertical-scroll-proportion="0.5938417" vertical-offset="510" max-vertical-offset="1320">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dao/RedeemCodeDAOImpl.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="163" selection-start="594" selection-end="594" vertical-scroll-proportion="-4.125" vertical-offset="141" max-vertical-offset="810">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/gd.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="543" column="9" selection-start="14340" selection-end="14340" vertical-scroll-proportion="0.34529147" vertical-offset="7914" max-vertical-offset="40275">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/RedeemCodeController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="0" selection-start="856" selection-end="856" vertical-scroll-proportion="-14.375" vertical-offset="0" max-vertical-offset="570">
-          <folding>
-            <element signature="n#cryptToRandomSecure#0;n#RedeemCodeController#0;n#!!top" expanded="false" />
-            <element signature="n#getToken#0;n#RedeemCodeController#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
+        <state line="9" column="1" selection-start="337" selection-end="337" vertical-scroll-proportion="0.19794722" vertical-offset="0" max-vertical-offset="870" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/View/redeem_list.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="0" selection-start="752" selection-end="752" vertical-scroll-proportion="-11.875" vertical-offset="165" max-vertical-offset="1170">
+        <state line="21" column="30" selection-start="416" selection-end="416" vertical-scroll-proportion="0.46187684" vertical-offset="0" max-vertical-offset="1215" />
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/PDO.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1141" column="20" selection-start="37593" selection-end="37593" vertical-scroll-proportion="0.34457478" vertical-offset="16880" max-vertical-offset="20205" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Library/medoo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="542" column="36" selection-start="18387" selection-end="18387" vertical-scroll-proportion="0.0" vertical-offset="8130" max-vertical-offset="12105" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/find_shop_name.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="0" selection-start="248" selection-end="248" vertical-scroll-proportion="0.24193548" vertical-offset="0" max-vertical-offset="682" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/edit_profile.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="66" column="6" selection-start="1957" selection-end="1957" vertical-scroll-proportion="0.9551569" vertical-offset="351" max-vertical-offset="4200" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/img/bake.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/phpstorm.jar!/resources/html5-schema/sectional.rnc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="21" selection-start="692" selection-end="692" vertical-scroll-proportion="0.33283582" vertical-offset="182" max-vertical-offset="2655" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dao/AccountDAO.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="56" selection-start="332" selection-end="332" vertical-scroll-proportion="0.2639296" vertical-offset="0" max-vertical-offset="682" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/profile.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="74" column="41" selection-start="2828" selection-end="2828" vertical-scroll-proportion="-2.2286994" vertical-offset="2601" max-vertical-offset="3270" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/entity/ShopImage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="13" selection-start="211" selection-end="211" vertical-scroll-proportion="0.20485584" vertical-offset="0" max-vertical-offset="1305" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="54" column="58" selection-start="2506" selection-end="2506" vertical-scroll-proportion="1.1153263" vertical-offset="0" max-vertical-offset="1125">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/take_delete_shop_image.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="0" selection-start="419" selection-end="419" vertical-scroll-proportion="0.32991204" vertical-offset="0" max-vertical-offset="682" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/ShopImageController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="6" selection-start="101" selection-end="101" vertical-scroll-proportion="0.0659824" vertical-offset="0" max-vertical-offset="682" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/entity/PromotionImage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="7" selection-start="474" selection-end="474" vertical-scroll-proportion="0.41788855" vertical-offset="0" max-vertical-offset="1335" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/take_delete_promotion_image.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="0" selection-start="94" selection-end="139" vertical-scroll-proportion="0.0659824" vertical-offset="0" max-vertical-offset="682" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/take_delete_promotion.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="27" selection-start="81" selection-end="81" vertical-scroll-proportion="0.08797654" vertical-offset="0" max-vertical-offset="682" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dao/PromotionImageDAOImpl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="30" selection-start="400" selection-end="400" vertical-scroll-proportion="0.32991204" vertical-offset="0" max-vertical-offset="900" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/PromotionImageController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="46" selection-start="236" selection-end="236" vertical-scroll-proportion="0.109970674" vertical-offset="0" max-vertical-offset="682" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/PromotionController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="44" selection-start="237" selection-end="237" vertical-scroll-proportion="0.06744868" vertical-offset="89" max-vertical-offset="795" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dao/ShopInformationDAOImpl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="45" selection-start="2024" selection-end="2024" vertical-scroll-proportion="0.57399106" vertical-offset="291" max-vertical-offset="960" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="33" selection-start="779" selection-end="779" vertical-scroll-proportion="0.33632287" vertical-offset="240" max-vertical-offset="1215" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/register_request.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="15" selection-start="577" selection-end="577" vertical-scroll-proportion="0.35874438" vertical-offset="30" max-vertical-offset="4155" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/RequestSignupController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="0" selection-start="768" selection-end="768" vertical-scroll-proportion="0.5718475" vertical-offset="0" max-vertical-offset="682" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dao/RequestSignupInfoDAOImpl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="90" selection-start="630" selection-end="662" vertical-scroll-proportion="0.39461884" vertical-offset="111" max-vertical-offset="1320" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/entity/RequestSignupInfo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="22" selection-start="428" selection-end="428" vertical-scroll-proportion="0.367713" vertical-offset="54" max-vertical-offset="2730" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/ActivitiesLogController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="5" selection-start="483" selection-end="483" vertical-scroll-proportion="0.39589444" vertical-offset="0" max-vertical-offset="682">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/session.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="17" selection-start="139" selection-end="152" vertical-scroll-proportion="0.17595308" vertical-offset="0" max-vertical-offset="682" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/take_login.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="0" selection-start="1017" selection-end="1017" vertical-scroll-proportion="0.5381166" vertical-offset="0" max-vertical-offset="669" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/take_logout.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="18" selection-start="41" selection-end="41" vertical-scroll-proportion="0.04398827" vertical-offset="0" max-vertical-offset="682" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/request_signup_list.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="180" selection-start="1348" selection-end="1520" vertical-scroll-proportion="0.44843048" vertical-offset="0" max-vertical-offset="1710" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/change_password.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="0" selection-start="449" selection-end="449" vertical-scroll-proportion="0.20179372" vertical-offset="0" max-vertical-offset="1440" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/edit_promotion.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="145" selection-start="576" selection-end="576" vertical-scroll-proportion="0.22421524" vertical-offset="0" max-vertical-offset="3060" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dao/AccountDAOImpl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="87" column="38" selection-start="3107" selection-end="3125" vertical-scroll-proportion="0.84304935" vertical-offset="696" max-vertical-offset="1485" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/controller/AccountController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="60" column="59" selection-start="1554" selection-end="1554" vertical-scroll-proportion="0.8680352" vertical-offset="263" max-vertical-offset="1005">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/edit_account.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="121" column="81" selection-start="4878" selection-end="4878" vertical-scroll-proportion="-1.0689656" vertical-offset="2528" max-vertical-offset="4095" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/add_account.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="284" column="41" selection-start="12236" selection-end="12236" vertical-scroll-proportion="2.5742128" vertical-offset="2543" max-vertical-offset="4665" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/add_promotion.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="86" column="12" selection-start="3464" selection-end="3464" vertical-scroll-proportion="1.934033" vertical-offset="0" max-vertical-offset="3750" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsonapi/promotion.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="33" selection-start="1632" selection-end="3121" vertical-scroll-proportion="0.8235294" vertical-offset="415" max-vertical-offset="1095" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/entity/Promotion.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="32" selection-start="986" selection-end="998" vertical-scroll-proportion="0.29705882" vertical-offset="368" max-vertical-offset="1530" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/home_admin.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="195" column="0" selection-start="7407" selection-end="7407" vertical-scroll-proportion="0.4377811" vertical-offset="2633" max-vertical-offset="3300" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsonapi/testjson.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="29" selection-start="617" selection-end="617" vertical-scroll-proportion="0.22058824" vertical-offset="0" max-vertical-offset="680" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/promotion.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="0" selection-start="1029" selection-end="1029" vertical-scroll-proportion="0.28035983" vertical-offset="293" max-vertical-offset="1725" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.htaccess">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="55" selection-start="981" selection-end="981" vertical-scroll-proportion="0.4474432" vertical-offset="0" max-vertical-offset="704" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/search_account.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="56" selection-start="2003" selection-end="2003" vertical-scroll-proportion="0.40358743" vertical-offset="390" max-vertical-offset="1290">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/search_promotion.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="286" selection-start="434" selection-end="451" vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="1005">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dao/PromotionDAOImpl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="66" column="5" selection-start="2602" selection-end="2602" vertical-scroll-proportion="1.412556" vertical-offset="0" max-vertical-offset="1305">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/View/account_list.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="129" column="159" selection-start="5448" selection-end="5448" vertical-scroll-proportion="-8.583333" vertical-offset="1729" max-vertical-offset="3540">
           <folding>
-            <marker date="1434709974000" expanded="true" signature="1630:2103" placeholder="..." />
-            <marker date="1434709974000" expanded="true" signature="1630:1655" placeholder="..." />
+            <element signature="n#style#0;n#form#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1436286373000" expanded="true" signature="3943:4169" placeholder="..." />
+            <marker date="1436286373000" expanded="true" signature="4348:4572" placeholder="..." />
+            <marker date="1436286373000" expanded="true" signature="4752:4978" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/barcode.php">
+    <entry file="file://$PROJECT_DIR$/View/promotion_list.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="23" selection-start="5793" selection-end="5793" vertical-scroll-proportion="-14.423077" vertical-offset="0" max-vertical-offset="1545">
-          <folding>
-            <element signature="e#6#183#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/map.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="252" selection-end="252" vertical-scroll-proportion="0.17595308" vertical-offset="0" max-vertical-offset="682">
+        <state line="98" column="34" selection-start="3872" selection-end="3872" vertical-scroll-proportion="0.44843048" vertical-offset="1170" max-vertical-offset="2580">
           <folding />
         </state>
       </provider>

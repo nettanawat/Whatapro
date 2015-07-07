@@ -5,8 +5,13 @@
 <html>
 <head>
     <title>WAP</title>
-    <link href="../style.css" rel="stylesheet" type="text/css">
-    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <?php
+
+    $assetPath = '';
+
+    include_once '../assets.php'
+
+    ?>
 
     <?php
     printf($_SESSION['redirect']);
@@ -28,12 +33,5 @@
     </div>
 
 </div> <!-- /container -->
-
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="../bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

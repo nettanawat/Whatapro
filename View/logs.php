@@ -12,10 +12,13 @@ if ('admin' != $user_type) {
 <html>
 <head>
     <title>WAP / Home</title>
-    <script src="../jquery.js"></script>
-    <link href="../style.css" rel="stylesheet" type="text/css">
-    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <?php
+
+    $assetPath = Config::PATH.'';
+
+    include_once '../assets.php'
+
+    ?>
 </head>
 <body>
 <div style="margin-top: 80px;" class="container-fluid">

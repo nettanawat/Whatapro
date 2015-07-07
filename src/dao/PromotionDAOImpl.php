@@ -41,7 +41,7 @@ class PromotionDAOImpl implements PromotionDAO{
 
     public function getAllPromotions() {
         $promotionList = array();
-        foreach ($this->database->select($this->table,'*') as $row) {
+        foreach ($this->database->select($this->table,'*', ["ORDER" => "id DESC"]) as $row) {
             $promotionList[] = new Promotion($row['id'], $row['shop_id'], $row['name'], $row['description'], $row['shared'], $row['start_date'], $row['end_date'], $row['status']);
         }
         return $promotionList;
@@ -58,16 +58,9 @@ class PromotionDAOImpl implements PromotionDAO{
     }
 
     public function editPromotion(Promotion $promotion){
-        $data = [
-            'shop_id' => $promotion->getAccountId(),
-            'name' => $promotion->getName(),
-            'description' => $promotion->getDescription(),
-            'shared' => $promotion->getShared(),
-            'start_date' => $promotion->getStartDate(),
-            'end_date' => $promotion->getEndDate(),
-            'status' => $promotion->getStatus(),
-        ];
-        return $this->database->update($this->table, $data);
+        $query = "UPDATE ".$this->table." SET name='".$promotion->getName()."' , description= '".$promotion->getDescription().
+            "' , start_date='".$promotion->getStartDate()."' , end_date='".$promotion->getEndDate()."' WHERE id='".$promotion->getPromotionId()."'";
+        $this->database->exec($query);
     }
 
     public function getPromotionByStatus($status)

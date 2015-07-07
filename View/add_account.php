@@ -27,6 +27,7 @@ if (isset($_POST['add'])) {
             //uplaod images
             $old = umask(0);
             $folderPath = "../user_upload/".$accountId."/shop_images/";
+
             mkdir($folderPath, 0777,true);
             $target_dir = $folderPath;
             umask($old);
@@ -41,6 +42,8 @@ if (isset($_POST['add'])) {
             foreach ($_FILES["files"]["tmp_name"] as $imageTmp) {
                 if (move_uploaded_file($imageTmp, $target_file[$i])) {
                     $uploadPath[] = $target_file[$i];
+                } else{
+                    // cant upload
                 }
                 $i++;
             }
@@ -51,13 +54,11 @@ if (isset($_POST['add'])) {
                 $shopImageController = new ShopImageController();
                 $shopImageController->addImage(new ShopImage("",$accountId,$image,""));
             }
-            $accountEmail = AccountController::getAccountById($accountId)->getEmail();
 //            add log
-            $actionDetail = "add new account into system [ ".$accountEmail." ] as role user";
-            ActivitiesLogController::getAllLog(new ActivitiesLog("",$logInAccount->getAccountId(),"add","account",$actionDetail,""));
+            ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"add","account","add account into database [ account id : ".$accountId." ]",null));
             $_SESSION['manageAccountStatus']= "true";
             $_SESSION['manageAccountAction'] = "add";
-            header('Location: account_list.php');
+            header('Location: '.Config::PATH.'/accounts');
             exit;
         } else {
             $_SESSION['error_message'] = "Password and confirm password are not match";
@@ -78,10 +79,12 @@ if (isset($_POST['add'])) {
 <html>
 <head>
     <title>WAP / New account</title>
-    <script src="../jquery.js"></script>
-    <link href="../style.css" rel="stylesheet" type="text/css">
-    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <?php
+
+    $assetPath = Config::PATH.'';
+
+    include_once '../assets.php';
+    ?>
     <style>
         #googleMap {
             width: 100%;

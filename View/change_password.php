@@ -3,6 +3,7 @@ include_once 'session.php';
 
 if(isset($_POST['password']) && isset($_POST['confirmPassword'])) {
     AccountController::changePassword(new AccountInfo($logInAccount->getAccountId(),"",$_POST['password'],"","",""));
+    ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"edit","account","change password [ account id : ".$logInAccount->getAccountId()." ]",null));
     $_SESSION['changePassword'] = "true";
 }
 ?>
@@ -12,10 +13,13 @@ if(isset($_POST['password']) && isset($_POST['confirmPassword'])) {
 
 <head>
     <title>WAP / Change Password</title>
-    <script src="../jquery.js"></script>
-    <link href="../style.css" rel="stylesheet" type="text/css">
-    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <?php
+
+    $assetPath = Config::PATH.'';
+
+    include_once '../assets.php'
+
+    ?>
 </head>
 <body>
 
