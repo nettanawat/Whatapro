@@ -16,7 +16,6 @@ if ($_GET['key'] == "") {
 } else {
     foreach ($database->query($query)->fetchAll() as $row) {
         $accountList[] = new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);
-//        $shopInformationList[] = new ShopInformation($row['accounts_id'], $row['name'], $row['address'], $row['phone_number'], $row['sub_district'], $row['latitude'], $row['longitude'], $row['open_time'], $row['description'], $row['category']);
     }
 }
 

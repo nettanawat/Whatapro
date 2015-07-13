@@ -41,7 +41,7 @@ if ('admin' != $user_type) {
                         <td>" . $activity->getId() . "</td>
                         <td>" . $activity->getMethod() . "</td>
                         <td>" . $activity->getModule() . "</td>
-                        <td><a href=''>" . $account->getEmail()  . "</a></td>
+                        <td><a href='".Config::PATH."/account/".$account->getAccountId()."'>" . $account->getEmail()  . "</a></td>
                         <td>" . $activity->getDetail() . "</td>
                         <td>" . $activity->getDate() . "</td>
                     </tr>

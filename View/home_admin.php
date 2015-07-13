@@ -105,7 +105,7 @@ if ('admin' != $user_type) {
                 } ?>
             </table>
             <div style="margin-top: -10px;" class="text-right">
-                <a href="account_list.php" class="btn btn-default btn-sm">see more</a>
+                <a href="<?php echo Config::PATH."/promotions"; ?>" class="btn btn-default btn-sm">see more</a>
             </div>
         </div>
         <div style="padding-top: 20px" class="col-md-12 text-center">

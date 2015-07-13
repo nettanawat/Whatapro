@@ -41,11 +41,11 @@ class RequestSignupInfoDAOImpl implements RequestSignupInfoDAO {
 
     }
 
-    public function updateRequest($id,$status) {
+    public function updateRequest($id,$status, $accountId) {
         if ($status == true){
-            $this->database->update($this->table,['status'=>1],['id'=>$id]);
+            $this->database->update($this->table,['status'=>1, 'approve_date' => date('Y-m-d H:i:s'), 'manage_by' => $accountId ],['id'=>$id]);
         } elseif ($status == false) {
-            $this->database->update($this->table,['status'=>0],['id'=>$id]);
+            $this->database->update($this->table,['status'=>0, 'approve_date' => date('Y-m-d H:i:s'), 'manage_by' => $accountId ],['id'=>$id]);
         } else {
 
         }
@@ -77,9 +77,5 @@ class RequestSignupInfoDAOImpl implements RequestSignupInfoDAO {
         $this->database->exec($query);
     }
 
-    public function approveRequest($id)
-    {
-        // TODO: Implement approveRequest() method.
-    }
 }
 

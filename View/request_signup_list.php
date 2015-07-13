@@ -9,16 +9,25 @@ if ('admin' != $user_type) {
 } else {
     if (isset($_POST['accept'])) {
         $request = RequestSignupController::getRequestById($_POST['requestId']);
-        $accountId = AccountController::addNewAccount(new AccountInfo("", $request->getEmail(), $request->getPassword(), "user", null, 1));
-        ShopInformationController::addShopInformation(new ShopInformation($accountId, $request->getName(), $request->getAddress(), $request->getPhoneNumber(), $request->getSubDistrict(), $request->getLatitude(), $request->getLongitude(), $request->getOpenTIme(), $request->getDescription(), null));
-        RequestSignupController::acceptRequest($_POST['requestId']);
+        if(AccountController::getAccountById(100) == null){
+            $accountId = AccountController::addNewAccount(new AccountInfo(100 , $request->getEmail(), $request->getPassword(), "user", null, 1));
+            ShopInformationController::addShopInformation(new ShopInformation($accountId, $request->getName(), $request->getAddress(), $request->getPhoneNumber(), $request->getSubDistrict(), $request->getLatitude(), $request->getLongitude(), $request->getOpenTIme(), $request->getDescription(), null));
+        } else {
+            $accountId = AccountController::addNewAccount(new AccountInfo("" , $request->getEmail(), $request->getPassword(), "user", null, 1));
+            ShopInformationController::addShopInformation(new ShopInformation($accountId, $request->getName(), $request->getAddress(), $request->getPhoneNumber(), $request->getSubDistrict(), $request->getLatitude(), $request->getLongitude(), $request->getOpenTIme(), $request->getDescription(), null));
+        }
+        RequestSignupController::acceptRequest($_POST['requestId'], $logInAccount->getAccountId());
         ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"accept","account","accept request from [ request id : ".$_POST['requestId']." ]",null));
+        $_SESSION['manageRequestStatus']= "true";
+        $_SESSION['manageRequestAction'] = "accept";
         header("Refresh: 0; url=" . Config::PATH . "/requests");
         exit;
     }
     if (isset($_POST['reject'])) {
-        RequestSignupController::rejectRequest($_POST['requestId']);
+        RequestSignupController::rejectRequest($_POST['requestId'], $logInAccount->getAccountId());
         ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"reject","account","reject request from [ request id : ".$_POST['requestId']." ]",null));
+        $_SESSION['manageRequestStatus']= "true";
+        $_SESSION['manageRequestAction'] = "reject";
         header("Refresh: 0; url=" . Config::PATH . "/requests");
         exit;
     }
@@ -33,6 +42,35 @@ if ('admin' != $user_type) {
 </head>
 <body>
 <div style="margin: 80px;" class="container-fluid">
+
+    <?php
+
+    if (isset($_SESSION['manageRequestStatus']) && isset($_SESSION['manageRequestAction'])) {
+        if ($_SESSION['manageRequestStatus'] == true) {
+            if ($_SESSION['manageRequestAction'] == "accept") {
+                echo('
+                <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Accept register request <strong>successful!</strong> <a href="'.Config::PATH.'/accounts">Check out new account here!</a>
+                </div>
+            ');
+            } elseif ($_SESSION['manageRequestAction'] == "reject") {
+                echo('
+                <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Reject register request <strong>successful!</strong>
+                </div>
+            ');
+            } else {
+
+            }
+        }
+        unset($_SESSION['manageRequestStatus']);
+        unset($_SESSION['manageRequestAction']);
+    }
+
+    ?>
+
     <div class="row">
         <h2>Request sign up</h2>
         <table class="col-md-12 table table-condensed table-hover">
@@ -43,6 +81,8 @@ if ('admin' != $user_type) {
                 <th>Phone number</th>
                 <th>Address</th>
                 <th>Request date</th>
+                <th>Manage by</th>
+                <th>Approve/reject date</th>
                 <th>Status</th>
                 <th>Action</th>
             </tr>
@@ -52,6 +92,11 @@ if ('admin' != $user_type) {
 
             foreach ($requestList as $request) {
                 Adaptor::setStatus($request->getStatus());
+                $account = AccountController::getAccountById($request->getManageBy());
+                if($account == null)
+                    $manageBy = '-';
+                else
+                    $manageBy = $account->getEmail();
                 echo('
                 <tr>
                     <td>' . $request->getId() . '</td>
@@ -63,6 +108,8 @@ if ('admin' != $user_type) {
                     <input type="hidden" class="latitude" value="' . $request->getLatitude() . '">
                     <input type="hidden" class="longitude" value="' . $request->getLongitude() . '"></td>
                     <td>' . $request->getRequestDate() . '</td>
+                    <td>' . $manageBy . '</td>
+                    <td>' . $request->getApproveDate() . '</td>
                     <td>' . Adaptor::getStatus() . '</td>');
                 if($request->getStatus() == 2){
                 echo('<td><form name="manageForm" action="" method="post">

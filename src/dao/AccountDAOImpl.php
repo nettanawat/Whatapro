@@ -33,17 +33,14 @@ class AccountDAOImpl implements AccountDAO {
         $account->setJoinDate($now->format('Y-m-d H:i:s'));
 
             $data = [
-            'email' => $account->getEmail(),
-            'password' => md5($account->getPassword()),
-            'role' => $account->getRole(),
-            'join_date' => $account->getJoinDate(),
-            'status' => $account->getStatus()
-            ];
+                'id' => $account->getAccountId(),
+                'email' => $account->getEmail(),
+                'password' => md5($account->getPassword()),
+                'role' => $account->getRole(),
+                'join_date' => $account->getJoinDate(),
+                'status' => $account->getStatus()
+                ];
         return $this->database->insert($this->table, $data);
-    }
-
-    public function disableAccount($id) {
-        $this->database->update($this->table,['status'=>3],['id'=>$id]);
     }
 
     public function editAccount(AccountInfo $account) {
@@ -53,7 +50,11 @@ class AccountDAOImpl implements AccountDAO {
 
     public function getAccountById($id) {
         $row = $this->database->get($this->table,'*',['AND'=>['id'=>$id]]);
-        return new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);
+        if($row) {
+            return new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);
+        } else {
+            return null;
+        }
     }
 
     public function getAccountByEmail($email) {
@@ -72,10 +73,6 @@ class AccountDAOImpl implements AccountDAO {
         return $accountList;
     }
 
-    public function enableAccount($id){
-        $this->database->update($this->table,['status'=>1],['id'=>$id]);
-    }
-
     public function changePassword(AccountInfo $accountInfo){
         $query = "UPDATE Accounts SET password = '".md5($accountInfo->getPassword())."' WHERE id = '".$accountInfo->getAccountId()."'";
         $this->database->exec($query);
@@ -85,7 +82,7 @@ class AccountDAOImpl implements AccountDAO {
         $this->database->delete($this->table, ["AND" => ["id" => $id]]);
     }
 
-    public function getLastFiveAccount(){
+    public function getLastFiveAccount() {
         $accountList = array();
         foreach ($this->database->select($this->table,'*',['LIMIT' => 5, 'ORDER' => 'join_date DESC']) as $row) {
             $accountList[] = new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);

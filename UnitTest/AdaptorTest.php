@@ -5,16 +5,18 @@
  * Date: 8/11/14 AD
  * Time: 12:42 PM
  */
+//include_once '../Config.php';
+
 include_once '../Library/Adaptor.php';
 class AdaptorTest extends PHPUnit_Framework_TestCase {
     public function testGetStatus(){
         $adaptor =new Adaptor();
         $adaptor->setStatus(0);
-        $this->assertEquals('waiting', $adaptor->getStatus());
+        $this->assertEquals('inactive', $adaptor->getStatus());
         $adaptor->setStatus(1);
         $this->assertEquals('active', $adaptor->getStatus());
         $adaptor->setStatus(2);
-        $this->assertEquals('deactive', $adaptor->getStatus());
+        $this->assertEquals('waiting', $adaptor->getStatus());
     }
 
     public function testGetAccountType(){

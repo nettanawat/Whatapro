@@ -14,9 +14,9 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="home.php">Dashboard</a></li>
+                        <li><a href="<?php echo Config::PATH;?>">Dashboard</a></li>
                         <li class="dropdown">
-                                <li><a href="promotions">Manage Promotion</a></li>
+                                <li><a href="<?php echo Config::PATH."/promotions";?>">Promotion</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -27,9 +27,9 @@
                             ?>
                             <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="changepassword">Change Password</a></li>
-                                <li><a href="profile/edit.php">Edit profile</a></li>
-                                <li><a href="logout.php">Logout</a></li>
+                                <li><a href="<?php echo Config::PATH."/changepassword";?>">Change Password</a></li>
+                                <li><a href="<?php echo Config::PATH."/profile/edit";?>">Edit profile</a></li>
+                                <li><a href="<?php echo Config::PATH."/logout";?>">Logout</a></li>
                             </ul>
                         </li>
                     </ul>

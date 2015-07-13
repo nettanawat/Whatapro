@@ -6,7 +6,6 @@
  * Time: 3:55 PM
  */
 
-
 class Config {
 
     const DATABASE_TYPE = 'mysql';
@@ -17,7 +16,7 @@ class Config {
     const CHARSET = 'utf8';
     const PATH = '/whatapro';
     const ADMIN_USERNAME ='nettanawat@gmail.com';
-    const ADMIN_PASSWORD ='bf6c860ad48fbc85df0195698f6dec5b';
+    const ADMIN_PASSWORD ='c09e487ab20c68cdc5c21dce226b0426';
 
     static $className =  array(
         'AccountController' => 'src/controller/AccountController',
@@ -60,12 +59,15 @@ class Config {
     );
 }
 
+include 'Library/medoo.php';
+include 'GenerateData.php';
+
 function __autoload($class_name) {
     if(Config::$className[$class_name]!=null || Config::$className[$class_name]!="")
         include dirname(__FILE__).'/'.Config::$className[$class_name].'.php';
+    GenerateData::createAdmin();
+    GenerateData::generateAccount(10);
 }
-
-include 'Library/medoo.php';
 
 AccountController::loadClass();
 ActivitiesLogController::loadClass();

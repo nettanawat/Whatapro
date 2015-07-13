@@ -26,7 +26,10 @@ if(isset($_SESSION['userId'])){
             include_once '../assets.php';
         ?>
     </head>
-    <body class="adminBackground">
+    <body>
+    <video autoplay loop id="bgvid">
+        <source src="whatapro/img/bg.m4v" type="video/mp4">
+    </video>
         <div style="margin-top: 150px; color: #ffffff" class="container">
             <!-- Main component for a primary marketing message or call to action -->
                 <div class="row">
@@ -36,7 +39,7 @@ if(isset($_SESSION['userId'])){
                     <div class="col-md-6">
                         <p>Welcome to What a pro.<br> Start a promotion, give them your offer, and be in the know.</p>
                         <p>
-                            <a class="btn btn-lg btn-primary" href="<?php echo Config::PATH; ?>/register" role="button">Join WAP &raquo;</a>
+                            <a style="color: #000000" class="btn btn-lg btn-warning" href="<?php echo Config::PATH; ?>/register" role="button">Join WAP &raquo;</a>
                         </p>
                     </div>
                     <div class="col-md-6">
@@ -64,7 +67,7 @@ if(isset($_SESSION['userId'])){
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-default">Sign in</button>
+                                    <button style="color: #000000" type="submit" class="btn btn-warning">Sign in</button>
                                 </div>
                             </div>
                         </form>

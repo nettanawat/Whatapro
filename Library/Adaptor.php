@@ -28,7 +28,7 @@ class Adaptor
         if ($status < 3 && $status >= 0) {
             switch ($status) {
                 case 0:
-                    self::$status = "deactive";
+                    self::$status = "inactive";
                     break;
                 case 1:
                     self::$status = "active";

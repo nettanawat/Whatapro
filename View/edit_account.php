@@ -239,30 +239,60 @@ if (isset($_POST['edit'])) {
         }
     }
 
-
     var userLat = <?php echo json_encode($shopInformation->getLatitude()); ?>;
+    if(userLat == null) {
+        userLat = 0.0;
+    }
     var userLong = <?php echo json_encode($shopInformation->getLongitude()); ?>;
-
+    if(userLong == null) {
+        userLong = 0.0;
+    }
     var myCenter = new google.maps.LatLng(userLat, userLong);
-
+//    var myCenter = new google.maps.LatLng(18.789570, 98.974244);
+    var geocoder;
+    var infowindow = new google.maps.InfoWindow();
+    var map;
     function initialize() {
+        geocoder = new google.maps.Geocoder();
         var mapProp = {
             center: myCenter,
             zoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-
-        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-
         var marker = new google.maps.Marker({
-            position: myCenter
+            position: myCenter,
+            title:"Hello World!"
         });
 
+        map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
         marker.setMap(map);
+        google.maps.event.addListener(map, 'click', function (event) {
+            placeMarker(event.latLng);
+            marker.setMap(null);
+        });
     }
+    var marker;
+    function placeMarker(location) {
+        if (marker) {
+            marker.setPosition(location);
+        } else {
+            marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+        }
 
+        var latlng = new google.maps.LatLng(location.lat(), location.lng());
+        geocoder.geocode({'latLng': latlng}, function (results) {
+            infowindow.setContent(results[1].formatted_address);
+            infowindow.open(map, marker);
+            document.inputeditaccount.temp.value = results[1].formatted_address;
+        });
+
+        document.inputeditaccount.inputLatitude.value = location.lat();
+        document.inputeditaccount.inputLongitude.value = location.lng();
+    }
     google.maps.event.addDomListener(window, 'load', initialize);
-
 </script>
 </body>
 </html>

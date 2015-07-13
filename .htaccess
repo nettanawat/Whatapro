@@ -5,7 +5,7 @@ RewriteRule    ^$    View/index.php    [NC,L]
 RewriteRule    ^accounts$    View/account_list.php    [NC,L]
 RewriteRule    ^account/add$    View/add_account.php    [NC,L]
 RewriteRule    ^account/edit/(.*)$    View/edit_account.php?userId=$1    [NC,L]
-RewriteRule    ^account/(.*)$    View/profile.php?accountId=$1    [NC,L]
+RewriteRule    ^account/(.*)$    View/account.php?accountId=$1    [NC,L]
 #promotion
 RewriteRule    ^promotions$    View/promotion_list.php    [NC,L]
 RewriteRule    ^promotion/add$    View/add_promotion.php    [NC,L]
@@ -13,7 +13,6 @@ RewriteRule    ^promotion/edit/(.*)$    View/edit_promotion.php?promotionId=$1  
 RewriteRule    ^promotion/(.*)$    View/promotion.php?promotionId=$1    [NC,L]
 
 #profile
-RewriteRule    ^profile    View/profile.php    [NC,L]
 RewriteRule    ^profile/edit    View/edit_profile.php    [NC,L]
 
 #redeem

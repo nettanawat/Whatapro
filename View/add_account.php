@@ -21,8 +21,14 @@ if (isset($_POST['add'])) {
             $openTime = $_POST['inputOpenAndCloseTime'];
             $category = 'test';
             $description = $_POST['inputDescription'];
-            $accountId = AccountController::addNewAccount(new AccountInfo("", $email, $password, "user", null, 1));
-            ShopInformationController::addShopInformation(new ShopInformation($accountId, $name, $address, $phone, $comboDistrict, $latitude, $longitude, $openTime, $description, $category));
+//            var_dump(AccountController::getAccountById(100) == null);die;
+            if(AccountController::getAccountById(100) == null){
+                $accountId = AccountController::addNewAccount(new AccountInfo(100, $email, $password, "user", null, 1));
+                ShopInformationController::addShopInformation(new ShopInformation($accountId, $name, $address, $phone, $comboDistrict, $latitude, $longitude, $openTime, $description, $category));
+            } else {
+                $accountId = AccountController::addNewAccount(new AccountInfo("", $email, $password, "user", null, 1));
+                ShopInformationController::addShopInformation(new ShopInformation($accountId, $name, $address, $phone, $comboDistrict, $latitude, $longitude, $openTime, $description, $category));
+            }
 
             //uplaod images
             $old = umask(0);

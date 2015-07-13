@@ -33,7 +33,6 @@ include_once 'session.php';
 
             $promotionImageController = new PromotionImageController();
             $promotionImage = $promotionImageController->getPromotionImageByPromotionId($promotion->getPromotionId());
-//            var_dump($promotionImage)
             $count = 0;
             foreach ($promotionImage as $imagePath) {
                 if ($count == 0) {

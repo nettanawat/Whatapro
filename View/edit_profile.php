@@ -57,7 +57,7 @@ if (isset($_POST['edit'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>WAP / Edit account</title>
+    <title>WAP / Edit profile</title>
     <?php
 
     $assetPath = Config::PATH.'';
@@ -84,7 +84,7 @@ if (isset($_POST['edit'])) {
     ?>
     <div class="row">
         <form role="form" name="inputeditaccount" action="" method="post" enctype="multipart/form-data">
-            <h2>Edit account</h2>
+            <h2>Edit profile</h2>
             <?php
             $account = AccountController::getAccountById($logInAccount->getAccountId());
             $shopInformation = ShopInformationController::getShopInformationById($logInAccount->getAccountId());
@@ -102,7 +102,7 @@ if (isset($_POST['edit'])) {
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="inputEmail">Email address</label>
-                    <input type="email" class="form-control" name="inputEmail" required
+                    <input type="email" class="form-control" name="inputEmail" required readonly
                            value="<?php echo($account->getEmail()); ?>">
                 </div>
             </div>
@@ -173,7 +173,7 @@ if (isset($_POST['edit'])) {
                                     <div class="panel-body text-right">
                                         <a href="take_delete_shop_image.php?shopImageId=' . $shopImage->getId() . '" class="deleteImage btn btn-danger btn-sm">remove</a>
                                     </div>
-                                    <img width="100%" src="' . $shopImage->getImagePath() . '">
+                                    <img width="100%" src="' .Config::PATH . '/whatapro/' . $shopImage->getImagePath() . '">
                                 </div>
                             </div>
                         ');
