@@ -79,7 +79,7 @@ class AccountDAOImpl implements AccountDAO {
     }
 
     public function deleteAccount($id){
-        $this->database->delete($this->table, ["AND" => ["id" => $id]]);
+        return $this->database->delete($this->table, ["AND" => ["id" => $id]]);
     }
 
     public function getLastFiveAccount() {

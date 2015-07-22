@@ -5,64 +5,11 @@
         if('user' == $user_type){
             $promotionId = PromotionController::addPromotion(new Promotion("", $logInAccount->getAccountId(), $_POST['inputName'], $_POST['inputDescription'],"",$_POST['inputStartDate'],$_POST['inputEndDate'], 1));
             ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"add","promotion","add promotion into database [ promotion id : ".$promotionId." ]",null));
-
-            //uplaod images
-            $accountId = $logInAccount->getAccountId();
-            $old = umask(0);
-            $folderPath = "../user_upload/".$accountId."/promotions/".$promotionId."/";
-            mkdir($folderPath, 0777,true);
-            $target_dir = $folderPath;
-            umask($old);
-            $target_file = array();
-            foreach ($_FILES["files"]["name"] as $aImage) {
-                $target_file[] = $target_dir . basename($aImage);
-            }
-            $i = 0;
-            $uploadPath = array();
-            foreach ($_FILES["files"]["tmp_name"] as $imageTmp) {
-                if (move_uploaded_file($imageTmp, $target_file[$i])) {
-                    $uploadPath[] = $target_file[$i];
-                }
-                $i++;
-            }
-
-            //add image
-            foreach($uploadPath as $image){
-                $promotionImageController = new PromotionImageController();
-                $promotionImageController->addImage(new PromotionImage("", $promotionId, $image,""));
-            }
         }
-
 
         if('admin' == $user_type){
             $promotionId = PromotionController::addPromotion(new Promotion("", $_POST['selectedShopId'], $_POST['inputName'], $_POST['inputDescription'],"",$_POST['inputStartDate'],$_POST['inputEndDate'], 1));
             ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"add","promotion","add promotion into database [ promotion id : ".$promotionId." ]",null));
-            //uplaod images
-            $accountId = $_POST['selectedShopId'];
-            $old = umask(0);
-            $folderPath = "../user_upload/".$accountId."/promotions/".$promotionId."/";
-            mkdir($folderPath, 0777,true);
-            $target_dir = $folderPath;
-            umask($old);
-            $target_file = array();
-            foreach ($_FILES["files"]["name"] as $aImage) {
-                $target_file[] = $target_dir . basename($aImage);
-            }
-            $i = 0;
-            $uploadPath = array();
-            foreach ($_FILES["files"]["tmp_name"] as $imageTmp) {
-                if (move_uploaded_file($imageTmp, $target_file[$i])) {
-                    $uploadPath[] = $target_file[$i];
-                }
-                $i++;
-            }
-
-            //add image
-            foreach($uploadPath as $image){
-                $promotionImageController = new PromotionImageController();
-                $promotionImageController->addImage(new PromotionImage("", $promotionId, $image,""));
-            }
-
         }
         $_SESSION['managePromotionStatus']= "true";
         $_SESSION['managePromotionAction'] = "add";
@@ -165,6 +112,8 @@
                     <?php
                     $shopList = ShopInformationController::getAllShopInformation();
                     foreach ($shopList as $shop) {
+                        $shopImageController = new ShopImageController();
+                        $shopImageList = $shopImageController->getImageByAccountId($shop->getAccountId());
                         echo('
                 <tr>
                     <td>' . $shop->getName() . '</td>

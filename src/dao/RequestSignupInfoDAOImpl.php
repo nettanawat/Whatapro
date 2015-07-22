@@ -41,7 +41,7 @@ class RequestSignupInfoDAOImpl implements RequestSignupInfoDAO {
 
     }
 
-    public function updateRequest($id,$status, $accountId) {
+    public function updateRequestStatus($id,$status, $accountId) {
         if ($status == true){
             $this->database->update($this->table,['status'=>1, 'approve_date' => date('Y-m-d H:i:s'), 'manage_by' => $accountId ],['id'=>$id]);
         } elseif ($status == false) {

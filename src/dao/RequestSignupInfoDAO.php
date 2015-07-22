@@ -15,6 +15,6 @@ interface RequestSignupInfoDAO {
     public function getAllRequest();
     public function addNewRequest(RequestSignupInfo $requestingSingup);
     public function getRequestByStatus($status);
-    public function updateRequest($id,$status, $accountId);
+    public function updateRequestStatus($id,$status, $accountId);
 }
 

@@ -22,7 +22,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <label class="navbar-brand">What a pro</label>
+                    <img width="80px" src="../Whatapro/img/logo.png">
                 </div>
                 <div class="navbar-collapse collapse">
 
@@ -31,12 +31,12 @@
         </div>
 
         <div  style="margin: 80px;" class="container-fluid">
-                <div class="row">
+                <div class="row text-center">
                     <div class="col-md-12">
-                        <h2 class="text-danger">Waring message</h2>
+                        <h2 class="text-danger">Oops!</h2>
                     </div>
                     <div class="col-md-12">
-                        <p class="text-danger">Invalid email or password or your account disabled by Administer</p>
+                        <p class="text-danger">Invalid email or password please check your email and password</p>
                     </div>
                 </div>
         </div> <!-- /container -->

@@ -41,14 +41,6 @@ class AccountController {
         self::$accountDaoImpl->editAccount($accountInfo);
     }
 
-    static function enableAccount($id){
-        self::$accountDaoImpl->editAccount($id);
-    }
-
-    static function disableUser($id) {
-        self::$accountDaoImpl->disableAccount($id);
-    }
-
     static function changePassword(AccountInfo $accountInfo){
         self::$accountDaoImpl->changePassword($accountInfo);
     }

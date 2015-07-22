@@ -10,7 +10,8 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <label class="navbar-brand">Admin panel</label>
+                        <img width="80px" src="<?php echo Config::PATH; ?>/img/logo.png">
+<!--                    <label class="navbar-brand">Admin panel</label>-->
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">

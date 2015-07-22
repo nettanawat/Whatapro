@@ -30,35 +30,49 @@ if ('admin' == $user_type) {
 //                delete promotion image
             $promotionImageList = $promotionImageController->getPromotionImageByPromotionId($promotion->getPromotionId());
             $promotionImageController->deleteImageByPromotionId($promotion->getPromotionId());
-            foreach ($promotionImageList as $promotionImage) {
-                unlink($promotionImage->getImagePath());
+            if($promotionImageList != null) {
+                foreach ($promotionImageList as $promotionImage) {
+                    unlink($promotionImage->getImagePath());
+                }
+    //            delete promotion folder
             }
-//            delete promotion folder
-            rmdir("../user_upload/" . $account->getAccountId() . "/promotions/" . $promotion->getPromotionId());
-            rmdir("../user_upload/" . $account->getAccountId() . "/promotions/");
+            $removePromotionImage = rmdir("../user_upload/" . $account->getAccountId() . "/promotions/" . $promotion->getPromotionId());
+        }
+        $promotionDirectory = "../user_upload/" . $account->getAccountId() . "/promotions";
+        if(is_dir($promotionDirectory)){
+            rmdir($promotionDirectory);
         }
 //        delete promotion
         $deletePromotion = PromotionController::deletePromotionByShopId($account->getAccountId());
-
+        $deleteShopImageDb = '';
         //        delete shop image
         $shopImageController = new ShopImageController();
-        foreach ($shopImageController->getImageByAccountId($account->getAccountId()) as $imageAccount) {
-            unlink($imageAccount->getImagePath());
+        $shopImageList = $shopImageController->getImageByAccountId($account->getAccountId());
+        if($shopImageList != null){
+            foreach ($shopImageList as $imageAccount) {
+                unlink($imageAccount->getImagePath());
+            }
+//        delete shop image **return number of deleted data**
+            $deleteShopImageDb = $shopImageController->deleteShopImageByShopId($account->getAccountId());
         }
-//        delete account folder
-        rmdir("../user_upload/" . $account->getAccountId() . "/shop_images");
-        rmdir("../user_upload/" . $account->getAccountId());
 
-        $deleteShopImage = $shopImageController->deleteShopImageByShopId($account->getAccountId());
-//        delete shop info
-        $deleteShopInfo = ShopInformationController::deleteShopInformation($account->getAccountId());
+        $removeShopImageDirectory = rmdir("../user_upload/" . $account->getAccountId() . "/shop_images");
+        $removeAccountDirectory = rmdir("../user_upload/" . $account->getAccountId());
+
+
+//        delete shop info **return number of deleted data**
+        $deleteShopInfoDb = ShopInformationController::deleteShopInformation($account->getAccountId());
+
 //        delete log
-        $deleteLog = ActivitiesLogController::deleteLogByAccountId($account->getAccountId());
-//        delete account
-        $deleteAccount = AccountController::deleteAccount($account->getAccountId());
+//        $deleteLog = ActivitiesLogController::deleteLogByAccountId($account->getAccountId());
 
-        if ($deleteShopInfo == true && $deleteAccount == true) {
-            $_SESSION['manageAccountStatus'] = "true";
+//        delete account ***return null WHY?*
+        $deleteAccountDb = AccountController::deleteAccount($account->getAccountId());
+        if ($deleteShopInfoDb == 1 && $deleteAccountDb == 1) {
+            $_SESSION['manageAccountStatus'] = true;
+            $_SESSION['manageAccountAction'] = "delete";
+        } else if ($deleteShopInfoDb =! 1 || $deleteAccountDb != 1) {
+            $_SESSION['manageAccountStatus'] = false;
             $_SESSION['manageAccountAction'] = "delete";
         }
 
@@ -91,6 +105,7 @@ if ('admin' == $user_type) {
 <?php
 
 if (isset($_SESSION['manageAccountStatus']) && isset($_SESSION['manageAccountAction'])) {
+
     if ($_SESSION['manageAccountStatus'] == true) {
         if ($_SESSION['manageAccountAction'] == "delete") {
             echo('
@@ -116,6 +131,33 @@ if (isset($_SESSION['manageAccountStatus']) && isset($_SESSION['manageAccountAct
         } else {
 
         }
+    } else if ($_SESSION['manageAccountStatus'] == false) { // when delete account has problem
+        if ($_SESSION['manageAccountAction'] == "delete") {
+            echo('
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Warning!</strong> deleting account is not complete
+                </div>
+            ');
+        } elseif ($_SESSION['manageAccountAction'] == "add") {
+            echo('
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Adding account <strong>successful!</strong>
+                </div>
+            ');
+        } elseif ($_SESSION['manageAccountAction'] == "edit") {
+            echo('
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Updating account <strong>successful!</strong>
+                </div>
+            ');
+        } else {
+
+        }
+    } else {
+
     }
     unset($_SESSION['manageAccountStatus']);
     unset($_SESSION['manageAccountAction']);

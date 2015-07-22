@@ -7,9 +7,7 @@ if ('admin' != $user_type) {
     header('Location: error_message.php');
     exit;
 }
-if (isset($_POST['add'])) {
-    if (!(SQLConnector::isDuplicate("Accounts", "email", $_POST['inputEmail']))) {
-        if ($_POST['inputPassword'] == $_POST['inputPasswordAgain']) {
+if (isset($_POST['inputName']) && isset($_POST['inputEmail'])) {
             $name = $_POST['inputName'];
             $address = $_POST['inputAddress'];
             $email = $_POST['inputEmail'];
@@ -66,18 +64,6 @@ if (isset($_POST['add'])) {
             $_SESSION['manageAccountAction'] = "add";
             header('Location: '.Config::PATH.'/accounts');
             exit;
-        } else {
-            $_SESSION['error_message'] = "Password and confirm password are not match";
-            $_SESSION['redirect'] = "<meta http-equiv='refresh' content='3;url=add_account.php'>";
-            header('Location: error_message.php');
-            exit;
-        }
-    } else {
-        $_SESSION['error_message'] = "This email is already exist";
-        $_SESSION['redirect'] = "<meta http-equiv='refresh' content='3;url=add_account.php'>";
-        header('Location: error_message.php');
-        exit;
-    }
 }
 
 ?>
@@ -99,62 +85,61 @@ if (isset($_POST['add'])) {
     </style>
 </head>
 <body>
-<div style="margin: 80px;" class="container-fluid">
+<div id="top" style="margin: 80px;" class="container-fluid">
 
     <!-- Main component for a primary marketing message or call to action -->
         <div class="row">
-            <form name="inputeditaccount" action="" method="post" enctype="multipart/form-data">
-
+            <form name="inputeditaccount" id="addAccountForm" action="" method="post" enctype="multipart/form-data">
                 <div class="col-md-12">
                     <label class="titleFontSize">New account</label>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="inputName">Shop name</label>
-                        <input type="text" class="form-control" name="inputName" placeholder="WAP shop" required>
+                    <div class="form-group shopName">
+                        <label class="control-label" for="inputError2">Shop name</label>
+                        <input id="shopName" type="text" class="form-control" name="inputName" placeholder="WAP shop" required>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="inputEmail">Email address</label>
+                    <div class="form-group email">
+                        <label class="control-label" for="inputError2">Email address</label>
                         <input type="email" class="form-control" name="inputEmail" placeholder="wapbar@wap.com"
+                               required onkeyup="checkExistingEmail(this.value)">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group password">
+                        <label class="control-label" for="inputError2">Create a password</label>
+                        <input id="password" type="password" class="form-control" name="inputPassword" placeholder="Your Password"
                                required>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="inputPassword">Create a password</label>
-                        <input type="password" class="form-control" name="inputPassword" placeholder="Your Password"
-                               required>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="inputPasswordAgain">Confirm Password</label>
-                        <input type="password" class="form-control" name="inputPasswordAgain"
+                    <div class="form-group confirmPassword">
+                        <label class="control-label" for="inputError2">Confirm Password</label>
+                        <input id="confirmPassword" type="password" class="form-control" name="inputPasswordAgain"
                                placeholder="Confirm Password" required>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="inputPhoneNumber">Phone number</label>
-                        <input type="text" class="form-control bfh-phone" name="inputPhoneNumber"
+                    <div class="form-group phoneNumber">
+                        <label class="control-label" for="inputPhoneNumber">Phone number</label>
+                        <input id="phoneNumber" type="text" class="form-control bfh-phone" name="inputPhoneNumber"
                                placeholder="053222222" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="inputOpenAndCloseTime">Open and Close</label>
-                            <input type="text" class="form-control" name="inputOpenAndCloseTime"
+                        <div class="form-group openAndCloseTime">
+                            <label class="control-label" for="inputOpenAndCloseTime">Open and Close</label>
+                            <input id="openAndCloseTime" type="text" class="form-control" name="inputOpenAndCloseTime"
                                    placeholder="Mon - Sat from 09.00-23.00" required>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="inputAddress">Address</label>
-                        <input type="text" class="form-control" name="inputAddress"
+                    <div class="form-group address">
+                        <label class="control-label" for="inputAddress">Address</label>
+                        <input id="address" type="text" class="form-control" name="inputAddress"
                                placeholder="40 Nimmarnhemin Rd., T.Suthep, A.Muang, Chiang Mai, 50200" required>
                     </div>
                 </div>
@@ -166,21 +151,21 @@ if (isset($_POST['add'])) {
                 </div>
 
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="inputLatitude">Latitude</label>
-                        <input type="text" class="form-control" id="inputLatitude" name="latitude">
+                    <div class="form-group inputLatitude">
+                        <label class="control-label" for="inputLatitude">Latitude</label>
+                        <input type="text" class="form-control" id="inputLatitude" name="latitude" readonly>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="inputLongitude">Longitude</label>
-                        <input type="text" class="form-control" id="inputLongitude" name="longitude">
+                    <div class="form-group inputLatitude">
+                        <label class="control-label" for="inputLongitude">Longitude</label>
+                        <input type="text" class="form-control" id="inputLongitude" name="longitude" readonly>
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="form-group">
-                        <label>A description for this shop</label>
-                        <textarea class="form-control" name="inputDescription" rows="3" required></textarea>
+                    <div class="form-group description">
+                        <label class="control-label" >A description for this shop</label>
+                        <textarea id="description" class="form-control" name="inputDescription" rows="3" required></textarea>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -220,7 +205,7 @@ if (isset($_POST['add'])) {
                 <div class="col-md-12" id="result"></div>
                 <div class="col-md-12">
                     <a class="btn btn-default" href="account_list.php" role="button">Back</a>
-                    <input type="submit" value="Submit" name="add" class="btn btn-default"/>
+                    <input id="submitAddBtn" type="submit" value="Submit" name="add" class="btn btn-default"/>
                 </div>
             </form>
     <!-- /row -->
@@ -233,7 +218,9 @@ if (isset($_POST['add'])) {
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
+<script src="Whatapro/accountvalidation.js"></script>
 <script type="text/javascript">
+
     window.onload = function(){
         //Check File API support
         if(window.File && window.FileList && window.FileReader)
@@ -265,8 +252,8 @@ if (isset($_POST['add'])) {
 //            console.log(“Your browser does not support File API”);
         }
     }
-</script>
-<script>
+
+
     var myCenter = new google.maps.LatLng(18.789570, 98.974244);
     var geocoder;
     var infowindow = new google.maps.InfoWindow();
@@ -305,6 +292,7 @@ if (isset($_POST['add'])) {
 
         document.inputeditaccount.latitude.value = location.lat();
         document.inputeditaccount.longitude.value = location.lng();
+        isValidateLatitude();
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>

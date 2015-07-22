@@ -10,7 +10,7 @@ if ('admin' != $user_type) {
 
 
 
-if (isset($_POST['edit'])) {
+if (isset($_POST['inputId']) && isset($_POST['inputName']) && isset($_POST['inputAddress']) && isset($_POST['inputPhoneNumber'])) {
     $id = $_POST['inputId'];
     $name = $_POST['inputName'];
     $address = $_POST['inputAddress'];
@@ -22,7 +22,7 @@ if (isset($_POST['edit'])) {
     $category = 'test';
     $description = $_POST['inputDescription'];
     AccountController::editAccount(new AccountInfo($id, $email, null, null, null, null));
-    ShopInformationController::editShopInformation(new ShopInformation($id, $name, $address, $phone, "", $latitude, $longitude, $openTime, $description, $category));
+    $editShop = ShopInformationController::editShopInformation(new ShopInformation($id, $name, $address, $phone, "", $latitude, $longitude, $openTime, $description, $category));
     ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"edit","account","edit account information [ account id : ".$id." ]",null));
     //uplaod images
     $folderPath = "../user_upload/".$id."/shop_images/";
@@ -69,7 +69,7 @@ if (isset($_POST['edit'])) {
 <body>
 <div style="margin: 80px;" class="container-fluid" id="top">
     <div class="row">
-        <form role="form" name="inputeditaccount" action="" method="post" enctype="multipart/form-data">
+        <form id="addAccountForm" role="form" name="inputeditaccount" action="" method="post" enctype="multipart/form-data">
             <h2>Edit account</h2>
             <?php
             $account = AccountController::getAccountById($_GET['userId']);
@@ -77,71 +77,74 @@ if (isset($_POST['edit'])) {
             ?>
             <input type="hidden" class="form-control" name="inputId" required
                    value="<?php echo $shopInformation->getAccountId(); ?>">
-
+            <input id="password" type="hidden" class="form-control" name="fakePass" required
+                   value="sssss">
+            <input id="confirmPassword" type="hidden" class="form-control" name="fakeConPass" required
+                   value="sssss">
             <div class="col-md-6">
-                <div class="form-group">
-                    <label for="inputName">Shop name</label>
-                    <input type="text" class="form-control" name="inputName" required
+                <div class="form-group shopName">
+                    <label class="control-label" for="inputName">Shop name</label>
+                    <input id="shopName" type="text" class="form-control" name="inputName" required
                            value="<?php echo $shopInformation->getName(); ?>">
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="form-group">
-                    <label for="inputEmail">Email address</label>
-                    <input type="email" class="form-control" name="inputEmail" readonly required
+                <div class="form-group email">
+                    <label class="control-label" for="inputEmail">Email address</label>
+                    <input id="email" type="email" class="form-control" name="inputEmail" readonly
                            value="<?php echo($account->getEmail()); ?>">
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="form-group">
-                    <label for="inputPhoneNumber">Phone number</label>
-                    <input type="text" class="form-control " name="inputPhoneNumber" required
+                <div class="form-group phoneNumber">
+                    <label class="control-label" for="inputPhoneNumber">Phone number</label>
+                    <input id="phoneNumber" type="text" class="form-control " name="inputPhoneNumber" required
                            value="<?php echo $shopInformation->getPhoneNumber(); ?>">
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-md-6">
+            <div class="col-md-6">
+            <div class="form-group openAndCloseTime">
                     <div class="form-group">
-                        <label for="inputOpenAndCloseTime">Open and Close</label>
-                        <input type="text" class="form-control" name="inputOpenAndCloseTime" required
+                        <label class="control-label" for="inputOpenAndCloseTime">Open and Close</label>
+                        <input id="openAndCloseTime" type="text" class="form-control" name="inputOpenAndCloseTime" required
                                value="<?php echo($shopInformation->getOpenTime()); ?>">
                     </div>
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="form-group">
-                    <label for="inputAddress">Address</label>
-                    <input type="text" class="form-control" name="inputAddress"
+                <div class="form-group address">
+                    <label class="control-label" for="inputAddress">Address</label>
+                    <input id="address" type="text" class="form-control" name="inputAddress"
                            value="<?php echo($shopInformation->getAddress()); ?>" required>
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="map">Pin your shop location on the map</label>
+                    <label class="control-label" for="map">Pin your shop location on the map</label>
 
                     <div style="width: 100%; height:300px;" id="googleMap"></div>
                 </div>
             </div>
 
             <div class="col-md-6">
-                <div class="form-group">
-                    <label for="inputLatitude">Latitude</label>
+                <div class="form-group inputLatitude">
+                    <label class="control-label" for="inputLatitude">Latitude</label>
                     <input type="text" class="form-control" id="inputLatitude" name="inputLatitude" required
                            value="<?php echo($shopInformation->getLatitude()); ?>">
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="form-group">
-                    <label for="inputLongitude">Longitude</label>
+                <div class="form-group inputLatitude">
+                    <label class="control-label" for="inputLongitude">Longitude</label>
                     <input type="text" class="form-control" id="inputLongitude" name="inputLongitude" required
                            value="<?php echo($shopInformation->getLongitude()); ?>">
                 </div>
             </div>
 
             <div class="col-md-12">
-                <div class="form-group">
-                    <label>A description for your shop</label>
-                    <textarea class="form-control" name="inputDescription" rows="3"
+                <div class="form-group description">
+                    <label class="control-label" >A description for your shop</label>
+                    <textarea id="description" class="form-control" name="inputDescription" rows="3"
                               required><?php echo($shopInformation->getDescription()); ?></textarea>
                 </div>
             </div>
@@ -165,7 +168,7 @@ if (isset($_POST['edit'])) {
                         ');
                 }
             } else {
-                echo ('<img class="col-md-6" width="100%" src="'.Config::PATH.'/img/noimage.png">');
+                echo ('<img id="noimg" class="col-md-6" width="100%" src="'.Config::PATH.'/img/noimage.png">');
             }
             ?>
             <div class="col-md-12">
@@ -179,7 +182,7 @@ if (isset($_POST['edit'])) {
 
             <div style="margin-top: 20px;" class="col-md-12">
                 <a class="btn btn-default" href="<?php echo Config::PATH.'/accounts'; ?>" role="button">Back</a>
-                <button type="submit" name="edit" class="btn btn-default">Update</button>
+                <button id="submitAddBtn" type="submit" name="edit" class="btn btn-default">Update</button>
             </div>
         </form>
     </div>
@@ -196,7 +199,12 @@ if (isset($_POST['edit'])) {
 </nav>
 
 <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
+<script src="Whatapro/accountvalidation.js"></script>
 <script>
+    $(document).ready(function () {
+        changeCheckEmailIsValidValue();
+    });
+
 
     $(".deleteImage").click(function (e) {
         if (confirm("Do you really want to delete this image?")) {
@@ -226,6 +234,7 @@ if (isset($_POST['edit'])) {
                         var picFile = event.target;
                         var div = document.createElement("div");
                         div.innerHTML = "<img class='img-rounded img-thumbnail col-sm-3' src='" + picFile.result + "'" +"title='" + picFile.name + "'/>";
+                        $('img#noimg').remove();
                         output.insertBefore(div,null);
                     });
                     //Read the image
@@ -254,21 +263,32 @@ if (isset($_POST['edit'])) {
     var map;
     function initialize() {
         geocoder = new google.maps.Geocoder();
+
+        var infowindow = new google.maps.InfoWindow({
+            content: "Hey yo mather fucker"
+        });
+
         var mapProp = {
             center: myCenter,
             zoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
+
         var marker = new google.maps.Marker({
-            position: myCenter,
-            title:"Hello World!"
+            position: myCenter
         });
 
         map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
         marker.setMap(map);
+
         google.maps.event.addListener(map, 'click', function (event) {
             placeMarker(event.latLng);
             marker.setMap(null);
+        });
+
+        google.maps.event.addListener(marker, 'click', function (event) {
+            infowindow.open(map,marker);
         });
     }
     var marker;
@@ -291,6 +311,7 @@ if (isset($_POST['edit'])) {
 
         document.inputeditaccount.inputLatitude.value = location.lat();
         document.inputeditaccount.inputLongitude.value = location.lng();
+        isValidateLatitude();
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>

@@ -43,7 +43,7 @@ class ShopInformationDAOImpl implements ShopInformationDAO {
           phone_number = '".$shopInformation->getPhoneNumber()."', latitude = '".$shopInformation->getLatitude()."', longitude = '".$shopInformation->getLongitude()."',
           open_time = '".$shopInformation->getOpenTime()."', description = '".$shopInformation->getDescription()."', category = '".$shopInformation->getCategory()."'
           WHERE accounts_id = '".$shopInformation->getAccountId()."'";
-        $this->database->exec($query);
+        return $this->database->exec($query);
     }
 
     public function getAllShopInformation() {

@@ -50,7 +50,7 @@ if (isset($_POST['inputEmail'])) {
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <label class="navbar-brand">What a pro</label>
+            <img width="80px" src="../Whatapro/img/logo.png">
         </div>
         <div class="navbar-collapse collapse">
 
@@ -190,7 +190,7 @@ if (isset($_POST['inputEmail'])) {
                 </div>
             </div>
             <div class="col-md-12">
-                <a class="btn btn-default" href="index.php" role="button">Back</a>
+                <a class="btn btn-default" href="<?php echo Config::PATH.'/';?>" role="button">Back</a>
                 <button type="submit" onclick="checkAndSubmit()" class="btn btn-default">Submit</button>
             </div>
         </form>

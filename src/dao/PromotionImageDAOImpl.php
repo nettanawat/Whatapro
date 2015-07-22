@@ -50,11 +50,11 @@ class PromotionImageDAOImpl implements PromotionImageDAO {
 
     public function deleteImageByPromotionId($promotionId)
     {
-        $this->database->delete($this->table,['AND'=>['promotion_id'=>$promotionId]]);
+        return $this->database->delete($this->table,['AND'=>['promotion_id'=>$promotionId]]);
     }
 
     public function deleteImageById($id)
     {
-        $this->database->delete($this->table,['AND'=>['id'=>$id]]);
+        return $this->database->delete($this->table,['AND'=>['id'=>$id]]);
     }
 }

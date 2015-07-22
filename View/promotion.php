@@ -13,10 +13,9 @@ include_once 'session.php';
     ?>
     <script type="text/javascript" src="../google_jsapi.js"></script>
 
-
 </head>
 <body>
-<div style="margin: 55px;"></div>
+<div style="margin: 50px;"></div>
 
 <div style="padding-bottom: 30px;" class="container-fluid">
     <div class="row">
@@ -50,11 +49,11 @@ include_once 'session.php';
             foreach ($promotionImage as $imagePath) {
                 if ($count == 0) {
                     echo '<div class="item active">
-                    <img src="' . Config::PATH . '/whatapro/' . $imagePath->getImagePath() . '" alt="...">
+                    <img src="' . Config::PATH . '/' . $imagePath->getImagePath() . '" alt="...">
                 </div>';
                 } else {
                     echo '<div class="item">
-                    <img src="' . Config::PATH . '/whatapro/' . $imagePath->getImagePath() . '" alt="...">
+                    <img src="' . Config::PATH . '/' . $imagePath->getImagePath() . '" alt="...">
                 </div>';
                 }
                 $count++;
@@ -89,7 +88,6 @@ include_once 'session.php';
                 <h4 class="col-md-6"><span class="glyphicon glyphicon-time"></span> <?php echo $startDate->format('l jS F Y').' - '; echo $endDate->format('l jS F Y');?></h4>
             </div>
         </div>
-
     </div>
     <!--row-->
 </div>

@@ -22,7 +22,7 @@ class ShopInformationController {
     }
 
     static function editShopInformation(ShopInformation $shopInfo){
-        self::$shopInformationDaoImpl->editShopInformation($shopInfo);
+        return self::$shopInformationDaoImpl->editShopInformation($shopInfo);
     }
 
     static function getAllShopInformation(){

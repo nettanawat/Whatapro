@@ -267,3 +267,51 @@ textarea{
     margin-top: 70px;
 }
 
+.loginform{
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-bottom: 20px;
+    padding-right: 30px;
+}
+
+.loginDiv{
+    background-color: rgba(255,255,255,0.9);
+    border-radius: 6px;
+}
+
+.loginElement{
+    height: 35px;
+    width: 250px;
+}
+img.displayed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+a.joinus{
+    font-family: quicksand;
+    /*height: ;*/
+    font-size: 20px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(255,255,255,0.5);
+    background-color: rgba(255,255,255,0.1);
+    color: #ffffff;
+}
+a.joinus:hover{
+    background-color: rgb(255,255,255);
+}
+
+button.joinus{
+    font-family: quicksand;
+    /*height: ;*/
+    font-size: 16px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(255,255,255,0.5);
+    background-color: rgba(255,255,255,0.1);
+    color: #ffffff;
+}
+button.joinus:hover{
+    background-color: rgb(255,255,255);
+}

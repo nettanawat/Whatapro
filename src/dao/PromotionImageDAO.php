@@ -10,4 +10,5 @@ interface PromotionImageDAO {
     public function addImage(PromotionImage $promotionImage);
     public function getImageByPromotionId($promotionImage);
     public function deleteImageByPromotionId($promotionId);
+    public function deleteImageById($id);
 } 

@@ -16,7 +16,40 @@ class PromotionController {
     }
 
     static function addPromotion(Promotion $promotion){
-        return self::$promotionDaoImpl->addNewPromotion($promotion);
+        $promotionId = self::$promotionDaoImpl->addNewPromotion($promotion);
+        $old = umask(0);
+        $folderPath = "user_upload/".$promotion->getAccountId()."/promotions/".$promotionId."/";
+        mkdir("../".$folderPath, 0777,true);
+
+        $target_dir = $folderPath;
+        umask($old);
+        $target_file = array();
+        $realPath = array();
+        //check how many files
+        $i=0;
+        foreach ($_FILES["files"]["name"] as $aImage) {
+            $realPath[] = $target_dir . basename($aImage);
+            $target_file[] = "../".$realPath[$i];
+            $i++;
+        }
+        $i = 0;
+        $uploadPath = array();
+        foreach ($_FILES["files"]["tmp_name"] as $imageTmp) {
+            if (move_uploaded_file($imageTmp, $target_file[$i])) {
+                $uploadPath[] = $realPath[$i];
+            }
+            else{
+                var_dump(move_uploaded_file($imageTmp, $target_file[$i]));die;
+            }
+            $i++;
+        }
+        //add image
+        foreach($uploadPath as $image){
+            $promotionImageController = new PromotionImageController();
+            $promotionImageController->addImage(new PromotionImage("", $promotionId, $image,""));
+        }
+        return $promotionId;
+
     }
 
     static function deletePromotionByPromotionId($id){
@@ -28,7 +61,7 @@ class PromotionController {
     }
 
     static function editPromotion(Promotion $promotion){
-        self::$promotionDaoImpl->editPromotion($promotion);
+        return self::$promotionDaoImpl->editPromotion($promotion);
     }
 
     static function getPromotionById($id){

@@ -66,7 +66,7 @@ function __autoload($class_name) {
     if(Config::$className[$class_name]!=null || Config::$className[$class_name]!="")
         include dirname(__FILE__).'/'.Config::$className[$class_name].'.php';
     GenerateData::createAdmin();
-    GenerateData::generateAccount(10);
+//    GenerateData::generateAccount(10);
 }
 
 AccountController::loadClass();

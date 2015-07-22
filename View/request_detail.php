@@ -2,14 +2,8 @@
 <html>
 <?php
 include_once 'session.php';
-// only admin has access
-if ('admin' != $user_type) {
-    $_SESSION['redirect'] = "<meta http-equiv='refresh' content='3;url=home.php'>";
-    $_SESSION['error_info'] = "You do not have sufficient permissions to access this page";
-    header('Location: error_message.php');
-    exit;
-}
 ?>
+
 <head>
     <title>WAP / Request Detail</title>
     <?php
@@ -22,42 +16,41 @@ if ('admin' != $user_type) {
 </head>
 <body>
 
-<div class="container">
+<div  style="margin-top: 80px;" class="container">
 
     <!-- Main component for a primary marketing message or call to action -->
-    <div class="jumbotron">
         <div class="row">
             <form role="form" name="requestdeailform" action="take_manage_request.php" method="post">
                 <?php
                 $adaptor = new Adaptor();
-                $adminContolller = new AdminController();
-                $requestDetail = $adminContolller->getRequestDetail($_GET['request_id']);
+
+                $requestDetail = RequestSignupController::getRequestById($_GET['requestId']);
                 ?>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="inputName">Shop name</label>
-                        <input type="text" class="form-control" name="inputName" required
+                        <input type="text" class="form-control" name="inputName" required readonly
                                value="<?php printf($requestDetail->getName()); ?>">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="inputEmail">Email address</label>
-                        <input type="email" class="form-control" name="inputEmail" required
+                        <input type="email" class="form-control" name="inputEmail" required readonly
                                value="<?php printf($requestDetail->getEmail()); ?>">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="inputPhoneNumber">Phone number</label>
-                        <input type="text" class="form-control bfh-phone" name="inputPhoneNumber" required
+                        <input type="text" class="form-control bfh-phone" name="inputPhoneNumber" required readonly
                                value="<?php printf($requestDetail->getPhoneNumber()); ?>">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="inputSubDistrict">Area</label>
-                        <select name="comboDistrict" class="form-control" required>
+                        <select name="comboDistrict" class="form-control" required readonly>
                             <option></option>
                             <option value="1" <?php if ($requestDetail->getSubDistrict() == 1) echo "selected"; ?>>
                                 Suthep
@@ -106,15 +99,9 @@ if ('admin' != $user_type) {
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="inputOpenAndCloseTime">Open and Close</label>
-                            <input type="text" class="form-control" name="inputOpenAndCloseTime" required
+                            <input type="text" class="form-control" name="inputOpenAndCloseTime" required readonly
                                    value="<?php printf($requestDetail->getOpenTime()); ?>">
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="inputImageLabel">Browse Image</label>
-                        <input type="file" name="file">
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -128,69 +115,33 @@ if ('admin' != $user_type) {
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="inputLatitude">Latitude</label>
-                        <input type="text" class="form-control" id="inputLatitude" name="inputLatitude" required
+                        <input type="text" class="form-control" id="inputLatitude" name="inputLatitude" required readonly
                                value="<?php printf($requestDetail->getLatitude()); ?>">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="inputLongitude">Longitude</label>
-                        <input type="text" class="form-control" id="inputLongitude" name="inputLongitude" required
+                        <input type="text" class="form-control" id="inputLongitude" name="inputLongitude" required readonly
                                value="<?php printf($requestDetail->getLongitude()); ?>">
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-group">
                         <label>A description for your shop</label>
-                        <textarea class="form-control" name="inputDescription" rows="3"
+                        <textarea class="form-control" name="inputDescription" rows="3" readonly
                                   required><?php printf($requestDetail->getDescription()); ?></textarea>
                     </div>
                 </div>
 
                 <div class="col-md-12">
-                    <div class="col-md-1">
-                        <a class="btn btn-success" href="request_signup_list.php" role="button">Back</a>
-                    </div>
-                    <div class="col-md-1">
-                        <?php
-                        if ($requestDetail->getStatus() == 0) {
-                            printf("
-                                            <input type=text value=" . $requestDetail->getId() . " name='inputId' hidden >
-                                                <button type=submit name='action' value='approve' class='btn btn-primary'>Approve</button>
-
-                                            ");
-                        } else {
-                            printf("
-                                                <button type=submit name='action' value='approve' class='btn btn-default' disabled>Approve</button>
-                                            ");
-                        }
-                        ?>
-                    </div>
-                    <div class="col-md-2">
-                        <?php
-                        if ($requestDetail->getStatus() == 0) {
-                            printf("
-                                            <input type=text value=" . $requestDetail->getId() . " name='inputId' hidden >
-                                                <button type=submit name='action' value='approve' class='btn btn-danger'>Reject</button>
-
-                                            ");
-                        } else {
-                            printf("
-                                                <button type=submit name='action' value='approve' class='btn btn-default' disabled>Reject</button>
-                                            ");
-                        }
-                        ?>
-                    </div>
-                    <div class="col-md-7">
-                    </div>
+                        <a class="btn btn-default" href="<? echo Config::PATH."/requests"; ?>" role="button">Back</a>
                 </div>
 
             </form>
         </div>
         <!-- /row -->
-    </div>
-
 </div>
 <!-- /container -->
 

@@ -13,13 +13,12 @@ if(isset($_POST['password']) && isset($_POST['confirmPassword'])) {
 
 <head>
     <title>WAP / Change Password</title>
+
     <?php
-
     $assetPath = Config::PATH.'';
-
     include_once '../assets.php'
-
     ?>
+
 </head>
 <body>
 
@@ -31,6 +30,8 @@ if(isset($_POST['password']) && isset($_POST['confirmPassword'])) {
                 Changing password <strong>successful!</strong>
                 </div>');
      }
+
+    unset($_SESSION['changePassword']);
     ?>
         <div class="row">
             <div class="col-md-12">
@@ -51,8 +52,8 @@ if(isset($_POST['password']) && isset($_POST['confirmPassword'])) {
                         <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" required>
                     </div>
                 </div>
-                <div class="col-md-12">
-                    <input type="submit" onclick="checkAndSubmit()" name="change" class="btn btn-default" value="Change password"/>
+                <div id="submitDiv" class="col-md-12">
+                    <input type="submit" id="submitChangePassword" name="change" class="btn btn-default" value="Change password"/>
                 </div>
 
             </form>
@@ -68,23 +69,31 @@ $(document).ready(function () {
 function checkPasswordMatch() {
     var password = $("#password").val();
     var confirmPassword = $("#confirmPassword").val();
-
     if (password != confirmPassword){
         $(".password").addClass("has-error has-feedback");
         $(".confirmPassword").addClass("has-error has-feedback");
     } else{
-        $(".password").addClass("has-success").removeClass("has-error").append("<span class='glyphicon glyphicon-ok form-control-feedback'></span>");
-        $(".confirmPassword").addClass("has-success").removeClass("has-error").append("<span class='glyphicon glyphicon-ok form-control-feedback'></span>");
+        if(password.length <= 3){
+            $(".password").addClass("has-error has-feedback");
+            $(".confirmPassword").addClass("has-error has-feedback");
+        } else{
+            $(".password").addClass("has-success").removeClass("has-error").append("<span class='glyphicon glyphicon-ok form-control-feedback'></span>");
+            $(".confirmPassword").addClass("has-success").removeClass("has-error").append("<span class='glyphicon glyphicon-ok form-control-feedback'></span>");
+        }
     }
 }
 
-    function checkAndSubmit(){
-        var password = $("#password").val();
-        var confirmPassword = $("#confirmPassword").val();
-        if(password == confirmPassword) {
-            $( "#changePasswordForm" ).submit();
-        }
+$( "#submitChangePassword" ).click(function( event ) {
+    event.preventDefault();
+    var password = $("#password").val();
+    var confirmPassword = $("#confirmPassword").val();
+    if(password == confirmPassword && password.length >= 4) {
+        $( "#changePasswordForm" ).submit();
+    } else {
+
     }
+});
+
 </script>
 </body>
 </html>

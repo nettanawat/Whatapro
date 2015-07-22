@@ -21,7 +21,7 @@ if ('admin' != $user_type) {
     <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['bar']}]}"></script>
 </head>
 <body>
-<div style="margin: 55px;"></div>
+<div style="margin: 50px;"></div>
 
 <div class="col-md-12" style="width: 100%; height: 500px;" id="map-canvas">
 </div>

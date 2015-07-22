@@ -27,10 +27,10 @@ class RequestSignupController {
     }
 
     static function rejectRequest($id, $accountId){
-        return self::$requestSignupDaoImpl->updateRequest($id,false, $accountId);
+        return self::$requestSignupDaoImpl->updateRequestStatus($id,false, $accountId);
     }
 
     static function acceptRequest($id, $accountId){
-        return self::$requestSignupDaoImpl->updateRequest($id,true, $accountId);
+        return self::$requestSignupDaoImpl->updateRequestStatus($id,true, $accountId);
     }
 } 

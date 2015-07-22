@@ -23,7 +23,7 @@ class ShopImageDAOImpl implements ShopImageDAO {
         $data = [
             "shop_id" => $shopImage->getShopId(),
             "image_path" => $shopImage->getImagePath(),
-            "added_date" => $shopImage->getAddDate(),
+            "added_date" => $shopImage->getAddDate()
         ];
         return $this->database->insert($this->table,$data);
     }

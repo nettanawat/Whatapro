@@ -17,6 +17,7 @@ RewriteRule    ^profile/edit    View/edit_profile.php    [NC,L]
 
 #redeem
 RewriteRule    ^redeemcodes$   View/redeem_list.php    [NC,L]
+RewriteRule    ^checkexistingemail   View/check_email.php    [NC,L]
 RewriteRule    ^searchaccount   View/search_account.php    [NC,L]
 RewriteRule    ^searchpromotion   View/search_promotion.php    [NC,L]
 RewriteRule    ^register$   View/register_request.php    [NC,L]

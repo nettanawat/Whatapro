@@ -19,4 +19,5 @@ interface AccountDAO {
     public function changePassword(AccountInfo $account);
     public function getLastFiveAccount();
     public function deleteAccount($id);
+    public function doLogin($email, $password);
 }

@@ -10,7 +10,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <label class="navbar-brand">What a pro</label>
+                    <img width="80px" src="../Whatapro/img/logo.png">
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">

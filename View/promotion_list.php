@@ -8,17 +8,23 @@ if ('admin' == $user_type) {
         $promotionId = $_POST['promotionId'];
         $promotionImageController = new PromotionImageController();
         $promotion = PromotionController::getPromotionById($promotionId);
+
 //        delete promotion image
+        $deleteImage = 1;
         $promotionImageList = $promotionImageController->getPromotionImageByPromotionId($promotion->getPromotionId());
-        $promotionImageController->deleteImageByPromotionId($promotion->getPromotionId());
         if ($promotionImageList != null) {
+            $deleteImage = $promotionImageController->deleteImageByPromotionId($promotion->getPromotionId());
             foreach ($promotionImageList as $promotionImage) {
                 unlink($promotionImage->getImagePath());
             }
         }
-        rmdir("user_upload/" . $promotion->getAccountId() . "/promotions/" . $promotion->getPromotionId());
+        $deletePath = "../user_upload/" . $promotion->getAccountId() . "/promotions/" . $promotion->getPromotionId();
+        rmdir($deletePath);
+
+
 //        delete promotion
         $deletePromotion = PromotionController::deletePromotionByPromotionId($promotionId);
+
         header("Refresh: 0; url=" . Config::PATH . "/promotions");
     }
 }
@@ -134,7 +140,7 @@ if (isset($_SESSION['managePromotionStatus']) && isset($_SESSION['managePromotio
                     <td>' . $endDate->format('Y-m-d') . '</td>
                     <td class="col-md-4">');
             foreach ($promotionImageList as $aImage) {
-                echo '<img class="col-md-3" src="' . Config::PATH . "/whatapro/" . $aImage . '">';
+                echo '<img class="col-md-3" src="' . Config::PATH . "/" . $aImage . '">';
             }
             echo('</td>
                     <td>' . Adaptor::getStatus() . '</td>

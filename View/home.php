@@ -23,7 +23,7 @@ include_once 'session.php';
 
 </head>
 <body>
-<div id="top" style="margin: 55px;"></div>
+<div id="top" style="margin: 50px;"></div>
 
 <div class="col-md-12" style="width: 100%; height: 300px;" id="map-canvas">
 </div>

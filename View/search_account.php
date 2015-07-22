@@ -6,10 +6,8 @@
  * Time: 2:05 PM
  */
 include dirname(__FILE__) . '/../Config.php';
-
 $database = new medoo();
 $query = "SELECT * FROM Accounts INNER JOIN ShopInformations ON Accounts.id = ShopInformations.accounts_id WHERE Accounts.email LIKE '%" . $_GET['key'] . "%' OR ShopInformations.name LIKE '%" . $_GET['key'] . "%' OR Accounts.id LIKE '%" . $_GET['key'] . "%' ORDER BY id DESC";
-
 $accountList = array();
 if ($_GET['key'] == "") {
     $accountList = AccountController::getAllAccount();
@@ -18,7 +16,6 @@ if ($_GET['key'] == "") {
         $accountList[] = new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);
     }
 }
-
 
 foreach ($accountList as $account) {
     $shopInfo = ShopInformationController::getShopInformationById($account->getAccountId());
@@ -29,7 +26,9 @@ foreach ($accountList as $account) {
     if ($shopInfo->getName() != null) {
         $shopName = "<a href='profile.php?accountId=" . $shopInfo->getAccountId() . "' >" . $shopInfo->getName() . "</a>";
     }
+
     $imageList = $shopImageController->getImageByAccountId($account->getAccountId());
+
     if ($shopImageController->getImageByAccountId($account->getAccountId()) != null) {
         foreach ($imageList as $image) {
             $shopImageList[] = $image->getImagePath();
