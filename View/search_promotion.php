@@ -45,7 +45,7 @@ if ($_GET['key'] == " ") {
                     <td>'.$endDate->format('Y-m-d').'</td>
                     <td class="col-md-4">');
         foreach($promotionImageList as $aImage){
-            echo'<img class="col-md-3" src="'. Config::PATH."/whatapro/".$aImage.'">';
+            echo'<img class="col-md-3" src="'. Config::PATH."/".$aImage.'">';
         }
         echo ('</td>
                     <td>'.Adaptor::getStatus().'</td>

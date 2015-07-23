@@ -1,91 +1,18 @@
 <?php
 include_once 'session.php';
-// only admin has access
-
 if ('admin' != $user_type) {
     $_SESSION['error_message'] = "You do not have sufficient permissions to access this page";
     $_SESSION['redirect'] = "<meta http-equiv='refresh' content='3;url=home.php'>";
-    header('Location: error_message.php');
+    header('Location: '.Config::PATH.'/errormessage');
     exit;
 }
 if ('admin' == $user_type) {
     if (isset($_POST['edit'])) { //edit account
         header("Location: " .Config::PATH. "/account/edit/" . $_POST['userId']);
-    } else if (isset($_POST['delete'])) { //delete account
-
-        $account = AccountController::getAccountById($_POST['userId']);
-        /*
-         * if delete account
-         * 1. delete promotion image
-         * 2. promotion
-         * 3. shop image
-         * 4. shop info
-         * 5. log
-         * 6. account
-         * */
-
-        $promotionImageController = new PromotionImageController();
-        $promotionList = PromotionController::getPromotionByShopId($account->getAccountId());
-        foreach ($promotionList as $promotion) {
-//                delete promotion image
-            $promotionImageList = $promotionImageController->getPromotionImageByPromotionId($promotion->getPromotionId());
-            $promotionImageController->deleteImageByPromotionId($promotion->getPromotionId());
-            if($promotionImageList != null) {
-                foreach ($promotionImageList as $promotionImage) {
-                    unlink($promotionImage->getImagePath());
-                }
-    //            delete promotion folder
-            }
-            $removePromotionImage = rmdir("../user_upload/" . $account->getAccountId() . "/promotions/" . $promotion->getPromotionId());
-        }
-        $promotionDirectory = "../user_upload/" . $account->getAccountId() . "/promotions";
-        if(is_dir($promotionDirectory)){
-            rmdir($promotionDirectory);
-        }
-//        delete promotion
-        $deletePromotion = PromotionController::deletePromotionByShopId($account->getAccountId());
-        $deleteShopImageDb = '';
-        //        delete shop image
-        $shopImageController = new ShopImageController();
-        $shopImageList = $shopImageController->getImageByAccountId($account->getAccountId());
-        if($shopImageList != null){
-            foreach ($shopImageList as $imageAccount) {
-                unlink($imageAccount->getImagePath());
-            }
-//        delete shop image **return number of deleted data**
-            $deleteShopImageDb = $shopImageController->deleteShopImageByShopId($account->getAccountId());
-        }
-
-        $removeShopImageDirectory = rmdir("../user_upload/" . $account->getAccountId() . "/shop_images");
-        $removeAccountDirectory = rmdir("../user_upload/" . $account->getAccountId());
-
-
-//        delete shop info **return number of deleted data**
-        $deleteShopInfoDb = ShopInformationController::deleteShopInformation($account->getAccountId());
-
-//        delete log
-//        $deleteLog = ActivitiesLogController::deleteLogByAccountId($account->getAccountId());
-
-//        delete account ***return null WHY?*
-        $deleteAccountDb = AccountController::deleteAccount($account->getAccountId());
-        if ($deleteShopInfoDb == 1 && $deleteAccountDb == 1) {
-            $_SESSION['manageAccountStatus'] = true;
-            $_SESSION['manageAccountAction'] = "delete";
-        } else if ($deleteShopInfoDb =! 1 || $deleteAccountDb != 1) {
-            $_SESSION['manageAccountStatus'] = false;
-            $_SESSION['manageAccountAction'] = "delete";
-        }
-
-        ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"delete","account","delete account from database [ account id : ".$account->getAccountId()." ]",null));
-        header("Refresh:0");
-        exit;
-    } else if (isset($_POST['enable'])) {
-//        $actionDetail = "enable deleted user in account list [".$adminController->getAccountById($_POST['userId'])->getName()."]";
-//        ActivitiesLogController::addLog(new ActivitiesLog('', $account->getAccountId(),'delete','account',$actionDetail,''));
-        header("Location: account_list.php");
-        exit;
     }
 }
+
+
 ?>
 
 <html>
@@ -99,73 +26,32 @@ if ('admin' == $user_type) {
     ?>
 </head>
 <body>
-<div style="margin-top: 80px;">
+<div style="margin-top: 50px;">
 
 </div>
 <?php
 
 if (isset($_SESSION['manageAccountStatus']) && isset($_SESSION['manageAccountAction'])) {
 
-    if ($_SESSION['manageAccountStatus'] == true) {
-        if ($_SESSION['manageAccountAction'] == "delete") {
-            echo('
-                <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                Deleting account <strong>successful!</strong>
-                </div>
-            ');
-        } elseif ($_SESSION['manageAccountAction'] == "add") {
-            echo('
-                <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                Adding account <strong>successful!</strong>
-                </div>
-            ');
-        } elseif ($_SESSION['manageAccountAction'] == "edit") {
-            echo('
-                <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                Updating account <strong>successful!</strong>
-                </div>
-            ');
-        } else {
-
-        }
-    } else if ($_SESSION['manageAccountStatus'] == false) { // when delete account has problem
-        if ($_SESSION['manageAccountAction'] == "delete") {
-            echo('
-                <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Warning!</strong> deleting account is not complete
-                </div>
-            ');
-        } elseif ($_SESSION['manageAccountAction'] == "add") {
-            echo('
-                <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                Adding account <strong>successful!</strong>
-                </div>
-            ');
-        } elseif ($_SESSION['manageAccountAction'] == "edit") {
-            echo('
-                <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                Updating account <strong>successful!</strong>
-                </div>
-            ');
-        } else {
-
-        }
+    if($_SESSION['manageAccountAction'] == 'add') {
+        echo '<input type="hidden" value="add" id="hiddenSession"';
+    } else if($_SESSION['manageAccountAction'] == 'edit') {
+        echo '<input type="hidden" value="edit" id="hiddenSession"';
     } else {
-
     }
     unset($_SESSION['manageAccountStatus']);
     unset($_SESSION['manageAccountAction']);
+} else {
+    echo '<input type="hidden" value="none" id="hiddenSession"';
 }
 
 ?>
 <div class="container-fluid">
-    <div class="col-md-12">
+    <div style="display: none;" id="updatesuccess" class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Updating account <strong>successful!</strong></div>
+    <div style="display: none;" id="addsuccess" class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Adding account <strong>successful!</strong></div>
+
+
+    <div id="top" class="col-md-12">
         <h2>Accounts</h2>
     </div>
     <form class="col-md-6" action="" style="padding-bottom: 20px;">
@@ -207,7 +93,7 @@ if (isset($_SESSION['manageAccountStatus']) && isset($_SESSION['manageAccountAct
 
 
             Adaptor::setStatus($account->getStatus());
-            echo '<tr class="tableData">
+            echo '<tr class="tableData" id="showData'.$shopInfo->getAccountId().'">
                 <td>' . $account->getAccountId() . '</td>
                 <td>' . $account->getEmail() . '</td>
                 <td>' . $account->getRole() . '</td>
@@ -216,7 +102,7 @@ if (isset($_SESSION['manageAccountStatus']) && isset($_SESSION['manageAccountAct
                 <td class="col-md-4">';
             foreach ($shopImageList as $aImage) {
                 //change path
-                echo '<img class="col-md-3" src="' .Config::PATH.'/whatapro/' .$aImage . '">';
+                echo '<img class="col-md-3" src="' .Config::PATH.'/' .$aImage . '">';
             }
             echo '</td><td>' . Adaptor::getStatus() . '</td>';
             if ('admin' == $account->getRole()) {
@@ -238,23 +124,49 @@ if (isset($_SESSION['manageAccountStatus']) && isset($_SESSION['manageAccountAct
             } else if (1 == $account->getStatus()) {
                 echo '
                         <td>
-                            <form name=deleteuser action="" method="post">
-                                <input type=hidden value=' . $account->getAccountId() . ' name="userId" >
-                                <button name="edit" type=submit><span class="glyphicon glyphicon-edit"></span></button>
-                                <button onclick="show_alert(); ; return false;" name="delete" type=submit><span class="glyphicon glyphicon-remove-circle"></span></button>
-                            </form>
+                                <button class="editBtn" id='.Config::PATH . "/account/edit/" . $account->getAccountId() .' name="edit" type=submit><span class="glyphicon glyphicon-edit"></span></button>
+                                <button class="deleteBtn" id="'. $account->getAccountId() .'" name="delete" type="button"><span class="glyphicon glyphicon-remove-circle"></span></button>
                         </td>';
             }
             echo '</tr>';
         } ?>
     </table>
 </div>
+<script src="<?php echo $assetPath; ?>/jquery.js"></script>
+<script src="<?php echo $assetPath; ?>/bootstrap/js/bootstrap.min.js"></script>
 <script>
-    function show_alert() {
-        if (confirm("Do you really want to delete this account?")) {
-            document.forms.name("deleteuser").submit();
+
+    $("button.editBtn").click(function(e){
+        $(location).attr('href', this.id);
+    });
+
+    $(document).ready(function () {
+        var sessionAction = $("#hiddenSession").val();
+        if(sessionAction == "add") {
+            $("#addsuccess").show().delay(3000).fadeOut();
+        } else if(sessionAction == "edit") {
+            $("#updatesuccess").show().delay(3000).fadeOut();
+        } else if(sessionAction == "none") {
         }
-    }
+    });
+
+    $("button.deleteBtn").click(function(e) {
+        e.preventDefault();
+        var accountId = this.id;
+        if (confirm("Do you really want to delete this account?")) {
+            $.ajax({
+                method: "POST",
+                url: "whatapro/view/take_delete_account.php",
+                data: { userId: accountId, loginUserId: <?php echo $logInAccount->getAccountId();?>}
+            }).done(function (deleteId) {
+                    $('#showData' + deleteId).addClass(" danger").delay(2000).fadeOut(function() {
+                        $(this.id).remove();
+                    });
+                    var showCompleteString = '<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Deleting account <strong>successful!</strong></div>'
+                    $(showCompleteString).insertBefore('#top').delay(3000).fadeOut();
+            });
+        }
+    });
 
     function searchData(data) {
         $.ajax({

@@ -1,6 +1,6 @@
 <?php
     include_once 'session.php';
-    if(isset($_POST['add'])){
+    if(isset($_POST['inputName']) && isset($_POST['inputDescription']) && isset($_POST['inputStartDate']) && isset($_POST['inputEndDate'])) {
 
         if('user' == $user_type){
             $promotionId = PromotionController::addPromotion(new Promotion("", $logInAccount->getAccountId(), $_POST['inputName'], $_POST['inputDescription'],"",$_POST['inputStartDate'],$_POST['inputEndDate'], 1));
@@ -39,20 +39,20 @@
                 <label class="titleFontSize">New promotion</label>
             </div>
             <div class="col-md-6">
-                <div class="form-group">
-                    <label for="inputName">Promotion name</label>
-                    <input type="text" class="form-control" name="inputName" placeholder="Buy 1 get 1 free" required>
+                <div class="form-group promotionName">
+                    <label class="control-label" for="inputName">Promotion name</label>
+                    <input id="promotionName" type="text" class="form-control" name="inputName" placeholder="Buy 1 get 1 free" required>
                 </div>
             </div>
             <?php
             if('admin'== $user_type) {
                 echo'
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="inputEmail">Select shop</label>
+                        <div class="form-group selectShop">
+                            <label class="control-label" for="inputEmail">Select shop</label>
                             <div class="form-group">
                                 <button id="clickSelectShop" type="button" class="btn btn-default" data-toggle="modal" data-target=".bs-example-modal-lg">Select Shop</button>
-                                <label id="show"></label>
+                                <label class="control-label" id="show"></label>
                                 <input type="hidden" id="selectedShopId" name="selectedShopId">
                             </div>
                         </div>
@@ -60,13 +60,13 @@
             }
             ?>
             <div id="sDateDiv" class="col-md-6">
-                <div class="form-group">
+                <div class="form-group dateClass">
                     <label class="control-label" for="inputStartDate">Start date</label>
                     <input id="startDateId" type="date" class="form-control" name="inputStartDate" required>
                 </div>
             </div>
             <div id="eDateDiv" class="col-md-6">
-                <div class="form-group">
+                <div class="form-group dateClass">
                     <label class="control-label" for="inputEndDate">End date</label>
                     <input id="endDateId" type="date" class="form-control" name="inputEndDate" required">
                 </div>
@@ -77,13 +77,13 @@
                     <input class="form-control" id="files" name="files[]" type="file" multiple/>
                 </div>
             </div>
+            <div class="col-md-12" id="result"></div>
             <div class="col-md-12">
-                <div class="form-group">
-                    <label>Description</label>
-                    <textarea class="form-control" name="inputDescription" rows="3" required placeholder="Something describe about your promotion"></textarea>
+                <div class="form-group description">
+                    <label class="control-label">Description</label>
+                    <textarea id="description" class="form-control" name="inputDescription" rows="3" required placeholder="Something describe about your promotion"></textarea>
                 </div>
             </div>
-            <div class="col-md-12" id="result"></div>
             <div class="col-md-12">
                 <a class="btn btn-default" href="account_list.php" role="button">Back</a>
                 <button type="submit" id="clickSubmit" name="add" class="btn btn-default">Submit</button>
@@ -110,10 +110,16 @@
                         <th>Action</th>
                     </tr>
                     <?php
+                    $shopImageController = new ShopImageController();
                     $shopList = ShopInformationController::getAllShopInformation();
                     foreach ($shopList as $shop) {
-                        $shopImageController = new ShopImageController();
-                        $shopImageList = $shopImageController->getImageByAccountId($shop->getAccountId());
+                        $shopImage = $shopImageController->getImageByAccountId($shop->getAccountId())[0];
+                        $imagePath = '';
+                        if($shopImage != null){
+                            $imagePath = Config::PATH."/".$shopImage->getImagePath();
+                        } else {
+                            $imagePath = Config::PATH."/img/noimage.png";
+                        }
                         echo('
                 <tr>
                     <td>' . $shop->getName() . '</td>
@@ -127,6 +133,9 @@
         </div>
     </div>
 </div>
+<script src="<?php echo $assetPath; ?>/jquery.js"></script>
+<script src="<?php echo $assetPath; ?>/bootstrap/js/bootstrap.min.js"></script>
+<script src="Whatapro/promotionvalidation.js"></script>
 <script type="text/javascript">
 
     window.onload = function(){
@@ -160,35 +169,6 @@
 //            console.log(“Your browser does not support File API”);
         }
     }
-    $(document).ready(function () {
-        $("button").click(function(e) {
-            if(this.id == "clickSelectShop"){
-
-            }
-            else if(this.id == "clickSubmit") {
-                var startDate = document.getElementById("startDateId").value;
-                var endDate = document.getElementById("endDateId").value;
-                if(startDate > endDate) {
-                    e.preventDefault();
-                    $( "#sDateDiv" ).addClass("has-error");
-                    $( "#eDateDiv" ).addClass("has-error");
-                    $( "#selectImageDiv" ).before( "<p style='font-size: 18; color: #eb3624' class='col-md-12 has-error'>Waring: Start date must lower than end date</p>" );
-                } else {
-                    $("form").submit(function(){
-
-                    });
-                }
-            }
-            else {
-                $.get('whatapro/View/find_shop_name.php?shopId='+this.id, function (result,data) {
-                    document.getElementById("show").innerHTML = "You selected "+result;
-                });
-                document.getElementById("selectedShopId").value = this.id;
-            }
-        });
-    });
-
-
 </script>
 </body>
 </html>

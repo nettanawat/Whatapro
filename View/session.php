@@ -13,8 +13,8 @@ if (isset($_SESSION['userId'])) {
         $user_type = 'admin';
     }
 } else {
-    header('Location: error_login.php');
-//    header('Location: index.php');
+    $_SESSION['error_message'] = "You do not have sufficient permissions to access this page";
+    header('Location: '.Config::PATH.'/errormessage');
     exit;
 }
 

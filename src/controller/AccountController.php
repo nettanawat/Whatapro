@@ -38,11 +38,11 @@ class AccountController {
     }
 
     static function editAccount(AccountInfo $accountInfo){
-        self::$accountDaoImpl->editAccount($accountInfo);
+        return self::$accountDaoImpl->editAccount($accountInfo);
     }
 
-    static function changePassword(AccountInfo $accountInfo){
-        self::$accountDaoImpl->changePassword($accountInfo);
+    static function changePassword($id, $password){
+        return self::$accountDaoImpl->changePassword($id, $password);
     }
 
     static function deleteAccount($id){

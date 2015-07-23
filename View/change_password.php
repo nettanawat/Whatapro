@@ -2,9 +2,14 @@
 include_once 'session.php';
 
 if(isset($_POST['password']) && isset($_POST['confirmPassword'])) {
-    AccountController::changePassword(new AccountInfo($logInAccount->getAccountId(),"",$_POST['password'],"","",""));
+    $status = AccountController::changePassword($logInAccount->getAccountId(),$_POST['password']);
     ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"edit","account","change password [ account id : ".$logInAccount->getAccountId()." ]",null));
-    $_SESSION['changePassword'] = "true";
+    if($status == true){
+        $_SESSION['changePasswordTrue'] = "true";
+    }
+    else {
+        $_SESSION['changePasswordFalse'] = "false";
+    }
 }
 ?>
 
@@ -24,11 +29,18 @@ if(isset($_POST['password']) && isset($_POST['confirmPassword'])) {
 
 <div style="margin: 80px;" class="container-fluid">
     <?php
-     if(isset($_SESSION['changePassword'])){
-         echo('<div class="alert alert-success alert-dismissible" role="alert">
+     if(isset($_SESSION['changePasswordTrue']) || isset($_SESSION['changePasswordFalse'])){
+         if(isset($_SESSION['changePasswordTrue'])){
+             echo('<div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    Changing password <strong>successful!</strong>
+                    </div>');
+         } else {
+             echo('<div class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                Changing password <strong>successful!</strong>
+                Changing password <strong>unsuccessful!</strong>
                 </div>');
+         }
      }
 
     unset($_SESSION['changePassword']);
@@ -95,5 +107,7 @@ $( "#submitChangePassword" ).click(function( event ) {
 });
 
 </script>
+<script src="<?php echo $assetPath; ?>/jquery.js"></script>
+<script src="<?php echo $assetPath; ?>/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

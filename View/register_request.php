@@ -2,7 +2,7 @@
 
 include_once '../Config.php';
 
-if (isset($_POST['inputEmail'])) {
+if (isset($_POST['inputEmail']) && isset($_POST['inputPassword']) && isset($_POST['inputName']) && isset($_POST['inputAddress'])) {
     $email = $_POST['inputEmail'];
     $password = $_POST['inputPassword'];
     $name = $_POST['inputName'];
@@ -61,44 +61,59 @@ if (isset($_POST['inputEmail'])) {
 
 <div style="margin: 80px;" class="container-fluid">
 
-    <!-- Main component for a primary marketing message or call to action -->
     <div class="row">
-        <form role="form" name="registerRequestForm" action="" method="post">
-
+        <form name="inputeditaccount" id="addAccountForm" action="" method="post" enctype="multipart/form-data">
             <div class="col-md-12">
-                <label class="titleFontSize">Request Signup</label>
+                <label class="titleFontSize">New account</label>
             </div>
             <div class="col-md-6">
-                <div class="form-group">
-                    <label for="inputName">Shop name</label>
-                    <input type="text" class="form-control" name="inputName" placeholder="WAP shop" required>
+                <div class="form-group shopName">
+                    <label class="control-label" for="inputError2">Shop name</label>
+                    <input id="shopName" type="text" class="form-control" name="inputName" placeholder="WAP shop" required>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="form-group">
-                    <label for="inputEmail">Email address</label>
-                    <input type="email" class="form-control" name="inputEmail" placeholder="wapbar@wap.com" required>
+                <div class="form-group email">
+                    <label class="control-label" for="inputError2">Email address</label>
+                    <input type="email" class="form-control" name="inputEmail" placeholder="wapbar@wap.com"
+                           required onkeyup="checkExistingEmail(this.value)">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group password">
-                    <label for="inputPassword">Create a password</label>
-                    <input type="password" class="form-control" name="inputPassword" id="password" placeholder="Your Password"
+                    <label class="control-label" for="inputError2">Create a password</label>
+                    <input id="password" type="password" class="form-control" name="inputPassword" placeholder="Your Password"
                            required>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group confirmPassword">
-                    <label for="inputPasswordAgain">Confirm Password</label>
-                    <input type="password" class="form-control" name="inputPasswordAgain" id="confirmPassword" placeholder="Confirm Password"
-                           required>
+                    <label class="control-label" for="inputError2">Confirm Password</label>
+                    <input id="confirmPassword" type="password" class="form-control" name="inputPasswordAgain"
+                           placeholder="Confirm Password" required>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="form-group">
-                    <label for="inputPhoneNumber">Phone number</label>
-                    <input type="text" class="form-control bfh-phone" name="inputPhoneNumber" placeholder="053222222"
-                           required>
+                <div class="form-group phoneNumber">
+                    <label class="control-label" for="inputPhoneNumber">Phone number</label>
+                    <input id="phoneNumber" type="text" class="form-control bfh-phone" name="inputPhoneNumber"
+                           placeholder="053222222" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6">
+                    <div class="form-group openAndCloseTime">
+                        <label class="control-label" for="inputOpenAndCloseTime">Open and Close</label>
+                        <input id="openAndCloseTime" type="text" class="form-control" name="inputOpenAndCloseTime"
+                               placeholder="Mon - Sat from 09.00-23.00" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group address">
+                    <label class="control-label" for="inputAddress">Address</label>
+                    <input id="address" type="text" class="form-control" name="inputAddress"
+                           placeholder="40 Nimmarnhemin Rd., T.Suthep, A.Muang, Chiang Mai, 50200" required>
                 </div>
             </div>
             <div class="col-md-6">
@@ -129,49 +144,32 @@ if (isset($_POST['inputEmail'])) {
                     </select>
                 </div>
             </div>
-            <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="inputOpenAndCloseTime">Open and Close</label>
-                        <input type="text" class="form-control" name="inputOpenAndCloseTime"
-                               placeholder="Mon - Sat from 09.00-23.00" required>
-                    </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="inputAddress">Address</label>
-                    <input type="text" class="form-control" name="inputAddress"
-                           placeholder="40 Nimmarnhemin Rd., T.Suthep, A.Muang, Chiang Mai, 50200" required>
-                </div>
-            </div>
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="map">Pin your shop location on the map</label>
-
                     <div id="googleMap"></div>
                 </div>
             </div>
 
             <div class="col-md-6">
-                <div class="form-group">
-                    <label for="inputLatitude">Latitude</label>
-                    <input type="text" class="form-control" id="inputLatitude" name="inputLatitude" required>
+                <div class="form-group inputLatitude">
+                    <label class="control-label" for="inputLatitude">Latitude</label>
+                    <input type="text" class="form-control" id="inputLatitude" name="latitude" readonly>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="form-group">
-                    <label for="inputLongitude">Longitude</label>
-                    <input type="text" class="form-control" id="inputLongitude" name="inputLongitude" required>
+                <div class="form-group inputLatitude">
+                    <label class="control-label" for="inputLongitude">Longitude</label>
+                    <input type="text" class="form-control" id="inputLongitude" name="longitude" readonly>
                 </div>
             </div>
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>A description for your shop</label>
-                    <textarea class="form-control" name="inputDescription" rows="3" required></textarea>
+            <div class="col-md-12">
+                <div class="form-group description">
+                    <label class="control-label" >A description for this shop</label>
+                    <textarea id="description" class="form-control" name="inputDescription" rows="3" required></textarea>
                 </div>
             </div>
-
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="form-group has-warning">
                     <label class="control-label">Terms and Conditions</label>
                     <textarea class="form-control" name="termAndConditions" rows="3" readonly="readonly">
@@ -182,7 +180,6 @@ if (isset($_POST['inputEmail'])) {
                         (1) you will keep your email and password safe, and won't share them with anyone.
                         (2) you will not pass yourself off as someone else or create multiple, false accounts.
                     </textarea>
-
                     <div class="checkbox">
                         <label><input type="checkbox" name="inputCheckbox" required> I agree to WAP's terms and
                             conditions</label>
@@ -190,41 +187,22 @@ if (isset($_POST['inputEmail'])) {
                 </div>
             </div>
             <div class="col-md-12">
-                <a class="btn btn-default" href="<?php echo Config::PATH.'/';?>" role="button">Back</a>
-                <button type="submit" onclick="checkAndSubmit()" class="btn btn-default">Submit</button>
+                <a class="btn btn-default" href="account_list.php" role="button">Back</a>
+                <input id="submitAddBtn" type="submit" value="Submit" name="add" class="btn btn-default"/>
             </div>
         </form>
+        <!-- /row -->
     </div>
+
+
+
 </div>
 <!-- /row -->
+<script src="<?php echo $assetPath; ?>/jquery.js"></script>
+<script src="<?php echo $assetPath; ?>/bootstrap/js/bootstrap.min.js"></script>
+<script src="Whatapro/accountvalidation.js"></script>
 <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
-
 <script type="text/javascript">
-    $(document).ready(function () {
-        $("#confirmPassword").keyup(checkPasswordMatch);
-        $("#password").keyup(checkPasswordMatch);
-    });
-
-    function checkPasswordMatch() {
-        var password = $("#password").val();
-        var confirmPassword = $("#confirmPassword").val();
-
-        if (password != confirmPassword) {
-            $(".password").addClass("has-error has-feedback");
-            $(".confirmPassword").addClass("has-error has-feedback");
-        } else {
-            $(".password").addClass("has-success").removeClass("has-error").append("<span class='glyphicon glyphicon-ok form-control-feedback'></span>");
-            $(".confirmPassword").addClass("has-success").removeClass("has-error").append("<span class='glyphicon glyphicon-ok form-control-feedback'></span>");
-        }
-    }
-
-    function checkAndSubmit() {
-        var password = $("#password").val();
-        var confirmPassword = $("#confirmPassword").val();
-        if (password == confirmPassword) {
-            $("#registerRequestForm").submit();
-        }
-    }
 
     var myCenter = new google.maps.LatLng(18.789570, 98.974244);
     var geocoder;
@@ -259,13 +237,15 @@ if (isset($_POST['inputEmail'])) {
         geocoder.geocode({'latLng': latlng}, function (results) {
             infowindow.setContent(results[1].formatted_address);
             infowindow.open(map, marker);
-            document.inputeditaccount.temp.value = results[1].formatted_address;
+//            document.inputeditaccount.temp.value = results[1].formatted_address;
         });
 
-        document.registerRequestForm.inputLatitude.value = location.lat();
-        document.registerRequestForm.inputLongitude.value = location.lng();
+        document.inputeditaccount.latitude.value = location.lat();
+        document.inputeditaccount.longitude.value = location.lng();
+        isValidateLatitude();
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>
+
 </body>
 </html>

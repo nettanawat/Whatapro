@@ -10,7 +10,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <img width="80px" src="../Whatapro/img/logo.png">
+                    <img width="80px" src="<?php echo Config::PATH; ?>/img/logo.png">
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">

@@ -43,11 +43,6 @@ class AccountDAOImpl implements AccountDAO {
         return $this->database->insert($this->table, $data);
     }
 
-    public function editAccount(AccountInfo $account) {
-        $query = "UPDATE Accounts SET email = '".$account->getEmail()."' WHERE id = '".$account->getAccountId()."'";
-        $this->database->exec($query);
-    }
-
     public function getAccountById($id) {
         $row = $this->database->get($this->table,'*',['AND'=>['id'=>$id]]);
         if($row) {
@@ -73,9 +68,18 @@ class AccountDAOImpl implements AccountDAO {
         return $accountList;
     }
 
-    public function changePassword(AccountInfo $accountInfo){
-        $query = "UPDATE Accounts SET password = '".md5($accountInfo->getPassword())."' WHERE id = '".$accountInfo->getAccountId()."'";
-        $this->database->exec($query);
+    public function changePassword($id, $password){
+        $account = $this->getAccountById($id);
+        if($account->getRole() == 'user'){
+            $query = "UPDATE Accounts SET password = '".md5($password)."' WHERE id = '".$id."'";
+            if($this->database->exec($query)){
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     public function deleteAccount($id){

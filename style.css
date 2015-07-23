@@ -252,6 +252,12 @@ textarea{
 
 }
 
+.imgborder{
+    border: solid 3px;
+    border-color: lightgray;
+    /*box-shadow: 5px 2px 10px #888888;*/
+}
+
 .textinpromotionbox{
     margin-top: 10px;
     font-family: Helvetica-Light;

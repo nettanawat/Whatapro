@@ -108,7 +108,7 @@ echo '<div style="margin-top: 20px; padding-bottom: 50px" class="container-fluid
             if($promotionImage == null) {
                 $imagePromotionBackground = Config::PATH.'/img/noimage.png';
             } else {
-                $imagePromotionBackground = Config::PATH.'/whatapro/'.$promotionImage[0]->getImagePath();
+                $imagePromotionBackground = Config::PATH.'/'.$promotionImage[0]->getImagePath();
             }
 
             echo('
@@ -139,7 +139,10 @@ echo '<div style="margin-top: 20px; padding-bottom: 50px" class="container-fluid
         </ul>
     </div>
 </nav>
-<!--container-->
+<script src="<?php echo $assetPath; ?>/jquery.js"></script>
+<script src="<?php echo $assetPath; ?>/bootstrap/js/bootstrap.min.js"></script>
+<script src="<?php echo Config::PATH.'/' ?>js/jquery-1.11.0.min.js"></script>
+<script src="<?php echo Config::PATH.'/' ?>js/lightbox.js"></script>
 <script>
     $(document).ready(function () {
         $(document).on('mouseenter', '.divbutton',function () {
@@ -148,8 +151,7 @@ echo '<div style="margin-top: 20px; padding-bottom: 50px" class="container-fluid
             $(this).find("a").hide();
         });
     });
-</script>
-<script>
+
     var lat = document.getElementById("latitude").value;
     var long = document.getElementById("longitude").value;
     var coordinate = new google.maps.LatLng(lat, long);
@@ -196,8 +198,6 @@ echo '<div style="margin-top: 20px; padding-bottom: 50px" class="container-fluid
 
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>
-<script src="<?php echo Config::PATH.'/' ?>js/jquery-1.11.0.min.js"></script>
-<script src="<?php echo Config::PATH.'/' ?>js/lightbox.js"></script>
 </body>
 </html>
 

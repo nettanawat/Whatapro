@@ -71,5 +71,7 @@ if ('admin' == $user_type) {
     </table>
 
 </div>
+<script src="<?php echo $assetPath; ?>/jquery.js"></script>
+<script src="<?php echo $assetPath; ?>/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

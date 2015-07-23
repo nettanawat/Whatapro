@@ -1,6 +1,6 @@
 <?php
 include_once 'session.php';
-if (isset($_POST['edit'])) {
+if (isset($_POST['inputAccountId']) && isset($_POST['inputPromotionId']) && isset($_POST['inputName'])) {
     $id = $_POST['inputAccountId'];
     $promotionId = $_POST['inputPromotionId'];
     $name = $_POST['inputName'];
@@ -10,30 +10,36 @@ if (isset($_POST['edit'])) {
     PromotionController::editPromotion(new Promotion($promotionId, $id, $name, $description, 0, $startDate, $endDate, 1));
     ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"edit","promotion","edit promotion information [ promotion id : ".$promotionId." ]",null));
 //uplaod images
-    $folderPath = "../user_upload/" . $id . "/promotions/" . $promotionId . "/";
+    $folderPath = "user_upload/" . $id . "/promotions/" . $promotionId . "/";
     $target_dir = $folderPath;
 
-    $target_file = array();
-    foreach ($_FILES["files"]["name"] as $aImage) {
-        $target_file[] = $target_dir . basename($aImage);
-    }
-
-    $i = 0;
-    $uploadPath = array();
-    foreach ($_FILES["files"]["tmp_name"] as $imageTmp) {
-        if (move_uploaded_file($imageTmp, $target_file[$i])) {
-            $uploadPath[] = $target_file[$i];
+    if(isset($_FILES)) {
+        $target_file = array();
+        $realPath = array();
+        $i=0;
+        foreach ($_FILES["files"]["name"] as $aImage) {
+            $realPath[] = $target_dir . basename($aImage);
+            $target_file[] = "../".$realPath[$i];
+            $i++;
         }
-        $i++;
-    }
-    //add image
 
-    foreach ($uploadPath as $image) {
-        $promotionImageController = new PromotionImageController();
-        $promotionImageController->addImage(new PromotionImage("", $promotionId, $image, ""));
+        $i = 0;
+        $uploadPath = array();
+        foreach ($_FILES["files"]["tmp_name"] as $imageTmp) {
+            if (move_uploaded_file($imageTmp, $target_file[$i])) {
+                $uploadPath[] = $realPath[$i];
+            }
+            $i++;
+        }
+        //add image
+
+        foreach ($uploadPath as $image) {
+            $promotionImageController = new PromotionImageController();
+            $promotionImageController->addImage(new PromotionImage("", $promotionId, $image, ""));
+        }
     }
     $_SESSION['managePromotionStatus'] = "true";
-    $_SESSION['managePromotionStatus'] = "edit";
+    $_SESSION['managePromotionAction'] = "edit";
     header('Location: ' . Config::PATH . '/promotions');
     exit;
 }
@@ -64,7 +70,7 @@ if (isset($_POST['edit'])) {
         $startDate = new DateTime($promotion->getStartDate());
         $endDate = new DateTime($promotion->getEndDate());
         ?>
-        <form name="inputeditaccount" action="" method="post" enctype="multipart/form-data">
+        <form name="addPromotionForm" action="" method="post" enctype="multipart/form-data">
             <input type="hidden" name="inputAccountId" value="<?php echo $promotion->getAccountId(); ?>">
             <input type="hidden" name="inputPromotionId" value="<?php echo $promotion->getPromotionId(); ?>">
 
@@ -72,37 +78,36 @@ if (isset($_POST['edit'])) {
                 <label class="titleFontSize">Edit promotion</label>
             </div>
             <div class="col-md-6">
-                <div class="form-group">
-                    <label for="inputName">Promotion name</label>
+                <div class="form-group promotionName">
+                    <label class="control-label" for="inputName">Promotion name</label>
                     <input type="text" class="form-control" value="<?php echo $promotion->getName(); ?>"
-                           name="inputName" placeholder="Buy 1 get 1 free" required>
+                           name="inputName" placeholder="Buy 1 get 1 free" required id="promotionName">
                 </div>
             </div>
+
             <div id="sDateDiv" class="col-md-6">
-                <div class="form-group">
+                <div class="form-group dateClass">
                     <label class="control-label" for="inputStartDate">Start date</label>
-                    <input id="startDateId" type="date" value="<?php echo $startDate->format('Y-m-d'); ?>"
-                           class="form-control" name="inputStartDate" required>
+                    <input id="startDateId" type="date" class="form-control" name="inputStartDate" value="<?php echo $startDate->format('Y-m-d'); ?>" required>
                 </div>
             </div>
             <div id="eDateDiv" class="col-md-6">
-                <div class="form-group">
+                <div class="form-group dateClass">
                     <label class="control-label" for="inputEndDate">End date</label>
-                    <input id="endDateId" type="date" value="<?php echo $endDate->format('Y-m-d'); ?>"
-                           class="form-control" name="inputEndDate" required">
+                    <input id="endDateId" type="date" class="form-control" name="inputEndDate" value="<?php echo $endDate->format('Y-m-d'); ?>" required">
                 </div>
             </div>
-            <div class="col-md-6">
+            <div id="selectImageDiv" class="col-md-6">
                 <div class="form-group">
                     <label for="files">Select image(s)</label>
                     <input class="form-control" id="files" name="files[]" type="file" multiple/>
                 </div>
             </div>
+            <div class="col-md-12" id="result"></div>
             <div class="col-md-12">
-                <div class="form-group">
-                    <label>Description</label>
-                    <textarea class="form-control" name="inputDescription" rows="3" required
-                              placeholder="Something describe about your promotion"><?php echo $promotion->getDescription(); ?></textarea>
+                <div class="form-group description">
+                    <label class="control-label">Description</label>
+                    <textarea id="description" class="form-control" name="inputDescription" rows="3" required placeholder="Something describe about your promotion"><?php echo $promotion->getDescription(); ?></textarea>
                 </div>
             </div>
             <?php
@@ -114,7 +119,7 @@ if (isset($_POST['edit'])) {
                                     <div class="panel-body text-right">
                                         <a href="' . Config::PATH . '/View/take_delete_promotion_image.php?promotionImageId=' . $promotionImage->getId() . '" onclick="return false;" class="deleteImage btn btn-danger btn-sm">remove</a>
                                     </div>
-                                    <img width="100%" src="' . Config::PATH . '/whatapro/' . $promotionImage->getImagePath() . '">
+                                    <img width="100%" src="' . Config::PATH . '/' . $promotionImage->getImagePath() . '">
                                 </div>
                             </div>
                         ');
@@ -139,6 +144,10 @@ if (isset($_POST['edit'])) {
         </ul>
     </div>
 </nav>
+
+<script src="<?php echo $assetPath; ?>/jquery.js"></script>
+<script src="<?php echo $assetPath; ?>/bootstrap/js/bootstrap.min.js"></script>
+<script src="Whatapro/promotionvalidation.js"></script>
 <script type="text/javascript">
     window.onload = function () {
         //Check File API support
@@ -169,30 +178,6 @@ if (isset($_POST['edit'])) {
 //            console.log(“Your browser does not support File API”);
         }
     }
-</script>
-<script>
-    $(".deleteImage").click(function (e) {
-        if (confirm("Do you really want to delete this image?")) {
-            e.preventDefault()
-            $.get($(this).attr('href'), function (result, data) {
-                $('#showImage' + result).remove();
-            });
-        }
-    });
-
-
-    $(".clickSubmit").click(function (e) {
-        e.preventDefault();
-        var startDate = document.getElementById("startDateId").value;
-        var endDate = document.getElementById("endDateId").value;
-        if (startDate > endDate) {
-            $("#sDateDiv").addClass("has-error");
-            $("#eDateDiv").addClass("has-error");
-            $("#selectImageDiv").before("<p style='font-size: 18; color: #eb3624' class='col-md-12 has-error'>Waring: Start date must lower than end date</p>");
-        } else {
-            document.forms.name("addPromotionForm").submit();
-        }
-    });
 
 </script>
 </body>

@@ -45,7 +45,7 @@ foreach ($accountList as $account) {
                 <td class="col-md-4">';
     foreach ($shopImageList as $aImage) {
         //change path
-        echo '<img class="col-md-3" src="' . Config::PATH . '/whatapro/' . $aImage . '">';
+        echo '<img class="col-md-3" src="' . Config::PATH . '/' . $aImage . '">';
     }
     echo '</td><td>' . Adaptor::getStatus() . '</td>';
     if ('admin' == $account->getRole()) {

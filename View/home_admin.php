@@ -210,5 +210,7 @@ if ('admin' != $user_type) {
             chart.draw(data, options);
         }
 </script>
+<script src="<?php echo $assetPath; ?>/jquery.js"></script>
+<script src="<?php echo $assetPath; ?>/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

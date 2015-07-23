@@ -19,44 +19,44 @@ if (isset($_POST['inputName']) && isset($_POST['inputEmail'])) {
             $openTime = $_POST['inputOpenAndCloseTime'];
             $category = 'test';
             $description = $_POST['inputDescription'];
-//            var_dump(AccountController::getAccountById(100) == null);die;
-            if(AccountController::getAccountById(100) == null){
-                $accountId = AccountController::addNewAccount(new AccountInfo(100, $email, $password, "user", null, 1));
-                ShopInformationController::addShopInformation(new ShopInformation($accountId, $name, $address, $phone, $comboDistrict, $latitude, $longitude, $openTime, $description, $category));
-            } else {
-                $accountId = AccountController::addNewAccount(new AccountInfo("", $email, $password, "user", null, 1));
-                ShopInformationController::addShopInformation(new ShopInformation($accountId, $name, $address, $phone, $comboDistrict, $latitude, $longitude, $openTime, $description, $category));
-            }
 
+            $accountId = AccountController::addNewAccount(new AccountInfo("", $email, $password, "user", null, 1));
+            ShopInformationController::addShopInformation(new ShopInformation($accountId, $name, $address, $phone, $comboDistrict, $latitude, $longitude, $openTime, $description, $category));
             //uplaod images
             $old = umask(0);
-            $folderPath = "../user_upload/".$accountId."/shop_images/";
+            $folderPath = "user_upload/".$accountId."/shop_images/";
 
-            mkdir($folderPath, 0777,true);
+            mkdir("../".$folderPath, 0777,true);
             $target_dir = $folderPath;
             umask($old);
-            $target_file = array();
 
-
-            foreach ($_FILES["files"]["name"] as $aImage) {
-                $target_file[] = $target_dir . basename($aImage);
-            }
-            $i = 0;
-            $uploadPath = array();
-            foreach ($_FILES["files"]["tmp_name"] as $imageTmp) {
-                if (move_uploaded_file($imageTmp, $target_file[$i])) {
-                    $uploadPath[] = $target_file[$i];
-                } else{
-                    // cant upload
+            if(isset($_FILES)){
+                $target_file = array();
+                $realPath = array();
+                $i=0;
+                foreach ($_FILES["files"]["name"] as $aImage) {
+                    $realPath[] = $target_dir . basename($aImage);
+                    $target_file[] = "../".$realPath[$i];
+                    $i++;
                 }
-                $i++;
-            }
 
-            //add image
+                $i = 0;
+                $uploadPath = array();
+                foreach ($_FILES["files"]["tmp_name"] as $imageTmp) {
+                    if (move_uploaded_file($imageTmp, $target_file[$i])) {
+                        $uploadPath[] = $realPath[$i];
+                    } else{
+                        // cant upload
+                    }
+                    $i++;
+                }
 
-            foreach($uploadPath as $image){
-                $shopImageController = new ShopImageController();
-                $shopImageController->addImage(new ShopImage("",$accountId,$image,""));
+                //add image
+
+                foreach($uploadPath as $image){
+                    $shopImageController = new ShopImageController();
+                    $shopImageController->addImage(new ShopImage("",$accountId,$image,""));
+                }
             }
 //            add log
             ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"add","account","add account into database [ account id : ".$accountId." ]",null));
@@ -85,6 +85,7 @@ if (isset($_POST['inputName']) && isset($_POST['inputEmail'])) {
     </style>
 </head>
 <body>
+
 <div id="top" style="margin: 80px;" class="container-fluid">
 
     <!-- Main component for a primary marketing message or call to action -->
@@ -213,12 +214,10 @@ if (isset($_POST['inputName']) && isset($_POST['inputEmail'])) {
 
 </div> <!-- /container -->
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
+<script src="<?php echo $assetPath; ?>/jquery.js"></script>
+<script src="<?php echo $assetPath; ?>/bootstrap/js/bootstrap.min.js"></script>
 <script src="Whatapro/accountvalidation.js"></script>
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
 <script type="text/javascript">
 
     window.onload = function(){
@@ -287,7 +286,7 @@ if (isset($_POST['inputName']) && isset($_POST['inputEmail'])) {
         geocoder.geocode({'latLng': latlng}, function (results) {
             infowindow.setContent(results[1].formatted_address);
             infowindow.open(map, marker);
-            document.inputeditaccount.temp.value = results[1].formatted_address;
+//            document.inputeditaccount.temp.value = results[1].formatted_address;
         });
 
         document.inputeditaccount.latitude.value = location.lat();
@@ -296,5 +295,6 @@ if (isset($_POST['inputName']) && isset($_POST['inputEmail'])) {
     }
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>
+
 </body>
 </html>

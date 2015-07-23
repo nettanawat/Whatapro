@@ -10,7 +10,7 @@ include dirname(__FILE__) . '/../Config.php';
 if(isset($_GET['promotionImageId'])){
     $imageId = $_GET['promotionImageId'];
     $promotionImageController = new PromotionImageController();
-    unlink($promotionImageController->getImageById($imageId)->getImagePath());
+    unlink("../".$promotionImageController->getImageById($imageId)->getImagePath());
     $promotionImageController->deleteImageById($imageId);
     echo $imageId;
 }

@@ -4,28 +4,6 @@ if ('admin' == $user_type) {
     $promotionList = PromotionController::getAllPromotion();
     if (isset($_POST['edit'])) {
         header("Location: " . Config::PATH . "/promotion/edit/" . $_POST['promotionId']);
-    } else if (isset($_POST['delete'])) {
-        $promotionId = $_POST['promotionId'];
-        $promotionImageController = new PromotionImageController();
-        $promotion = PromotionController::getPromotionById($promotionId);
-
-//        delete promotion image
-        $deleteImage = 1;
-        $promotionImageList = $promotionImageController->getPromotionImageByPromotionId($promotion->getPromotionId());
-        if ($promotionImageList != null) {
-            $deleteImage = $promotionImageController->deleteImageByPromotionId($promotion->getPromotionId());
-            foreach ($promotionImageList as $promotionImage) {
-                unlink($promotionImage->getImagePath());
-            }
-        }
-        $deletePath = "../user_upload/" . $promotion->getAccountId() . "/promotions/" . $promotion->getPromotionId();
-        rmdir($deletePath);
-
-
-//        delete promotion
-        $deletePromotion = PromotionController::deletePromotionByPromotionId($promotionId);
-
-        header("Refresh: 0; url=" . Config::PATH . "/promotions");
     }
 }
 
@@ -49,33 +27,18 @@ if ('user' == $user_type) {
 
 </head>
 <body>
-<div style="margin-top: 80px;"></div>
+<div style="margin-top: 50px;">
+
+</div>
 
 <?php
 
 if (isset($_SESSION['managePromotionStatus']) && isset($_SESSION['managePromotionAction'])) {
     if ($_SESSION['managePromotionStatus'] == true) {
-        if ($_SESSION['managePromotionAction'] == "delete") {
-            echo('
-                <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                Deleting promotion <strong>successful!</strong>
-                </div>
-            ');
-        } elseif ($_SESSION['managePromotionAction'] == "add") {
-            echo('
-                <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                Adding promotion <strong>successful!</strong>
-                </div>
-            ');
+        if ($_SESSION['managePromotionAction'] == "add") {
+            echo '<input type="hidden" value="add" id="hiddenSession"';
         } elseif ($_SESSION['managePromotionAction'] == "edit") {
-            echo('
-                <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                Updating promotion <strong>successful!</strong>
-                </div>
-            ');
+            echo '<input type="hidden" value="edit" id="hiddenSession"';
         } else {
 
         }
@@ -88,7 +51,9 @@ if (isset($_SESSION['managePromotionStatus']) && isset($_SESSION['managePromotio
 ?>
 
 <div class="container-fluid">
-    <div class="col-md-12">
+    <div style="display: none;" id="updatesuccess" class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Updating promotion <strong>successful!</strong></div>
+    <div style="display: none;" id="addsuccess" class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Adding promotion <strong>successful!</strong></div>
+    <div  id="top" class="col-md-12">
         <h2>Promotions</h2>
     </div>
     <?php if ('admin' == $user_type) {
@@ -106,7 +71,7 @@ if (isset($_SESSION['managePromotionStatus']) && isset($_SESSION['managePromotio
     } ?>
 
 
-    <table class="table table-hover table-condensed">
+    <table class="col-md-12 table table-hover table-condensed">
         <tr id="tableHeader">
             <th>Id</th>
             <th>Promotion name</th>
@@ -132,7 +97,7 @@ if (isset($_SESSION['managePromotionStatus']) && isset($_SESSION['managePromotio
             Adaptor::setStatus($promotion->getStatus());
             $startDate = new DateTime($promotion->getStartDate());
             $endDate = new DateTime($promotion->getEndDate());;
-            echo('<tr class="tableData">
+            echo('<tr class="tableData" id="showData'.$promotion->getPromotionId().'">
                     <td>' . $promotion->getPromotionId() . '</td>
                     <td><a href="' . Config::PATH . '/promotion/' . $promotion->getPromotionId() . '">' . $promotion->getName() . '</a></td>
                     <td><a href="' . Config::PATH . '/account/' . $shopInfo->getAccountId() . '">' . $shopInfo->getName() . '</a></td>
@@ -145,23 +110,48 @@ if (isset($_SESSION['managePromotionStatus']) && isset($_SESSION['managePromotio
             echo('</td>
                     <td>' . Adaptor::getStatus() . '</td>
                     <td>
-                            <form id="deleteForm" name=promotion action="" method="post">
-                                <input type=hidden value=' . $promotion->getPromotionId() . ' name="promotionId" >
-                                <button name="edit" type=submit><span class="glyphicon glyphicon-edit"></span></button>
-                                <button onclick="show_alert(); return false;" name="delete" type=submit><span class="glyphicon glyphicon-remove-circle"></span></button>
-                            </form>
-                        </td>
+                        <button class="editBtn" id='.Config::PATH . "/promotion/edit/" . $promotion->getPromotionId() .' name="edit" type=submit><span class="glyphicon glyphicon-edit"></span></button>
+                        <button class="deleteBtn" id="'. $promotion->getPromotionId() .'" name="delete" type="button"><span class="glyphicon glyphicon-remove-circle"></span></button>
+                    </td>
                 </tr>');
         }
         ?>
     </table>
 </div>
+<script src="<?php echo $assetPath; ?>/jquery.js"></script>
+<script src="<?php echo $assetPath; ?>/bootstrap/js/bootstrap.min.js"></script>
 <script>
-    function show_alert() {
-        if (confirm("Do you really want to delete this account?")) {
-            document.forms.name("deleteuser").submit();
+
+    $("button.editBtn").click(function(e){
+        $(location).attr('href', this.id);
+    });
+
+    $(document).ready(function () {
+        var sessionAction = $("#hiddenSession").val();
+        if(sessionAction == "add") {
+            $("#addsuccess").show().delay(3000).fadeOut();
+        } else if(sessionAction == "edit") {
+            $("#updatesuccess").show().delay(3000).fadeOut();
+        } else if(sessionAction == "none") {
         }
-    }
+    });
+
+    $("button.deleteBtn").click(function(e) {
+        e.preventDefault();
+        var promotionId = this.id;
+        if (confirm("Do you really want to delete this promotion?")) {
+            $.ajax({
+                method: "POST",
+                url: "whatapro/view/take_delete_promotion.php",
+                data: { promotionId: promotionId}
+            })
+                .done(function (deleteId) {
+                    $('#showData' + deleteId).remove();
+                    var showMessageString = '<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>Deleting promotion <strong>successful!</strong></div>';
+                    $(showMessageString).insertBefore('#top').delay(3000).fadeOut();
+                });
+        }
+    });
 
     function searchData(data) {
         $.ajax({
@@ -175,5 +165,6 @@ if (isset($_SESSION['managePromotionStatus']) && isset($_SESSION['managePromotio
             });
     }
 </script>
+
 </body>
 </html>

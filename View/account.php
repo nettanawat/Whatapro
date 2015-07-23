@@ -82,9 +82,9 @@ if (isset($_GET['accountId'])) {
             } else {
                 foreach ($shopImage as $image) {
                     echo '
-                    <div class="col-md-3">
-                        <a class="example-image-link" href="'. Config::PATH.'/whatapro/' . $image->getImagePath() . '" data-lightbox="example-set">
-                        <img width="100%" class="example-image" src="'. Config::PATH.'/whatparo/' . $image->getImagePath() . '" alt=""/></a>
+                    <div style="padding-bottom: 20px;" class="col-md-3">
+                        <a class="example-image-link" href="'. Config::PATH.'/' . $image->getImagePath() . '" data-lightbox="example-set">
+                        <img width="250px" height="250px;" class="example-image imgborder img-circle" src="'. Config::PATH.'/' . $image->getImagePath() . '" alt=""/></a>
                     </div>
                     ';
                 }
@@ -111,13 +111,13 @@ if (isset($_GET['accountId'])) {
             if($promotionImage == null) {
                 $imagePromotionBackground = Config::PATH.'/img/noimage.png';
             } else {
-                $imagePromotionBackground = Config::PATH.'/whatapro/'.$promotionImage[0]->getImagePath();
+                $imagePromotionBackground = Config::PATH.'/'.$promotionImage[0]->getImagePath();
             }
 
             echo('
                     <div class="col-md-4">
                             <div style="background-image: url(' . $imagePromotionBackground . '); background-size: cover;" class="col-md-12 promotionboxtop divbutton text-center container-fluid">
-                                    <a href="'.Config::PATH.'/promotion/'. $promotion->getPromotionId() . '" style="display: none; background-color: rgba(255,255,255,0.5); color: #ffffff" class="viewpromotion btn btn-default">View Promotion</a>
+                                    <a id="view" href="'.Config::PATH.'/promotion/'. $promotion->getPromotionId() . '" style="display: none; background-color: rgba(255,255,255,0.5); color: #ffffff" class="viewpromotion btn btn-default">View Promotion</a>
                             </div>
                             <div class="col-md-12 promotionboxbtm text-center">
                                 <p class="textinpromotionbox">' . $promotion->getName() . '</p>
@@ -144,7 +144,10 @@ if (isset($_GET['accountId'])) {
         </ul>
     </div>
 </nav>
-<!--container-->
+<script src="<?php echo $assetPath; ?>/jquery.js"></script>
+<script src="<?php echo $assetPath; ?>/bootstrap/js/bootstrap.min.js"></script>
+<script src="<?php echo Config::PATH.'/' ?>js/jquery-1.11.0.min.js"></script>
+<script src="<?php echo Config::PATH.'/' ?>js/lightbox.js"></script>
 <script>
     $(document).ready(function () {
         $(document).on('mouseenter', '.divbutton',function () {
@@ -153,8 +156,7 @@ if (isset($_GET['accountId'])) {
             $(this).find("a").hide();
         });
     });
-</script>
-<script>
+
     var lat = document.getElementById("latitude").value;
     var long = document.getElementById("longitude").value;
 
@@ -204,8 +206,6 @@ if (isset($_GET['accountId'])) {
 
     google.maps.event.addDomListener(window, 'load', initialize);
 </script>
-<script src="<?php echo Config::PATH.'/' ?>js/jquery-1.11.0.min.js"></script>
-<script src="<?php echo Config::PATH.'/' ?>js/lightbox.js"></script>
 </body>
 </html>
 

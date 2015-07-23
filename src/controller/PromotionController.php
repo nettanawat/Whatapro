@@ -27,26 +27,28 @@ class PromotionController {
         $realPath = array();
         //check how many files
         $i=0;
-        foreach ($_FILES["files"]["name"] as $aImage) {
-            $realPath[] = $target_dir . basename($aImage);
-            $target_file[] = "../".$realPath[$i];
-            $i++;
-        }
-        $i = 0;
-        $uploadPath = array();
-        foreach ($_FILES["files"]["tmp_name"] as $imageTmp) {
-            if (move_uploaded_file($imageTmp, $target_file[$i])) {
-                $uploadPath[] = $realPath[$i];
+        if(isset($_FILES)) {
+            foreach ($_FILES["files"]["name"] as $aImage) {
+                $realPath[] = $target_dir . basename($aImage);
+                $target_file[] = "../".$realPath[$i];
+                $i++;
             }
-            else{
-                var_dump(move_uploaded_file($imageTmp, $target_file[$i]));die;
+            $i = 0;
+            $uploadPath = array();
+            foreach ($_FILES["files"]["tmp_name"] as $imageTmp) {
+                if (move_uploaded_file($imageTmp, $target_file[$i])) {
+                    $uploadPath[] = $realPath[$i];
+                }
+                else{
+                    var_dump(move_uploaded_file($imageTmp, $target_file[$i]));
+                }
+                $i++;
             }
-            $i++;
-        }
-        //add image
-        foreach($uploadPath as $image){
-            $promotionImageController = new PromotionImageController();
-            $promotionImageController->addImage(new PromotionImage("", $promotionId, $image,""));
+            //add image
+            foreach($uploadPath as $image){
+                $promotionImageController = new PromotionImageController();
+                $promotionImageController->addImage(new PromotionImage("", $promotionId, $image,""));
+            }
         }
         return $promotionId;
 
