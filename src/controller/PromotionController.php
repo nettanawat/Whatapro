@@ -16,7 +16,9 @@ class PromotionController {
     }
 
     static function addPromotion(Promotion $promotion){
+        $promotion->setShared(0);
         $promotionId = self::$promotionDaoImpl->addNewPromotion($promotion);
+
         $old = umask(0);
         $folderPath = "user_upload/".$promotion->getAccountId()."/promotions/".$promotionId."/";
         mkdir("../".$folderPath, 0777,true);
@@ -68,14 +70,6 @@ class PromotionController {
 
     static function getPromotionById($id){
         return self::$promotionDaoImpl->getPromotionById($id);
-    }
-
-    static function getPromotionByName($name){
-        return self::$promotionDaoImpl->getPromotionByName($name);
-    }
-
-    static function getPromotionByStatus($status){
-        return self::$promotionDaoImpl->getPromotionByStatus($status);
     }
 
     static function getAllPromotion(){

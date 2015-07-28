@@ -7,7 +7,7 @@ if (isset($_POST['inputAccountId']) && isset($_POST['inputPromotionId']) && isse
     $startDate = $_POST['inputStartDate'];
     $endDate = $_POST['inputEndDate'];
     $description = $_POST['inputDescription'];
-    PromotionController::editPromotion(new Promotion($promotionId, $id, $name, $description, 0, $startDate, $endDate, 1));
+    $editPromotion = PromotionController::editPromotion(new Promotion($promotionId, $id, $name, $description, 0, $startDate, $endDate, 1));
     ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"edit","promotion","edit promotion information [ promotion id : ".$promotionId." ]",null));
 //uplaod images
     $folderPath = "user_upload/" . $id . "/promotions/" . $promotionId . "/";
@@ -38,8 +38,13 @@ if (isset($_POST['inputAccountId']) && isset($_POST['inputPromotionId']) && isse
             $promotionImageController->addImage(new PromotionImage("", $promotionId, $image, ""));
         }
     }
-    $_SESSION['managePromotionStatus'] = "true";
-    $_SESSION['managePromotionAction'] = "edit";
+    if($editPromotion == 1){
+        $_SESSION['managePromotionStatus'] = "true";
+        $_SESSION['managePromotionAction'] = "edit";
+    } else {
+        $_SESSION['managePromotionStatus'] = "false";
+        $_SESSION['managePromotionAction'] = "edit";
+    }
     header('Location: ' . Config::PATH . '/promotions');
     exit;
 }
@@ -117,7 +122,7 @@ if (isset($_POST['inputAccountId']) && isset($_POST['inputPromotionId']) && isse
                             <div id="showImage' . $promotionImage->getId() . '" style="padding-bottom: 20px;" class="col-md-3">
                                 <div class="panel panel-default">
                                     <div class="panel-body text-right">
-                                        <a href="' . Config::PATH . '/View/take_delete_promotion_image.php?promotionImageId=' . $promotionImage->getId() . '" onclick="return false;" class="deleteImage btn btn-danger btn-sm">remove</a>
+                                        <a href="' . Config::PATH . '/View/take_delete_promotion_image.php?promotionImageId=' . $promotionImage->getId() . '" class="deleteImage btn btn-danger btn-sm">remove</a>
                                     </div>
                                     <img width="100%" src="' . Config::PATH . '/' . $promotionImage->getImagePath() . '">
                                 </div>
@@ -148,7 +153,16 @@ if (isset($_POST['inputAccountId']) && isset($_POST['inputPromotionId']) && isse
 <script src="<?php echo $assetPath; ?>/jquery.js"></script>
 <script src="<?php echo $assetPath; ?>/bootstrap/js/bootstrap.min.js"></script>
 <script src="Whatapro/promotionvalidation.js"></script>
-<script type="text/javascript">
+<script>
+    $(".deleteImage").click(function (e) {
+        if (confirm("Do you really want to delete this image?")) {
+            e.preventDefault()
+            $.get($(this).attr('href'), function (result, data) {
+                $('#showImage' + result).remove();
+            });
+        }
+    });
+
     window.onload = function () {
         //Check File API support
         if (window.File && window.FileList && window.FileReader) {

@@ -80,8 +80,7 @@ if (isset($_SESSION['manageAccountStatus']) && isset($_SESSION['manageAccountAct
             $shopImageList = array();
             $shopImageController = new ShopImageController();
 
-
-            if ($shopInfo->getName() != null) {
+            if ($shopInfo != null) {
                 $shopName = "<a href='".Config::PATH."/account/".$shopInfo->getAccountId()."' >".$shopInfo->getName()."</a>";
             }
             $imageList = $shopImageController->getImageByAccountId($account->getAccountId());
@@ -93,7 +92,7 @@ if (isset($_SESSION['manageAccountStatus']) && isset($_SESSION['manageAccountAct
 
 
             Adaptor::setStatus($account->getStatus());
-            echo '<tr class="tableData" id="showData'.$shopInfo->getAccountId().'">
+            echo '<tr class="tableData" id="showData'.$account->getAccountId().'">
                 <td>' . $account->getAccountId() . '</td>
                 <td>' . $account->getEmail() . '</td>
                 <td>' . $account->getRole() . '</td>

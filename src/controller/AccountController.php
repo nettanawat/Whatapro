@@ -22,6 +22,10 @@ class AccountController {
     }
 
     static function addNewAccount(AccountInfo $account) {
+        $now = new DateTime();
+        $now->setTimezone(new DateTimeZone('Asia/Bangkok'));    // Another way
+        $account->setJoinDate($now->format('Y-m-d H:i:s'));
+        $account->setPassword(md5($account->getPassword()));
         return self::$accountDaoImpl->addNewAccount($account);
     }
 
@@ -53,4 +57,7 @@ class AccountController {
         return self::$accountDaoImpl->getLastFiveAccount();
     }
 
+    static function searchIdOrEmailOrName($keyword){
+        return self::$accountDaoImpl->getAccountByIdOrEmailOrShopName($keyword);
+    }
 }

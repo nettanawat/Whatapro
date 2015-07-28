@@ -13,7 +13,6 @@
 interface PromotionDAO {
         
     public function getAllPromotions();
-    public function getPromotionByName($name);
     public function addNewPromotion(Promotion $promotion);
     public function getPromotionById($id);
     public function editPromotion(Promotion $promotion);

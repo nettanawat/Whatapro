@@ -113,6 +113,7 @@
                     $shopImageController = new ShopImageController();
                     $shopList = ShopInformationController::getAllShopInformation();
                     foreach ($shopList as $shop) {
+
                         $shopImage = $shopImageController->getImageByAccountId($shop->getAccountId())[0];
                         $imagePath = '';
                         if($shopImage != null){

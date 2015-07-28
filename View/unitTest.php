@@ -1,4 +1,4 @@
 <?php
-include_once '../UnitTest/AdaptorTest.php';
+include_once '../test/AdaptorTest.php';
 $adaptorTest = new AdaptorTest();
 $adaptorTest->testSetStatus();

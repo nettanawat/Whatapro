@@ -8,53 +8,117 @@
 
 class PromotionImageDAOImpl implements PromotionImageDAO {
 
-    private $database = '';
-    private $table = 'PromotionImage';
-
-    function __construct()
-    {
-        $this->database = new medoo();
-    }
+    private $database_dns = 'mysql:host=127.0.0.1;dbname=WAP';
+    private $database_username = 'root';
+    private $database_password = '';
 
     public function addImage(PromotionImage $promotionImage)
     {
-        $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Asia/Bangkok'));    // Another way
-        $promotionImage->setAddDate($now->format('Y-m-d H:i:s'));
-        $data = [
-            "promotion_id" => $promotionImage->getPromotionId(),
-            "image_path" => $promotionImage->getImagePath(),
-            "add_date" => $promotionImage->getAddDate(),
-        ];
-        return $this->database->insert($this->table,$data);
+        $query = '';
+        $result = '';
+        try {
+            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
+            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $query = "INSERT INTO PromotionImage (promotion_id, image_path, add_date) VALUES (".$promotionImage->getPromotionId().", "
+                .$connection->quote($promotionImage->getImagePath()).", '".$promotionImage->getAddDate()."')";
+            $row = $connection->query($query);
+            $result = $connection->lastInsertId();
+        }
+        catch(PDOException $e)
+        {
+            echo $query . "<br>" . $e->getMessage();
+            $result = null;
+        }
+        $connection = null;
+        return $result;
     }
 
     public function getImageByPromotionId($promotionId)
     {
+        $query = '';
+        $result = '';
         $promotionImageList = array();
-        if(false == $this->database->select($this->table,'*',['AND'=>['promotion_id'=>$promotionId]])) {
-            return null;
-        }else{
-            foreach ($this->database->select($this->table,'*',['AND'=>['promotion_id'=>$promotionId]]) as $row){
+        try {
+            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
+            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $query ="SELECT * FROM PromotionImage WHERE promotion_id=".$promotionId;
+            foreach($connection->query($query)->fetchAll() as $row){
                 $promotionImageList[] = new PromotionImage($row['id'], $row['promotion_id'], $row['image_path'], $row['add_date']);
             }
-            return $promotionImageList;
+            $result = $promotionImageList;
         }
+        catch(PDOException $e)
+        {
+            echo $query . "<br>" . $e->getMessage();
+            $result = null;
+        }
+        $connection = null;
+        return $result;
     }
 
 
     public function getImageById($id){
-        $row = $this->database->get($this->table,'*',['AND'=>['id'=>$id]]);
-        return new PromotionImage($row['id'], $row['promotion_id'], $row['image_path'], $row['add_date']);
+        $query = '';
+        $result = '';
+        $promotionImageList = array();
+        try {
+            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
+            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $query ="SELECT * FROM PromotionImage WHERE id ='" . $id . "'";
+            $row = $connection->query($query)->fetch();
+            if($row == false) {
+                $result = null;
+            } else {
+                $result = new PromotionImage($row['id'], $row['promotion_id'], $row['image_path'], $row['add_date']);
+            }
+        }
+        catch(PDOException $e)
+        {
+            echo $query . "<br>" . $e->getMessage();
+            $result = null;
+        }
+        $connection = null;
+        return $result;
     }
 
     public function deleteImageByPromotionId($promotionId)
     {
-        return $this->database->delete($this->table,['AND'=>['promotion_id'=>$promotionId]]);
+        $query = '';
+        $result = '';
+        try {
+            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
+            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $query = "DELETE FROM PromotionImage WHERE promotion_id=".$promotionId;
+            $row = $connection->exec($query);
+            $result = $row;
+        }
+        catch(PDOException $e)
+        {
+            echo $query . "<br>" . $e->getMessage();
+            $result = null;
+        }
+        $connection = null;
+        return $result;
     }
 
     public function deleteImageById($id)
     {
-        return $this->database->delete($this->table,['AND'=>['id'=>$id]]);
+        $query = '';
+        $result = '';
+        try {
+            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
+            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $query = "DELETE FROM PromotionImage WHERE id=".$id;
+            $row = $connection->exec($query);
+            $result = $row;
+        }
+        catch(PDOException $e)
+        {
+            echo $query . "<br>" . $e->getMessage();
+            $result = null;
+        }
+        $connection = null;
+        return $result;
     }
 }

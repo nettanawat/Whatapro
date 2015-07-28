@@ -8,6 +8,9 @@
 
 class PromotionImageController {
     public function addImage(PromotionImage $promotionImage){
+        $now = new DateTime();
+        $now->setTimezone(new DateTimeZone('Asia/Bangkok'));
+        $promotionImage->setAddDate($now->format('Y-m-d H:i:s'));
         $promotionImageDAOImpl = new PromotionImageDAOImpl();
         return $promotionImageDAOImpl->addImage($promotionImage);
     }

@@ -7,7 +7,7 @@
  */
 include dirname(__FILE__) . '/../Config.php';
 $database = new medoo();
-$query = "SELECT * FROM Accounts INNER JOIN ShopInformations ON Accounts.id = ShopInformations.accounts_id WHERE Accounts.email LIKE '%" . $_GET['key'] . "%' OR ShopInformations.name LIKE '%" . $_GET['key'] . "%' OR Accounts.id LIKE '%" . $_GET['key'] . "%' ORDER BY id DESC";
+$query = "SELECT * FROM Accounts INNER JOIN ShopInformations ON Accounts.id = ShopInformations.accounts_id WHERE Accounts.email LIKE '%" . $_GET['key'] . "%' OR ShopInformations.name LIKE '%" . $_GET['key'] . "%' OR Accounts.id LIKE '%" . $_GET['key'] . "%'";
 $accountList = array();
 if ($_GET['key'] == "") {
     $accountList = AccountController::getAllAccount();
@@ -23,7 +23,7 @@ foreach ($accountList as $account) {
     $shopImageList = array();
     $shopImageController = new ShopImageController();
 
-    if ($shopInfo->getName() != null) {
+    if ($shopInfo != null) {
         $shopName = "<a href='profile.php?accountId=" . $shopInfo->getAccountId() . "' >" . $shopInfo->getName() . "</a>";
     }
 

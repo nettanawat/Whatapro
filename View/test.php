@@ -6,6 +6,6 @@
  * Time: 12:34 PM
  */
 
-$now = new DateTime();
-$now->setTimezone(new DateTimeZone('Asia/Bangkok'));    // Another way
-echo($now->format('Y-m-d H:i:s'));
+include_once '../Config.php';
+$shopImageController = new ShopImageController();
+var_dump($shopImageController->addImage(new ShopImage("", 68,"asad", null)));

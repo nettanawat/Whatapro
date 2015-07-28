@@ -9,6 +9,9 @@
 class ShopImageController {
 
     function addImage(ShopImage $shopImage){
+        $now = new DateTime();
+        $now->setTimezone(new DateTimeZone('Asia/Bangkok'));    // Another way
+        $shopImage->setAddDate($now->format('Y-m-d H:i:s'));
         $shopImageDaoImpl = new ShopImageDAOImpl();
         return $shopImageDaoImpl->addImage($shopImage);
     }

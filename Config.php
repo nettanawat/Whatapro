@@ -10,7 +10,8 @@ class Config {
 
     const DATABASE_TYPE = 'mysql';
     const DATABASE_NAME = 'WAP';
-    const SERVER = 'localhost';
+    const DATABASE_DNS = 'mysql:host=localhost;dbname=WAP';
+    const SERVER = '127.0.0.1';
     const USERNAME = 'root';
     const PASSWORD = '';
     const CHARSET = 'utf8';
@@ -65,7 +66,7 @@ include 'GenerateData.php';
 function __autoload($class_name) {
     if(Config::$className[$class_name]!=null || Config::$className[$class_name]!="")
         include dirname(__FILE__).'/'.Config::$className[$class_name].'.php';
-    GenerateData::createAdmin();
+//    GenerateData::createAdmin();
 //    GenerateData::generateAccount(10);
 }
 

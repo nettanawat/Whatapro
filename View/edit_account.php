@@ -217,7 +217,6 @@ if (isset($_POST['inputId']) && isset($_POST['inputName']) && isset($_POST['inpu
         changeCheckEmailIsValidValue();
     });
 
-
     $(".deleteImage").click(function (e) {
         if (confirm("Do you really want to delete this image?")) {
             e.preventDefault()

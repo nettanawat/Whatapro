@@ -9,89 +9,199 @@
  *
  * @author NetSmith
  */
-class AccountDAOImpl implements AccountDAO {
-    private $database = '';
-    private $table = 'Accounts';
 
-    function __construct()
-    {
-        $this->database = new medoo();
-    }
+//include_once 'AccountDAO.php';
+//include_once dirname(__FILE__).'/../entity/AccountInfo.php';
+class AccountDAOImpl implements AccountDAO {
+
+    private $database_dns = 'mysql:host=127.0.0.1;dbname=WAP';
+    private $database_username = 'root';
+    private $database_password = '';
 
     public function doLogin($email, $password){
-        $row = $this->database->get($this->table,'*',['AND'=>['email'=>$email, 'password'=>md5($password), 'status' => 1]]);
-        if(false == $row) {
-            return null;
-        }else{
-            return new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);
+
+        $query = '';
+        $result = '';
+        try {
+            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
+            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $query ="SELECT * FROM Accounts WHERE email = '".$email."' AND password ='".md5($password)."'";
+
+            $row = $connection->query($query)->fetch();
+            if($row == false){
+                $result =  null;
+            } else {
+                $result =  new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);
+            }
         }
+        catch(PDOException $e)
+        {
+            echo $query . "<br>" . $e->getMessage();
+            $result = null;
+        }
+
+        $connection = null;
+        return $result;
     }
 
     public function addNewAccount(AccountInfo $account) {
-        $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Asia/Bangkok'));    // Another way
-        $account->setJoinDate($now->format('Y-m-d H:i:s'));
+        $query = '';
+        $result = '';
+        try {
+            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
+            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $query ="INSERT INTO Accounts (email, password, role, join_date, status) VALUES ('".$account->getEmail()."', '".$account->getPassword()."', '".$account->getRole()."', '".$account->getJoinDate()."', 1)";
+            $row = $connection->query($query);
+            $result = $connection->lastInsertId();
+        }
+        catch(PDOException $e)
+        {
+            echo $query . "<br>" . $e->getMessage();
+            $result = null;
+        }
 
-            $data = [
-                'id' => $account->getAccountId(),
-                'email' => $account->getEmail(),
-                'password' => md5($account->getPassword()),
-                'role' => $account->getRole(),
-                'join_date' => $account->getJoinDate(),
-                'status' => $account->getStatus()
-                ];
-        return $this->database->insert($this->table, $data);
+        $connection = null;
+        return $result;
     }
 
     public function getAccountById($id) {
-        $row = $this->database->get($this->table,'*',['AND'=>['id'=>$id]]);
-        if($row) {
-            return new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);
-        } else {
-            return null;
+        $query = '';
+        $result = '';
+        try {
+            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
+            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $query ="SELECT * FROM Accounts WHERE id ='" . $id . "'";
+            $row = $connection->query($query)->fetch();
+            if($row == false) {
+                $result = null;
+            } else {
+                $result = new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);
+            }
         }
+        catch(PDOException $e)
+        {
+            echo $query . "<br>" . $e->getMessage();
+            $result = null;
+        }
+        $connection = null;
+        return $result;
     }
 
     public function getAccountByEmail($email) {
-        $accountList = array();
-        foreach ($this->database->select($this->table,'*',['AND'=>['email'=>$email]]) as $row) {
-            $accountList[] = new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);
+        $query = '';
+        $result = '';
+        try {
+            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
+            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $query ="SELECT * FROM Accounts WHERE email ='" . $email . "'";
+            $row = $connection->query($query)->fetch();
+            if($row == false) {
+                $result = null;
+            } else {
+                $result = new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);
+            }
         }
-        return $accountList;
+        catch(PDOException $e)
+        {
+            echo $query . "<br>" . $e->getMessage();
+        }
+        $connection = null;
+        return $result;
     }
 
     public function getAllAccounts() {
-        $accountList = array();
-        foreach ($this->database->select($this->table,'*') as $row) {
-            $accountList[] = new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);
+        $query = '';
+        $accounts = array();
+        try {
+            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
+            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $query ="SELECT * FROM Accounts";
+            foreach($connection->query($query)->fetchAll() as $row){
+                $accounts[] = new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);
+            }
         }
-        return $accountList;
+        catch(PDOException $e)
+        {
+            echo $query . "<br>" . $e->getMessage();
+        }
+        $connection = null;
+        return $accounts;
     }
 
     public function changePassword($id, $password){
-        $account = $this->getAccountById($id);
-        if($account->getRole() == 'user'){
+        $query = '';
+        $result = '';
+        try {
+            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
+            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $query = "UPDATE Accounts SET password = '".md5($password)."' WHERE id = '".$id."'";
-            if($this->database->exec($query)){
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
+            $row = $connection->exec($query);
+            $result = $row;
         }
+        catch(PDOException $e)
+        {
+            echo $query . "<br>" . $e->getMessage();
+            $result = null;
+        }
+        $connection = null;
+        return $result;
     }
 
     public function deleteAccount($id){
-        return $this->database->delete($this->table, ["AND" => ["id" => $id]]);
+        $query = '';
+        $result = '';
+        try {
+            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
+            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $query = "DELETE FROM Accounts WHERE id=".$id;
+            $row = $connection->exec($query);
+            $result = $row;
+        }
+        catch(PDOException $e)
+        {
+            echo $query . "<br>" . $e->getMessage();
+            $result = null;
+        }
+        $connection = null;
+        return $result;
     }
 
     public function getLastFiveAccount() {
-        $accountList = array();
-        foreach ($this->database->select($this->table,'*',['LIMIT' => 5, 'ORDER' => 'join_date DESC']) as $row) {
-            $accountList[] = new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);
+        $query = '';
+        $accounts = array();
+        try {
+            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
+            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $query ="SELECT * FROM Accounts ORDER BY id DESC LIMIT 5";
+            foreach($connection->query($query)->fetchAll() as $row){
+                $accounts[] = new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);
+            }
         }
-        return $accountList;
+        catch(PDOException $e)
+        {
+            echo $query . "<br>" . $e->getMessage();
+        }
+        $connection = null;
+        return $accounts;
+    }
+    public function getAccountByIdOrEmailOrShopName($keyword){
+        $keyword = "%".$keyword."%";
+        $query = '';
+        $accounts = array();
+        try {
+            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
+            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $query = "SELECT * FROM Accounts INNER JOIN ShopInformations ON Accounts.id = ShopInformations.accounts_id WHERE Accounts.email LIKE " . $connection->quote($keyword) . " OR ShopInformations.name LIKE " . $connection->quote($keyword) . " OR Accounts.id LIKE " . $connection->quote($keyword) . " ORDER BY id DESC";
+            foreach($connection->query($query)->fetchAll() as $row){
+                $accounts[] = new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);
+            }
+        }
+        catch(PDOException $e)
+        {
+            echo $query . "<br>" . $e->getMessage();
+        }
+        $connection = null;
+        return $accounts;
     }
 }
 

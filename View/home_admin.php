@@ -12,13 +12,14 @@ if ('admin' != $user_type) {
 <head>
     <?php
 
-    $assetPath = Config::PATH.'/';
+    $assetPath = Config::PATH . '/';
 
     include_once '../assets.php'
 
     ?>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
-    <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['bar']}]}"></script>
+    <script type="text/javascript"
+            src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['bar']}]}"></script>
 </head>
 <body>
 <div style="margin: 50px;"></div>
@@ -44,7 +45,7 @@ if ('admin' != $user_type) {
                 $longitudes = array();
                 $shopNames = array();
                 $promotionAmount = array();
-                foreach($shopInformationList as $shop) {
+                foreach ($shopInformationList as $shop) {
                     $latitudes[] = $shop->getLatitude();
                     $longitudes[] = $shop->getLongitude();
                     $shopNames[] = $shop->getName();
@@ -57,7 +58,7 @@ if ('admin' != $user_type) {
                     $adaptor->setStatus($account->getStatus());
                     $shopInfo = ShopInformationController::getShopInformationById($account->getAccountId());
                     $shopName = '-';
-                    if($shopInfo->getName() != null){
+                    if ($shopInfo != null) {
                         $shopName = $shopInfo->getName();
                     }
                     echo '<tr>
@@ -70,7 +71,7 @@ if ('admin' != $user_type) {
                 } ?>
             </table>
             <div style="margin-top: -10px;" class="text-right">
-                <a href="<?php echo Config::PATH."/accounts"; ?>" class="btn btn-default btn-sm">see more</a>
+                <a href="<?php echo Config::PATH . "/accounts"; ?>" class="btn btn-default btn-sm">see more</a>
             </div>
         </div>
 
@@ -105,20 +106,21 @@ if ('admin' != $user_type) {
                 } ?>
             </table>
             <div style="margin-top: -10px;" class="text-right">
-                <a href="<?php echo Config::PATH."/promotions"; ?>" class="btn btn-default btn-sm">see more</a>
+                <a href="<?php echo Config::PATH . "/promotions"; ?>" class="btn btn-default btn-sm">see more</a>
             </div>
         </div>
         <div style="padding-top: 20px" class="col-md-12 text-center">
             <h2>Overall promotion in system</h2>
         </div>
         <div class="col-md-12" id="chart_div" style="width: 100%; height: 500px;"></div>
-    </div> <!--row-->
-</div><!--container-->
+    </div>
+    <!--row-->
+</div>
+<!--container-->
 <script>
 
-    var latitudes= <?php echo json_encode($latitudes ); ?>;
-    var longitude= <?php echo json_encode($longitudes ); ?>;
-
+    var latitudes = <?php echo json_encode($latitudes ); ?>;
+    var longitude = <?php echo json_encode($longitudes ); ?>;
 
 
     // If you're adding a number of markers, you may want to drop them on the map
@@ -126,8 +128,8 @@ if ('admin' != $user_type) {
     // window.setTimeout() to space your markers' animation.
 
     var berlin = new google.maps.LatLng(18.789570, 98.974244);
-    var neighborhoods =[];
-    for(var i=0; i<longitude.length; i++){
+    var neighborhoods = [];
+    for (var i = 0; i < longitude.length; i++) {
         neighborhoods[i] = new google.maps.LatLng(latitudes[i], longitude[i]);
     }
 
@@ -153,7 +155,7 @@ if ('admin' != $user_type) {
     }
 
     function addMarkerWithTimeout(position, timeout) {
-        window.setTimeout(function() {
+        window.setTimeout(function () {
             markers.push(new google.maps.Marker({
                 position: position,
                 map: map,
@@ -171,44 +173,44 @@ if ('admin' != $user_type) {
     }
 
     google.maps.event.addDomListener(window, 'load', initialize);
-</script>
-<script type="text/javascript">
-        google.load('visualization', '1', {packages: ['corechart', 'bar']});
-        google.setOnLoadCallback(drawBasic);
-        var shopNames= <?php echo json_encode($shopNames ); ?>;
-        var promotionAmount = <?php echo json_encode($promotionAmount ); ?>;
-        var shop;
-        for(var i=0; i<shopNames.length;i++){
-            shop = [shopNames[i], promotionAmount[i]];
-        }
 
-        function drawBasic() {
-            var data = google.visualization.arrayToDataTable(
-                [
-                    ['Shop name', 'Currently promotion'],
-                    ['Coffee smith', 2],
-                    ['Warm up cafe', 3],
-                    ['iLike ice cream', 5],
-                    ['Ristr8to', 0],
-                    ['madbar', 2]
-                ]
-            );
 
-            var options = {
-                chartArea: {width: '70%'},
-                hAxis: {
-                    title: 'Total Promotion',
-                    minValue: 0
-                },
-                vAxis: {
-                    title: 'Shop'
-                }
-            };
+    google.load('visualization', '1', {packages: ['corechart', 'bar']});
+    google.setOnLoadCallback(drawBasic);
+    var shopNames = <?php echo json_encode($shopNames ); ?>;
+    var promotionAmount = <?php echo json_encode($promotionAmount ); ?>;
+    var shop;
+    for (var i = 0; i < shopNames.length; i++) {
+        shop = [shopNames[i], promotionAmount[i]];
+    }
 
-            var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+    function drawBasic() {
+        var data = google.visualization.arrayToDataTable(
+            [
+                ['Shop name', 'Currently promotion'],
+                ['Coffee smith', 2],
+                ['Warm up cafe', 3],
+                ['iLike ice cream', 5],
+                ['Ristr8to', 0],
+                ['madbar', 2]
+            ]
+        );
 
-            chart.draw(data, options);
-        }
+        var options = {
+            chartArea: {width: '70%'},
+            hAxis: {
+                title: 'Total Promotion',
+                minValue: 0
+            },
+            vAxis: {
+                title: 'Shop'
+            }
+        };
+
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+    }
 </script>
 <script src="<?php echo $assetPath; ?>/jquery.js"></script>
 <script src="<?php echo $assetPath; ?>/bootstrap/js/bootstrap.min.js"></script>

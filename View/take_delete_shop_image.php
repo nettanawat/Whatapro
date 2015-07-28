@@ -9,7 +9,11 @@ include dirname(__FILE__) . '/../Config.php';
 if(isset($_GET['shopImageId'])){
     $imageId = $_GET['shopImageId'];
     $shopImageController = new ShopImageController();
-    unlink($shopImageController->getShopImageById($imageId)->getImagePath());
-    $shopImageController->deleteShopImageById($imageId);
-    echo $imageId;
+    try{
+        unlink("../".$shopImageController->getShopImageById($imageId)->getImagePath());
+        $shopImageController->deleteShopImageById($imageId);
+        echo $imageId;
+    } catch (Exception $ex) {
+        echo ($ex);
+    }
 }
