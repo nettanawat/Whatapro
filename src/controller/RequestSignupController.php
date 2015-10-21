@@ -15,6 +15,10 @@ class RequestSignupController {
     }
 
     static function addRequest(RequestSignupInfo $requestSignupInfo){
+        $now = new DateTime();
+        $now->setTimezone(new DateTimeZone('Asia/Bangkok'));
+        $requestSignupInfo->setRequestDate($now->format('Y-m-d H:i:s'));
+        $requestSignupInfo->setPassword(md5($requestSignupInfo->getAddress()));
         return self::$requestSignupDaoImpl->addNewRequest($requestSignupInfo);
     }
 

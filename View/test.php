@@ -7,5 +7,10 @@
  */
 
 include_once '../Config.php';
-$shopImageController = new ShopImageController();
-var_dump($shopImageController->addImage(new ShopImage("", 68,"asad", null)));
+
+$promotionDaoImpl = new PromotionDAOImpl();
+$shop = new ShopInformationDAOImpl();
+var_dump($shop->addNewShopInformation(new ShopInformation(100, "Test add", "41 Nimmarnhemin Rd., T.Suthep, A.Muang,, Chiang Mai, 50200", "053 400 888", 4, 18.7951095, 98.9650533, "All time no close", "This is description", null)));
+echo '<pre>';
+//var_dump();
+echo '<pre>';

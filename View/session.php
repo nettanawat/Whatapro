@@ -7,7 +7,6 @@ session_start();
 $user_type = "user";
 if (isset($_SESSION['userId'])) {
     $logInAccount = AccountController::getAccountById($_SESSION['userId']);
-
     // if account is admin
     if('admin' == $logInAccount->getRole()){
         $user_type = 'admin';

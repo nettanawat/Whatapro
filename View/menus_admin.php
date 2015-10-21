@@ -21,7 +21,6 @@
                         <li><a href="<?php echo Config::PATH; ?>/requests"><span class="glyphicon glyphicon-list"></span> Request</a></li>
                         <li><a href=""><span class="glyphicon glyphicon-user"></span> Mobile user</a></li>
                         <li><a href="<?php echo Config::PATH; ?>/redeemcodes"><span class="glyphicon glyphicon-gift"></span> Redeem Code</a></li>
-                        <li><a href="<?php echo Config::PATH; ?>/logs"><span class="glyphicon glyphicon-list-alt"></span> Activities Log</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">

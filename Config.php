@@ -10,18 +10,20 @@ class Config {
 
     const DATABASE_TYPE = 'mysql';
     const DATABASE_NAME = 'WAP';
-    const DATABASE_DNS = 'mysql:host=localhost;dbname=WAP';
+    const DATABASE_DNS = 'mysql:host=127.0.0.1;dbname=WAP';
     const SERVER = '127.0.0.1';
+    const DATABASE_USERNAME = 'root';
+    const DATABASE_PASSWORD = '';
     const USERNAME = 'root';
     const PASSWORD = '';
     const CHARSET = 'utf8';
     const PATH = '/whatapro';
     const ADMIN_USERNAME ='nettanawat@gmail.com';
     const ADMIN_PASSWORD ='c09e487ab20c68cdc5c21dce226b0426';
+    static $connection = '';
 
     static $className =  array(
         'AccountController' => 'src/controller/AccountController',
-        'ActivitiesLogController' => 'src/controller/ActivitiesLogController',
         'PromotionController' => 'src/controller/PromotionController',
         'ShopInformationController' => 'src/controller/ShopInformationController',
         'RequestSignupController' => 'src/controller/RequestSignupController',
@@ -31,8 +33,6 @@ class Config {
         'Adaptor' => 'library/Adaptor',
         'AccountDAO' => 'src/dao/AccountDAO',
         'AccountDAOImpl' => 'src/dao/AccountDAOImpl',
-        'ActivitiesLogDAO' => 'src/dao/ActivitiesLogDAO',
-        'ActivitiesLogDAOImpl' => 'src/dao/ActivitiesLogDAOImpl',
         'CheckInCodeDAO' => 'src/dao/CheckInCodeDAO',
         'CheckInCodeDAOImpl' => 'src/dao/CheckInCodeDAOImpl',
         'ShopImageDAO' => 'src/dao/ShopImageDAO',
@@ -48,7 +48,6 @@ class Config {
         'RedeemCodeDAO' => 'src/dao/RedeemCodeDAO',
         'RedeemCodeDAOImpl' => 'src/dao/RedeemCodeDAOImpl',
         'AccountInfo' => 'src/entity/AccountInfo',
-        'ActivitiesLog' => 'src/entity/ActivitiesLog',
         'CheckInCode' => 'src/entity/CheckInCode',
         'Promotion' => 'src/entity/Promotion',
         'RequestSignupInfo' => 'src/entity/RequestSignupInfo',
@@ -66,12 +65,15 @@ include 'GenerateData.php';
 function __autoload($class_name) {
     if(Config::$className[$class_name]!=null || Config::$className[$class_name]!="")
         include dirname(__FILE__).'/'.Config::$className[$class_name].'.php';
-//    GenerateData::createAdmin();
-//    GenerateData::generateAccount(10);
+    GenerateData::createAdmin();
+    Config::$connection = new PDO(Config::DATABASE_DNS, Config::DATABASE_USERNAME, Config::DATABASE_PASSWORD);
+}
+
+function clearConnection(){
+    Config::$connection = null;
 }
 
 AccountController::loadClass();
-ActivitiesLogController::loadClass();
 PromotionController::loadClass();
 RequestSignupController::loadClass();
 ShopInformationController::loadClass();

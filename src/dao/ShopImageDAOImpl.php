@@ -8,29 +8,29 @@
 
 class ShopImageDAOImpl implements ShopImageDAO {
 
-    private $database_dns = 'mysql:host=127.0.0.1;dbname=WAP';
-    private $database_username = 'root';
-    private $database_password = '';
-
     public function addImage(ShopImage $shopImage)
     {
         $query = '';
         $result = '';
         try {
-            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
-            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            $query = "INSERT INTO ShopImage (shop_id, image_path, added_date) VALUES (".$shopImage->getShopId().", "
-                .$connection->quote($shopImage->getImagePath()).", '".$shopImage->getAddDate()."')";
-            $row = $connection->query($query);
-            $result = $connection->lastInsertId();
+            $queryGetId ="SELECT id FROM ShopImage ORDER BY id DESC LIMIT 1";
+            $lastId = Config::$connection->query($queryGetId)->fetch();
+            $id = '';
+            if($lastId == false) {
+                $id = 1;
+            } else {
+                $id = $lastId['id']+1;
+            }
+            $query = "INSERT INTO ShopImage (id, shop_id, image_path, added_date) VALUES (".$id.", "
+                .$shopImage->getShopId().", ".Config::$connection->quote($shopImage->getImagePath()).", '".$shopImage->getAddDate()."')";
+            $row = Config::$connection->query($query);
+            $result = Config::$connection->lastInsertId();
         }
         catch(PDOException $e)
         {
             echo $query . "<br>" . $e->getMessage();
             $result = null;
         }
-        $connection = null;
         return $result;
     }
 
@@ -39,10 +39,8 @@ class ShopImageDAOImpl implements ShopImageDAO {
         $query = '';
         $result = '';
         try {
-            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
-            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $query = "DELETE FROM ShopImage WHERE shop_id=".$shopId;
-            $row = $connection->exec($query);
+            $row = Config::$connection->exec($query);
             $result = $row;
         }
         catch(PDOException $e)
@@ -50,7 +48,6 @@ class ShopImageDAOImpl implements ShopImageDAO {
             echo $query . "<br>" . $e->getMessage();
             $result = null;
         }
-        $connection = null;
         return $result;
     }
 
@@ -59,10 +56,8 @@ class ShopImageDAOImpl implements ShopImageDAO {
         $result = '';
         $shopImageList = array();
         try {
-            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
-            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $query ="SELECT * FROM ShopImage WHERE shop_id=".$accountId;
-            foreach($connection->query($query)->fetchAll() as $row){
+            foreach(Config::$connection->query($query)->fetchAll() as $row){
                 $shopImageList[] = new ShopImage($row['id'], $row['shop_id'], $row['image_path'], $row['added_date']);
             }
             $result = $shopImageList;
@@ -72,7 +67,6 @@ class ShopImageDAOImpl implements ShopImageDAO {
             echo $query . "<br>" . $e->getMessage();
             $result = null;
         }
-        $connection = null;
         return $result;
     }
 
@@ -81,10 +75,8 @@ class ShopImageDAOImpl implements ShopImageDAO {
         $query = '';
         $result = '';
         try {
-            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
-            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $query = "DELETE FROM ShopImage WHERE id=".$id;
-            $row = $connection->exec($query);
+            $row = Config::$connection->exec($query);
             $result = $row;
         }
         catch(PDOException $e)
@@ -92,7 +84,6 @@ class ShopImageDAOImpl implements ShopImageDAO {
             echo $query . "<br>" . $e->getMessage();
             $result = null;
         }
-        $connection = null;
         return $result;
     }
 
@@ -101,10 +92,8 @@ class ShopImageDAOImpl implements ShopImageDAO {
         $query = '';
         $result = '';
         try {
-            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
-            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $query ="SELECT * FROM ShopImage WHERE id ='" . $id . "'";
-            $row = $connection->query($query)->fetch();
+            $row = Config::$connection->query($query)->fetch();
             if($row == false) {
                 $result = null;
             } else {
@@ -116,7 +105,6 @@ class ShopImageDAOImpl implements ShopImageDAO {
             echo $query . "<br>" . $e->getMessage();
             $result = null;
         }
-        $connection = null;
         return $result;
     }
 }

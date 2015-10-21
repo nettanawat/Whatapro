@@ -17,7 +17,6 @@ if ('admin' != $user_type) {
             ShopInformationController::addShopInformation(new ShopInformation($accountId, $request->getName(), $request->getAddress(), $request->getPhoneNumber(), $request->getSubDistrict(), $request->getLatitude(), $request->getLongitude(), $request->getOpenTIme(), $request->getDescription(), null));
         }
         RequestSignupController::acceptRequest($_POST['requestId'], $logInAccount->getAccountId());
-        ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"accept","account","accept request from [ request id : ".$_POST['requestId']." ]",null));
         $_SESSION['manageRequestStatus']= "true";
         $_SESSION['manageRequestAction'] = "accept";
         header("Refresh: 0; url=" . Config::PATH . "/requests");
@@ -25,7 +24,6 @@ if ('admin' != $user_type) {
     }
     if (isset($_POST['reject'])) {
         RequestSignupController::rejectRequest($_POST['requestId'], $logInAccount->getAccountId());
-        ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"reject","account","reject request from [ request id : ".$_POST['requestId']." ]",null));
         $_SESSION['manageRequestStatus']= "true";
         $_SESSION['manageRequestAction'] = "reject";
         header("Refresh: 0; url=" . Config::PATH . "/requests");

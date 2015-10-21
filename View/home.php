@@ -79,8 +79,8 @@ include_once 'session.php';
                 foreach ($shopImage as $image) {
                     echo '
                     <div class="col-md-3">
-                        <a class="example-image-link" href="'. Config::PATH.'/whatapro/' . $image->getImagePath() . '" data-lightbox="example-set">
-                        <img width="100%" class="example-image" src="'. Config::PATH.'/whatparo/' . $image->getImagePath() . '" alt=""/></a>
+                        <a class="example-image-link" href="'. Config::PATH.'/' . $image->getImagePath() . '" data-lightbox="example-set">
+                        <img width="100%" class="example-image" src="'. Config::PATH.'/' . $image->getImagePath() . '" alt=""/></a>
                     </div>
                     ';
                 }

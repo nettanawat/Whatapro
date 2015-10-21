@@ -10,11 +10,9 @@ if(isset($_POST['inputEmail']) && isset($_POST['inputPassword'])){
         $_SESSION['userId'] = $loginAccount->getAccountId();
         if ('admin' == $loginAccount->getRole()) {
             $actionDetail = "logged in to system";
-            ActivitiesLogController::addLog(new ActivitiesLog('', $loginAccount->getAccountId(), 'login', 'account', $actionDetail, ''));
             header('Location: '.Config::PATH.'/admin');
         } else {
             $actionDetail = "logged in to system";
-            ActivitiesLogController::addLog(new ActivitiesLog('', $loginAccount->getAccountId(), 'login', 'account', $actionDetail, ''));
             header('Location: '.Config::PATH.'/user');
         }
     } else {

@@ -8,7 +8,6 @@ if (isset($_POST['inputAccountId']) && isset($_POST['inputPromotionId']) && isse
     $endDate = $_POST['inputEndDate'];
     $description = $_POST['inputDescription'];
     $editPromotion = PromotionController::editPromotion(new Promotion($promotionId, $id, $name, $description, 0, $startDate, $endDate, 1));
-    ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"edit","promotion","edit promotion information [ promotion id : ".$promotionId." ]",null));
 //uplaod images
     $folderPath = "user_upload/" . $id . "/promotions/" . $promotionId . "/";
     $target_dir = $folderPath;

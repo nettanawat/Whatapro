@@ -8,29 +8,29 @@
 
 class PromotionImageDAOImpl implements PromotionImageDAO {
 
-    private $database_dns = 'mysql:host=127.0.0.1;dbname=WAP';
-    private $database_username = 'root';
-    private $database_password = '';
-
     public function addImage(PromotionImage $promotionImage)
     {
         $query = '';
         $result = '';
         try {
-            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
-            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            $query = "INSERT INTO PromotionImage (promotion_id, image_path, add_date) VALUES (".$promotionImage->getPromotionId().", "
-                .$connection->quote($promotionImage->getImagePath()).", '".$promotionImage->getAddDate()."')";
-            $row = $connection->query($query);
-            $result = $connection->lastInsertId();
+            $queryGetId ="SELECT id FROM PromotionImage ORDER BY id DESC LIMIT 1";
+            $lastId = Config::$connection->query($queryGetId)->fetch();
+            $id = '';
+            if($lastId == false) {
+                $id = 1;
+            } else {
+                $id = $lastId['id']+1;
+            }
+            $query = "INSERT INTO PromotionImage (id, promotion_id, image_path, add_date) VALUES (".$id.", "
+                .$promotionImage->getPromotionId().", ".Config::$connection->quote($promotionImage->getImagePath()).", '".$promotionImage->getAddDate()."')";
+            $row = Config::$connection->query($query);
+            $result = Config::$connection->lastInsertId();
         }
         catch(PDOException $e)
         {
             echo $query . "<br>" . $e->getMessage();
             $result = null;
         }
-        $connection = null;
         return $result;
     }
 
@@ -40,10 +40,8 @@ class PromotionImageDAOImpl implements PromotionImageDAO {
         $result = '';
         $promotionImageList = array();
         try {
-            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
-            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $query ="SELECT * FROM PromotionImage WHERE promotion_id=".$promotionId;
-            foreach($connection->query($query)->fetchAll() as $row){
+            foreach(Config::$connection->query($query)->fetchAll() as $row){
                 $promotionImageList[] = new PromotionImage($row['id'], $row['promotion_id'], $row['image_path'], $row['add_date']);
             }
             $result = $promotionImageList;
@@ -53,20 +51,16 @@ class PromotionImageDAOImpl implements PromotionImageDAO {
             echo $query . "<br>" . $e->getMessage();
             $result = null;
         }
-        $connection = null;
         return $result;
     }
-
 
     public function getImageById($id){
         $query = '';
         $result = '';
         $promotionImageList = array();
         try {
-            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
-            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $query ="SELECT * FROM PromotionImage WHERE id ='" . $id . "'";
-            $row = $connection->query($query)->fetch();
+            $row = Config::$connection->query($query)->fetch();
             if($row == false) {
                 $result = null;
             } else {
@@ -78,7 +72,6 @@ class PromotionImageDAOImpl implements PromotionImageDAO {
             echo $query . "<br>" . $e->getMessage();
             $result = null;
         }
-        $connection = null;
         return $result;
     }
 
@@ -87,10 +80,8 @@ class PromotionImageDAOImpl implements PromotionImageDAO {
         $query = '';
         $result = '';
         try {
-            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
-            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $query = "DELETE FROM PromotionImage WHERE promotion_id=".$promotionId;
-            $row = $connection->exec($query);
+            $row = Config::$connection->exec($query);
             $result = $row;
         }
         catch(PDOException $e)
@@ -98,7 +89,6 @@ class PromotionImageDAOImpl implements PromotionImageDAO {
             echo $query . "<br>" . $e->getMessage();
             $result = null;
         }
-        $connection = null;
         return $result;
     }
 
@@ -107,10 +97,8 @@ class PromotionImageDAOImpl implements PromotionImageDAO {
         $query = '';
         $result = '';
         try {
-            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
-            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $query = "DELETE FROM PromotionImage WHERE id=".$id;
-            $row = $connection->exec($query);
+            $row = Config::$connection->exec($query);
             $result = $row;
         }
         catch(PDOException $e)
@@ -118,7 +106,6 @@ class PromotionImageDAOImpl implements PromotionImageDAO {
             echo $query . "<br>" . $e->getMessage();
             $result = null;
         }
-        $connection = null;
         return $result;
     }
 }

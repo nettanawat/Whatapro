@@ -6,51 +6,88 @@
  * Time: 9:47 AM
  */
 include dirname(__FILE__) . '/../Config.php';
+
 class ShopInformationDAOImplTest extends PHPUnit_Framework_TestCase {
 
     private $shopInformation1 = '';
     private $shopInformation2 = '';
     private $shopInformation3 = '';
     private $shopInformation4 = '';
-    private $shopInformation5 = '';
+
 
     public function setUp(){
-        $this->shopInformation1 = new ShopInformation(73, "Coffee smith", "696 Moo 15, Tumbol Booheaw", "0533333333", null, 18.7906989079, 98.9626121521, "Everyday from 6.00AM - 10.00PM", "This is description", null);
-        $this->shopInformation2 = new ShopInformation(73, "Coffee smith nimman", "696 Moo 15, Tumbol Booheaw", "0533333333", null, 18.7906989079, 98.9626121521, "Everyday from 6.00AM - 10.00PM", "This is description", null);
-
-        $this->shopInformation3 = new ShopInformation(69, "Coffee smith", "696 Moo 15, Tumbol Booheaw", "0533333333", null, 18.7906989079, 98.9626121521, "Everyday from 6.00AM - 10.00PM", "This is description", null);
-        $this->shopInformation4 = new ShopInformation(72, "Coffee smith", "696 Moo 15, Tumbol Booheaw", "0533333333", null, 18.7906989079, 98.9626121521, "Everyday from 6.00AM - 10.00PM", "This is description", null);
-//        $this->shopInformation5 = new ShopInformation(null, "Coffee smith", "696 Moo 15, Tumbol Booheaw", "0533333333", null, 18.7906989079, 98.9626121521, "Everyday from 6.00AM - 10.00PM", "This is description", null);
+        $this->shopInformation1 = new ShopInformation(10, "Oh yeah", "41 Nimmarnhemin Rd., T.Suthep, A.Muang,, Chiang Mai, 50200", "053 400 888", 1, 18.7951095, 98.9650533, "Every day", "This is description", null);
+        $this->shopInformation2 = new ShopInformation(11, "Hello", "41 Nimmarnhemin Rd., T.Suthep, A.Muang,, Chiang Mai, 50200", "053 400 888", 2, 18.7951095, 98.9650533, "Everyday", "This is description", null);
+        $this->shopInformation3 = new ShopInformation(12, "Coffee smith", "41 Nimmarnhemin Rd., T.Suthep, A.Muang,, Chiang Mai, 50200", "053 400 888", 3, 18.7951095, 98.9650533, "6.00 - 12.00", "This is description", null);
+        $this->shopInformation4 = new ShopInformation(100, "Test add", "41 Nimmarnhemin Rd., T.Suthep, A.Muang,, Chiang Mai, 50200", "053 400 888", 4, 18.7951095, 98.9650533, "All time no close", "This is description", null);
     }
 
     public function testGetShopInformationById(){
         $shopInformationDaoImpl = new ShopInformationDAOImpl();
-        $this->assertEquals($this->shopInformation1, $shopInformationDaoImpl->getShopInformationById(73));
-        $this->assertEquals(null, $shopInformationDaoImpl->getShopInformationById(75));
+        Config::$connection->beginTransaction();
+        $shopInformationDaoImpl->addNewShopInformation($this->shopInformation1);
+        $shopInformationDaoImpl->addNewShopInformation($this->shopInformation2);
+        $shopInformationDaoImpl->addNewShopInformation($this->shopInformation3);
+        $this->assertEquals($this->shopInformation1, $shopInformationDaoImpl->getShopInformationById(10));
+        $this->assertEquals($this->shopInformation2, $shopInformationDaoImpl->getShopInformationById(11));
+        $this->assertEquals($this->shopInformation3, $shopInformationDaoImpl->getShopInformationById(12));
+        $this->assertEquals(null, $shopInformationDaoImpl->getShopInformationById(100));
+        Config::$connection->rollBack();
     }
 
-//    public function testAddNewShopInformation(){
-//        $shopInformationDaoImpl = new ShopInformationDAOImpl();
-//        $this->assertEquals(69, $shopInformationDaoImpl->addNewShopInformation($this->shopInformation3));
-//        $this->assertEquals(72, $shopInformationDaoImpl->addNewShopInformation($this->shopInformation4));
-//    }
+    public function testAddNewShopInformation(){
+        $shopInformationDaoImpl = new ShopInformationDAOImpl();
+        Config::$connection->beginTransaction();
+        $this->assertEquals(10, $shopInformationDaoImpl->addNewShopInformation($this->shopInformation1));
+        $this->assertEquals(11, $shopInformationDaoImpl->addNewShopInformation($this->shopInformation2));
+        $this->assertEquals(12, $shopInformationDaoImpl->addNewShopInformation($this->shopInformation3));
+        $this->assertEquals(12, $shopInformationDaoImpl->addNewShopInformation($this->shopInformation4));
+        Config::$connection->rollBack();
+    }
 
-//    public function testDeleteShopInformation(){
-//        $shopInformationDaoImpl = new ShopInformationDAOImpl();
-//        $this->assertEquals(1, $shopInformationDaoImpl->deleteShopInformation(72));
-//        $this->assertEquals(1, $shopInformationDaoImpl->deleteShopInformation(71));
-//    }
+    public function testDeleteShopInformation(){
+        $shopInformationDaoImpl = new ShopInformationDAOImpl();
+        Config::$connection->beginTransaction();
+        $shopInformationDaoImpl->addNewShopInformation($this->shopInformation1);
+        $shopInformationDaoImpl->addNewShopInformation($this->shopInformation2);
+        $shopInformationDaoImpl->addNewShopInformation($this->shopInformation3);
+        $shopInformationDaoImpl->addNewShopInformation($this->shopInformation4);
+        $this->assertEquals(1, $shopInformationDaoImpl->deleteShopInformation(10));
+        $this->assertEquals(1, $shopInformationDaoImpl->deleteShopInformation(11));
+        $this->assertEquals(1, $shopInformationDaoImpl->deleteShopInformation(12));
+        $this->assertEquals(0, $shopInformationDaoImpl->deleteShopInformation(100));
+        Config::$connection->rollBack();
+    }
 
     public function testGetAllShopInformation(){
         $shopInformationDaoImpl = new ShopInformationDAOImpl();
-        $this->assertEquals(17, sizeof($shopInformationDaoImpl->getAllShopInformation()));
+        $this->assertEquals(3, sizeof($shopInformationDaoImpl->getAllShopInformation()));
 
     }
 
     public function testEditShopInformation(){
         $shopInformationDaoImpl = new ShopInformationDAOImpl();
+        Config::$connection->beginTransaction();
+        $shopInformationDaoImpl->addNewShopInformation($this->shopInformation1);
+        $shopInformationDaoImpl->addNewShopInformation($this->shopInformation2);
+        $shopInformationDaoImpl->addNewShopInformation($this->shopInformation3);
+        $this->shopInformation1->setName("Hiii");
+        $this->shopInformation2->setName("Hey yo");
+        $this->shopInformation3->setName("setName");
+        $this->shopInformation4->setAccountId(100);
+        $this->assertEquals(1, $shopInformationDaoImpl->editShopInformation($this->shopInformation1));
+        $this->assertEquals(1, $shopInformationDaoImpl->editShopInformation($this->shopInformation2));
+        $this->assertEquals(1, $shopInformationDaoImpl->editShopInformation($this->shopInformation3));
+        $this->assertEquals(0, $shopInformationDaoImpl->editShopInformation($this->shopInformation4));
+        Config::$connection->rollBack();
 
-        $this->assertEquals(1, sizeof($shopInformationDaoImpl->editShopInformation(new ShopInformation(68, "Test eddit", null, null, null, null, null, null, null, null))));
     }
+
+    public function tearDown(){
+        if(Config::$connection->inTransaction()){
+            Config::$connection->rollBack();
+        }
+    }
+
 }
  

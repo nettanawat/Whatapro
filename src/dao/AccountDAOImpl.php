@@ -10,24 +10,15 @@
  * @author NetSmith
  */
 
-//include_once 'AccountDAO.php';
-//include_once dirname(__FILE__).'/../entity/AccountInfo.php';
 class AccountDAOImpl implements AccountDAO {
-
-    private $database_dns = 'mysql:host=127.0.0.1;dbname=WAP';
-    private $database_username = 'root';
-    private $database_password = '';
 
     public function doLogin($email, $password){
 
         $query = '';
         $result = '';
         try {
-            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
-            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $query ="SELECT * FROM Accounts WHERE email = '".$email."' AND password ='".md5($password)."'";
-
-            $row = $connection->query($query)->fetch();
+            $row = Config::$connection->query($query)->fetch();
             if($row == false){
                 $result =  null;
             } else {
@@ -40,26 +31,32 @@ class AccountDAOImpl implements AccountDAO {
             $result = null;
         }
 
-        $connection = null;
         return $result;
     }
 
     public function addNewAccount(AccountInfo $account) {
+        $account->setJoinDate(null);
+        $account->setStatus(null);
         $query = '';
         $result = '';
         try {
-            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
-            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $query ="INSERT INTO Accounts (email, password, role, join_date, status) VALUES ('".$account->getEmail()."', '".$account->getPassword()."', '".$account->getRole()."', '".$account->getJoinDate()."', 1)";
-            $row = $connection->query($query);
-            $result = $connection->lastInsertId();
+            $queryGetId ="SELECT id FROM Accounts ORDER BY id DESC LIMIT 1";
+            $lastId = Config::$connection->query($queryGetId)->fetch();
+            $id='';
+            if($account->getAccountId() != null){
+                $id = $account->getAccountId();
+            } else{
+                $id = $lastId['id']+1;
+            }
+            $query ="INSERT INTO Accounts (id, email, password, role, join_date, status) VALUES (".$id.", '".$account->getEmail()."', '".$account->getPassword()."', '".$account->getRole()."', '".$account->getJoinDate()."', 1)";
+            $row = Config::$connection->query($query);
+            $result = Config::$connection->lastInsertId();
         }
         catch(PDOException $e)
         {
             echo $query . "<br>" . $e->getMessage();
             $result = null;
         }
-
         $connection = null;
         return $result;
     }
@@ -68,10 +65,8 @@ class AccountDAOImpl implements AccountDAO {
         $query = '';
         $result = '';
         try {
-            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
-            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $query ="SELECT * FROM Accounts WHERE id ='" . $id . "'";
-            $row = $connection->query($query)->fetch();
+            $row = Config::$connection->query($query)->fetch();
             if($row == false) {
                 $result = null;
             } else {
@@ -83,7 +78,6 @@ class AccountDAOImpl implements AccountDAO {
             echo $query . "<br>" . $e->getMessage();
             $result = null;
         }
-        $connection = null;
         return $result;
     }
 
@@ -91,10 +85,8 @@ class AccountDAOImpl implements AccountDAO {
         $query = '';
         $result = '';
         try {
-            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
-            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $query ="SELECT * FROM Accounts WHERE email ='" . $email . "'";
-            $row = $connection->query($query)->fetch();
+            $row = Config::$connection->query($query)->fetch();
             if($row == false) {
                 $result = null;
             } else {
@@ -105,7 +97,6 @@ class AccountDAOImpl implements AccountDAO {
         {
             echo $query . "<br>" . $e->getMessage();
         }
-        $connection = null;
         return $result;
     }
 
@@ -113,10 +104,8 @@ class AccountDAOImpl implements AccountDAO {
         $query = '';
         $accounts = array();
         try {
-            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
-            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $query ="SELECT * FROM Accounts";
-            foreach($connection->query($query)->fetchAll() as $row){
+            foreach(Config::$connection->query($query)->fetchAll() as $row){
                 $accounts[] = new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);
             }
         }
@@ -124,7 +113,6 @@ class AccountDAOImpl implements AccountDAO {
         {
             echo $query . "<br>" . $e->getMessage();
         }
-        $connection = null;
         return $accounts;
     }
 
@@ -132,10 +120,8 @@ class AccountDAOImpl implements AccountDAO {
         $query = '';
         $result = '';
         try {
-            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
-            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $query = "UPDATE Accounts SET password = '".md5($password)."' WHERE id = '".$id."'";
-            $row = $connection->exec($query);
+            $row = Config::$connection->exec($query);
             $result = $row;
         }
         catch(PDOException $e)
@@ -143,7 +129,6 @@ class AccountDAOImpl implements AccountDAO {
             echo $query . "<br>" . $e->getMessage();
             $result = null;
         }
-        $connection = null;
         return $result;
     }
 
@@ -151,10 +136,8 @@ class AccountDAOImpl implements AccountDAO {
         $query = '';
         $result = '';
         try {
-            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
-            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $query = "DELETE FROM Accounts WHERE id=".$id;
-            $row = $connection->exec($query);
+            $row = Config::$connection->exec($query);
             $result = $row;
         }
         catch(PDOException $e)
@@ -162,7 +145,6 @@ class AccountDAOImpl implements AccountDAO {
             echo $query . "<br>" . $e->getMessage();
             $result = null;
         }
-        $connection = null;
         return $result;
     }
 
@@ -170,10 +152,8 @@ class AccountDAOImpl implements AccountDAO {
         $query = '';
         $accounts = array();
         try {
-            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
-            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $query ="SELECT * FROM Accounts ORDER BY id DESC LIMIT 5";
-            foreach($connection->query($query)->fetchAll() as $row){
+            foreach(Config::$connection->query($query)->fetchAll() as $row){
                 $accounts[] = new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);
             }
         }
@@ -181,27 +161,24 @@ class AccountDAOImpl implements AccountDAO {
         {
             echo $query . "<br>" . $e->getMessage();
         }
-        $connection = null;
         return $accounts;
     }
+
     public function getAccountByIdOrEmailOrShopName($keyword){
-        $keyword = "%".$keyword."%";
-        $query = '';
-        $accounts = array();
-        try {
-            $connection = new PDO($this->database_dns, $this->database_username, $this->database_password);
-            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $query = "SELECT * FROM Accounts INNER JOIN ShopInformations ON Accounts.id = ShopInformations.accounts_id WHERE Accounts.email LIKE " . $connection->quote($keyword) . " OR ShopInformations.name LIKE " . $connection->quote($keyword) . " OR Accounts.id LIKE " . $connection->quote($keyword) . " ORDER BY id DESC";
-            foreach($connection->query($query)->fetchAll() as $row){
-                $accounts[] = new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);
-            }
-        }
-        catch(PDOException $e)
-        {
-            echo $query . "<br>" . $e->getMessage();
-        }
-        $connection = null;
-        return $accounts;
+//        $keyword = "%".$keyword."%";
+//        $query = '';
+//        $accounts = array();
+//        try {
+//            $query = "SELECT * FROM Accounts INNER JOIN ShopInformations ON Accounts.id = ShopInformations.accounts_id WHERE Accounts.email LIKE " . $connection->quote($keyword) . " OR ShopInformations.name LIKE " . $connection->quote($keyword) . " OR Accounts.id LIKE " . $connection->quote($keyword) . " ORDER BY id DESC";
+//            foreach(Config::$connection->query($query)->fetchAll() as $row){
+//                $accounts[] = new AccountInfo($row['id'], $row['email'], $row['password'], $row['role'], $row['join_date'], $row['status']);
+//            }
+//        }
+//        catch(PDOException $e)
+//        {
+//            echo $query . "<br>" . $e->getMessage();
+//        }
+//        return $accounts;
     }
 }
 

@@ -21,7 +21,6 @@ if (isset($_POST['inputId']) && isset($_POST['inputName']) && isset($_POST['inpu
     $category = 'test';
     $description = $_POST['inputDescription'];
     $editShop = ShopInformationController::editShopInformation(new ShopInformation($id, $name, $address, $phone, "", $latitude, $longitude, $openTime, $description, $category));
-    ActivitiesLogController::addLog(new ActivitiesLog("", $logInAccount->getAccountId(), "edit", "account", "edit account information [ account id : " . $id . " ]", null));
 
 
     //uplaod images

@@ -9,8 +9,8 @@ if (isset($_POST['inputEmail']) && isset($_POST['inputPassword']) && isset($_POS
     $address = $_POST['inputAddress'];
     $phoneNumber = $_POST['inputPhoneNumber'];
     $subDistrict = $_POST['comboDistrict'];
-    $latitude = $_POST['inputLatitude'];
-    $longitude = $_POST['inputLongitude'];
+    $latitude = $_POST['latitude'];
+    $longitude = $_POST['longitude'];
     $openTime = $_POST['inputOpenAndCloseTime'];
     $description = $_POST['inputDescription'];
     $requestDate = '';

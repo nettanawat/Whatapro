@@ -59,7 +59,6 @@ if (isset($_POST['inputName']) && isset($_POST['inputEmail'])) {
                 }
             }
 //            add log
-            ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"add","account","add account into database [ account id : ".$accountId." ]",null));
             $_SESSION['manageAccountStatus']= "true";
             $_SESSION['manageAccountAction'] = "add";
             header('Location: '.Config::PATH.'/accounts');

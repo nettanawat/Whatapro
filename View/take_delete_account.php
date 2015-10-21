@@ -62,7 +62,5 @@ if (isset($_POST['userId'])) { //delete account
     $deleteShopInfoDb = ShopInformationController::deleteShopInformation($account->getAccountId());
 
     $deleteAccountDb = AccountController::deleteAccount($account->getAccountId());
-
-    ActivitiesLogController::addLog(new ActivitiesLog("", $_POST['loginUserId'],"delete","account","delete account from database [ account id : ".$id." ]",null));
     echo $id;
 }

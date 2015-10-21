@@ -3,7 +3,6 @@ include_once 'session.php';
 
 if(isset($_POST['password']) && isset($_POST['confirmPassword'])) {
     $status = AccountController::changePassword($logInAccount->getAccountId(),$_POST['password']);
-    ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"edit","account","change password [ account id : ".$logInAccount->getAccountId()." ]",null));
     if($status == true){
         $_SESSION['changePasswordTrue'] = "true";
     }

@@ -4,12 +4,10 @@
 
         if('user' == $user_type){
             $promotionId = PromotionController::addPromotion(new Promotion("", $logInAccount->getAccountId(), $_POST['inputName'], $_POST['inputDescription'],"",$_POST['inputStartDate'],$_POST['inputEndDate'], 1));
-            ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"add","promotion","add promotion into database [ promotion id : ".$promotionId." ]",null));
         }
 
         if('admin' == $user_type){
             $promotionId = PromotionController::addPromotion(new Promotion("", $_POST['selectedShopId'], $_POST['inputName'], $_POST['inputDescription'],"",$_POST['inputStartDate'],$_POST['inputEndDate'], 1));
-            ActivitiesLogController::addLog(new ActivitiesLog("",$logInAccount->getAccountId(),"add","promotion","add promotion into database [ promotion id : ".$promotionId." ]",null));
         }
         $_SESSION['managePromotionStatus']= "true";
         $_SESSION['managePromotionAction'] = "add";

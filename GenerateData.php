@@ -8,28 +8,50 @@
 class GenerateData
 {
 
-
     static function createAdmin()
     {
-        $database = new medoo();
-        if ($database->get('Accounts', '*', ['id' => 1])) {
-
-        } else {
-            $query = "INSERT INTO `Accounts` (`email`, `password`, `role`, `join_date`, `status`) VALUES ('" . Config::ADMIN_USERNAME . "', '" . Config::ADMIN_PASSWORD . "', 'admin', '" . date('Y-m-d') . "', '1')";
-            $database->exec($query);
-            $startingAdminEmail = ["admin1@gmail.com", "admin2@gmail.com", "admin3@gmail.com", "iamadmin@gmail.com", "iamfuckingadmin@gmail.com",];
-            $startingAdminPassword = ["1234", "1234", "1234", "1234", "1234"];
-            $startingId = 10;
-            for ($i = 0; $i < 5; $i++) {
-                if ($i == 0) {
-                    $query = "INSERT INTO `Accounts` (`id`, `email`, `password`, `role`, `join_date`, `status`) VALUES ('" . $startingId . "', '" . $startingAdminEmail[$i] . "', '" . md5($startingAdminPassword[$i]) . "', 'admin', '" . date('Y-m-d') . "', '1')";
-                } else {
+        if(self::isTheFirstRun()) {
+            $query = '';
+            try {
+                $connection = new PDO(Config::DATABASE_DNS, Config::DATABASE_USERNAME, Config::DATABASE_PASSWORD);
+                $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $query = "INSERT INTO `Accounts` (`email`, `password`, `role`, `join_date`, `status`) VALUES ('" . Config::ADMIN_USERNAME . "', '" . Config::ADMIN_PASSWORD . "', 'admin', '" . date('Y-m-d') . "', '1')";
+                $connection->query($query);
+                $startingAdminEmail = ["admin1@gmail.com", "admin2@gmail.com", "admin3@gmail.com", "iamadmin@gmail.com"];
+                $startingAdminPassword = ["1234", "1234", "1234", "1234"];
+                for ($i = 0; $i < 4; $i++) {
                     $query = "INSERT INTO `Accounts` (`email`, `password`, `role`, `join_date`, `status`) VALUES ('" . $startingAdminEmail[$i] . "', '" . md5($startingAdminPassword[$i]) . "', 'admin', '" . date('Y-m-d') . "', '1')";
+                    $connection->query($query);
                 }
-                $database->exec($query);
             }
+            catch(PDOException $e)
+            {
+                echo $query . "<br>" . $e->getMessage();
+            }
+            $connection = null;
         }
     }
+
+    static function isTheFirstRun(){
+        $query = '';
+        try {
+            $connection = new PDO(Config::DATABASE_DNS, Config::DATABASE_USERNAME, Config::DATABASE_PASSWORD);
+            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $query = "SELECT * FROM Accounts WHERE id = 1";
+            $row = $connection->query($query)->fetch();
+            if($row == null) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        catch(PDOException $e)
+        {
+            echo $query . "<br>" . $e->getMessage();
+        }
+        $connection = null;
+    }
+
 
     static function generateAccount($numberOfAccount) {
         $database = new medoo();

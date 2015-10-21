@@ -123,8 +123,8 @@ if (isset($_SESSION['manageAccountStatus']) && isset($_SESSION['manageAccountAct
             } else if (1 == $account->getStatus()) {
                 echo '
                         <td>
-                                <button class="editBtn" id='.Config::PATH . "/account/edit/" . $account->getAccountId() .' name="edit" type=submit><span class="glyphicon glyphicon-edit"></span></button>
-                                <button class="deleteBtn" id="'. $account->getAccountId() .'" name="delete" type="button"><span class="glyphicon glyphicon-remove-circle"></span></button>
+                                <button class="editBtn" id='.Config::PATH . "/account/edit/" . $account->getAccountId() .' name="edit" type=submit><span style="color: orange;" class="glyphicon glyphicon-edit"></span></button>
+                                <button class="deleteBtn" id="'. $account->getAccountId() .'" name="delete" type="button"><span style="color: red;" class="glyphicon glyphicon-remove-circle"></span></button>
                         </td>';
             }
             echo '</tr>';

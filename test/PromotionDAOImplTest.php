@@ -16,60 +16,101 @@ class PromotionDAOImplTest extends PHPUnit_Framework_TestCase {
     private $promotion5 = '';
 
     public function setUp(){
-        $this->promotion1 = new Promotion(28, 65, "Promotion 1", "This is description", 0, "2015-07-23 00:00:00", "2015-08-23 00:00:00", 1);
-        $this->promotion2 = new Promotion(29, 66, "Promotion 1", "This is description", 0, "2015-07-23 00:00:00", "2015-08-23 00:00:00", 1);
-        $this->promotion3 = new Promotion(30, 67, "Promotion 1", "This is description", 0, "2015-07-23 00:00:00", "2015-08-23 00:00:00", 1);
-        $this->promotion4 = new Promotion(31, 68, "Promotion 1", "This is description", 0, "2015-07-23 00:00:00", "2015-08-23 00:00:00", 1);
-        $this->promotion5 = new Promotion(32, 69, "Promotion 1", "This is description", 0, "2015-07-23 00:00:00", "2015-08-23 00:00:00", 1);
+        $this->promotion1 = new Promotion(1, 6, "Friday special !!", "Breakfast buffet 150.- for each", 0, "2015-07-23 00:00:00", "2015-07-31 00:00:00", 1);
+        $this->promotion2 = new Promotion(2, 7, "Get a FREE order of Dog pretzel", "with the purchase of a Green mint mocha", 0, "2015-08-01 00:00:00", "2015-08-09 00:00:00", 1);
+        $this->promotion3 = new Promotion(3, 8, "Show student card for a special 10% discount", "Not to be used in conjunction with other voucher", 0, "2015-08-18 00:00:00", "2015-09-09 00:00:00", 1);
+        $this->promotion4 = new Promotion(4, 1002, "Free coffee or tea", "3pm – 6pm (Everyday)With any order on our menu + dessert menu", 0, "2015-07-28 00:00:00", "2015-09-28 00:00:00", 1);
+        $this->promotion5 = new Promotion(5, 6, "Promotion 1", "This is description", 0, "2015-07-23 00:00:00", "2015-08-23 00:00:00", 1);
     }
 
-//    public function testGetPromotionByName(){
+    public function testAddPromotion(){
+        $promotionDaoImpl = new PromotionDAOImpl();
+        Config::$connection->beginTransaction();
+        $this->assertEquals(1, $promotionDaoImpl->addNewPromotion($this->promotion1));
+        $this->assertEquals(2, $promotionDaoImpl->addNewPromotion($this->promotion2));
+        $this->assertEquals(3, $promotionDaoImpl->addNewPromotion($this->promotion3));
+        Config::$connection->rollBack();
+    }
+
+    public function testGetPromotionByName(){
 //        $promotionDaoImpl = new PromotionDAOImpl();
-//        $this->assertEquals(28, $promotionDaoImpl->addNewPromotion($this->promotion1));
-//        $this->assertEquals(29, $promotionDaoImpl->addNewPromotion($this->promotion1));
-//        $this->assertEquals(30, $promotionDaoImpl->addNewPromotion($this->promotion1));
+//        $this->assertEquals("", $promotionDaoImpl->addNewPromotion($this->promotion1));
+//        $this->assertEquals("", $promotionDaoImpl->addNewPromotion($this->promotion1));
+//        $this->assertEquals("", $promotionDaoImpl->addNewPromotion($this->promotion1));
 //        $this->assertEquals(31, $promotionDaoImpl->addNewPromotion($this->promotion1));
 //        $this->assertEquals(32, $promotionDaoImpl->addNewPromotion($this->promotion1));
-//    }
+    }
 
 
-//    public function testGetPromotionByPromotionId(){
-//        $promotionDaoImpl = new PromotionDAOImpl();
-//        $promotion = $promotionDaoImpl->getPromotionById(28);
-//        $this->assertEquals(28, $promotion->getPromotionId());
-//        $this->assertEquals(65, $promotion->getAccountId());
-//        $this->assertEquals("Promotion 1", $promotion->getName());
-//        $this->assertEquals( new Promotion(29, 65, 'Promotion 1', 'This is description', 0, '2015-07-23 00:00:00', '2015-08-23 00:00:00', 1), $promotionDaoImpl->getPromotionById(29));
-//    }
+    public function testGetPromotionByPromotionId(){
+        $promotionDaoImpl = new PromotionDAOImpl();
+        Config::$connection->beginTransaction();
+        $promotionDaoImpl->addNewPromotion($this->promotion1);
+        $promotionDaoImpl->addNewPromotion($this->promotion2);
+        $this->assertEquals(new Promotion(1, 6, "Friday special !!", "Breakfast buffet 150.- for each", 0, "2015-07-23 00:00:00", "2015-07-31 00:00:00", 1) , $promotionDaoImpl->getPromotionById(1));
+        $this->assertEquals(new Promotion(2, 7, "Get a FREE order of Dog pretzel", "with the purchase of a Green mint mocha", 0, "2015-08-01 00:00:00", "2015-08-09 00:00:00", 1), $promotionDaoImpl->getPromotionById(2));
+        Config::$connection->rollBack();
+    }
 
-//    public function testGetPromotionByShopId(){
-//        $promotionDaoImpl = new PromotionDAOImpl();
-//        $this->assertEquals(10, sizeof($promotionDaoImpl->getPromotionByShopId(65)));
-//    }
+    public function testGetPromotionByShopId(){
+        $promotionDaoImpl = new PromotionDAOImpl();
+        Config::$connection->beginTransaction();
+        $promotionDaoImpl->addNewPromotion(new Promotion(1, 6, "Friday special !!", "Breakfast buffet 150.- for each", 0, "2015-07-23 00:00:00", "2015-07-31 00:00:00", 1));
+        $promotionDaoImpl->addNewPromotion(new Promotion(2, 6, "Friday special !!", "Breakfast buffet 150.- for each", 0, "2015-07-23 00:00:00", "2015-07-31 00:00:00", 1));
+        $this->assertEquals(2, sizeof($promotionDaoImpl->getPromotionByShopId(6)));
+        $this->assertEquals(0, sizeof($promotionDaoImpl->getPromotionByShopId(8)));
+        $this->assertEquals(0, sizeof($promotionDaoImpl->getPromotionByShopId(253)));
+        Config::$connection->rollBack();
+    }
 
-//    public function testDeletePromotionByPromotionId(){
-//        $promotionDaoImpl = new PromotionDAOImpl();
-//        $this->assertEquals(1, $promotionDaoImpl->deletePromotionByPromotionId(24));
-//        $this->assertEquals(1, $promotionDaoImpl->deletePromotionByPromotionId(23));
-//    }
+    public function testDeletePromotionByPromotionId(){
+        $promotionDaoImpl = new PromotionDAOImpl();
+        Config::$connection->beginTransaction();
+        $promotionDaoImpl->addNewPromotion($this->promotion1);
+        $promotionDaoImpl->addNewPromotion($this->promotion2);
+        $this->assertEquals(1, $promotionDaoImpl->deletePromotionByPromotionId(1));
+        $this->assertEquals(1, $promotionDaoImpl->deletePromotionByPromotionId(2));
+        $this->assertEquals(0, $promotionDaoImpl->deletePromotionByPromotionId(33));
+        Config::$connection->rollBack();
+    }
 
-//    public function testDeletePromotionByShopId(){
-//        $promotionDaoImpl = new PromotionDAOImpl();
-//        $this->assertEquals(8, sizeof($promotionDaoImpl->deletePromotionByShopId(65)));
-//    }
+    public function testDeletePromotionByShopId(){
+        $promotionDaoImpl = new PromotionDAOImpl();
+        Config::$connection->beginTransaction();
+        $promotionDaoImpl->addNewPromotion(new Promotion(1, 6, "Friday special !!", "Breakfast buffet 150.- for each", 0, "2015-07-23 00:00:00", "2015-07-31 00:00:00", 1) , $promotionDaoImpl->getPromotionById(1));
+        $promotionDaoImpl->addNewPromotion(new Promotion(2, 6, "Friday special !!", "Breakfast buffet 150.- for each", 0, "2015-07-23 00:00:00", "2015-07-31 00:00:00", 1) , $promotionDaoImpl->getPromotionById(1));
+        $promotionDaoImpl->addNewPromotion(new Promotion(3, 7, "Friday special !!", "Breakfast buffet 150.- for each", 0, "2015-07-23 00:00:00", "2015-07-31 00:00:00", 1) , $promotionDaoImpl->getPromotionById(1));
+        $this->assertEquals(2, $promotionDaoImpl->deletePromotionByShopId(6));
+        $this->assertEquals(1, $promotionDaoImpl->deletePromotionByShopId(7));
+        $this->assertEquals(0, $promotionDaoImpl->deletePromotionByShopId(1004));
+        Config::$connection->rollBack();
+    }
 
     public function testGetAllPromotion(){
         $promotionDaoImpl = new PromotionDAOImpl();
-        $this->assertEquals(1, sizeof($promotionDaoImpl->getAllPromotions()));
+        Config::$connection->beginTransaction();
+        $promotionDaoImpl->addNewPromotion($this->promotion1);
+        $promotionDaoImpl->addNewPromotion($this->promotion2);
+        $this->assertEquals(2, sizeof($promotionDaoImpl->getAllPromotions()));
+        Config::$connection->rollBack();
+
     }
 
     public function testEditPromotion(){
         $promotionDaoImpl = new PromotionDAOImpl();
-        $this->assertEquals(1, $promotionDaoImpl->editPromotion(new Promotion(21, 69, 'Test edit unit test t', 'adadsaasdadadadadasdad', 0, '2015-07-01 00:00:00', '2015-07-16 00:00:00', 1)));
-        $this->assertEquals(null, $promotionDaoImpl->editPromotion(new Promotion(22, 69, 'Test edit unit test', 'adadsaasdadadadadasdad', 0, '2015-07-01 00:00:00', '2015-07-16 00:00:00', 1)));
+        Config::$connection->beginTransaction();
+        $promotionDaoImpl->addNewPromotion($this->promotion1);
+        $promotionDaoImpl->addNewPromotion($this->promotion2);
+        $promotionDaoImpl->addNewPromotion($this->promotion4);
+        $this->assertEquals(1, $promotionDaoImpl->editPromotion(new Promotion(1, 6, "Friday special !!", "Ok?", 0, "2015-07-23 00:00:00", "2015-07-31 00:00:00", 1)));
+        $this->assertEquals(1, $promotionDaoImpl->editPromotion(new Promotion(2, 7, "WHAT??", "with the purchase of a Green mint mocha", 0, "2015-08-01 00:00:00", "2015-08-09 00:00:00", 1)));
+        $this->assertEquals(0, $promotionDaoImpl->editPromotion(new Promotion(90, 100, "Free coffee or tea", "3pm – 6pm (Everyday)With any order on our menu + dessert menu", 0, "2015-07-28 00:00:00", "2015-09-28 00:00:00", 1)));
+        Config::$connection->rollBack();
     }
 
-
+    public function tearDown(){
+        if(Config::$connection->inTransaction()){
+            Config::$connection->rollBack();
+        }
+    }
 }
-
- 

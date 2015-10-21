@@ -16,7 +16,6 @@ session_start();
             $_POST['img'] = '';
         // fix id to name
         $actionDetail = "edit promotion [Owner: ".$_SESSION['user_id'].", Promotion name: ".$_POST['inputPromotionName']."]";
-        ActivitiesLogDAOImpl::addLog(new ActivitiesLog($_SESSION['user_id'], "delete function", $actionDetail, Date("Y-m-d"),"","delete promotion"));
         $accountController->editPromotion(new Promotion($_SESSION['promotion_id'], $_SESSION['user_id'], $_POST['inputPromotionName'], $_POST['inputDescription'], $_POST['img'], "", $_POST['inputDateFrom'], $_POST['inputDateTo'], null));
         header('Location: promotion_list.php');
         exit;
