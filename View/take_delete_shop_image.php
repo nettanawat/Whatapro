@@ -10,7 +10,7 @@ if(isset($_GET['shopImageId'])){
     $imageId = $_GET['shopImageId'];
     $shopImageController = new ShopImageController();
     try{
-        unlink("../".$shopImageController->getShopImageById($imageId)->getImagePath());
+        unlink('../'.$shopImageController->getShopImageById($imageId)->getImagePath());
         $shopImageController->deleteShopImageById($imageId);
         echo $imageId;
     } catch (Exception $ex) {

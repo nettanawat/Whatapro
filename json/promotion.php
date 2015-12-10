@@ -10,7 +10,7 @@ include_once '../Config.php';
 $promotionImageController = new PromotionImageController();
 $promotionList = array();
 if(isset($_GET['promotionId'])){
-    $promotionList[] = PromotionController::getPromotionByShopId($_GET['promotionId']);
+    $promotionList[] = PromotionController::getPromotionById($_GET['promotionId']);
 } elseif(isset($_GET[''])){
 
 } elseif(isset($_GET[''])){
@@ -36,6 +36,7 @@ for($i=0;$i<sizeof($promotionList);$i++) {
     }
     $outputarr['response_data'][$i] = array();
     $outputarr['response_data'][$i]['promotion_id'] = $promotionList[$i]->getPromotionId();
+    $outputarr['response_data'][$i]['promotion_name'] = $promotionList[$i]->getName();
     $outputarr['response_data'][$i]['account_id'] = $promotionList[$i]->getAccountId();
     $outputarr['response_data'][$i]['description'] = $promotionList[$i]->getDescription();
     if($promotionImageList != null){

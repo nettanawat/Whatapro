@@ -14,7 +14,7 @@ class RedeemCodeController {
         self::$redeemCodeDaoImpl = new RedeemCodeDAOImpl();
     }
 
-    static function generateRedeemCode($mobileUserId = '1365239032', $pointAmount = 50){
+    static function generateRedeemCode($mobileUserId, $pointAmount){
         $now = new DateTime();
         $now->setTimezone(new DateTimeZone('Asia/Bangkok'));    // Another way
         $randomCode = self::getToken();
@@ -22,9 +22,9 @@ class RedeemCodeController {
             $randomCode = self::getToken();
         }
 
-        $redeemCode = new RedeemCode('',$mobileUserId, $randomCode,'bar path',$now->format('Y-m-d H:i:s'), $pointAmount, 1);
+        $redeemCode = new RedeemCode('',$mobileUserId, $randomCode,$now->format('Y-m-d H:i:s'), $pointAmount, 0);
         self::$redeemCodeDaoImpl->addRedeemCode($redeemCode);
-        return $redeemCode;
+        return $redeemCode->getCode();
     }
 
     private function cryptToRandomSecure($min, $max) {
@@ -52,8 +52,11 @@ class RedeemCodeController {
         return $token;
     }
 
-
     static function getAllRedeemCode(){
         return self::$redeemCodeDaoImpl->getAllRedeemCode();
+    }
+
+    static function useCode($code){
+        return self::$redeemCodeDaoImpl->updateRedeemCodeStatus($code);
     }
 } 

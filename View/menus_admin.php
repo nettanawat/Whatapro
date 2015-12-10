@@ -19,7 +19,7 @@
                         <li><a href="<?php echo Config::PATH; ?>/accounts"><span class="glyphicon glyphicon-briefcase"></span> Account</a></li>
                         <li><a href="<?php echo Config::PATH; ?>/promotions"><span class="glyphicon glyphicon-star"></span> Promotion</a></li>
                         <li><a href="<?php echo Config::PATH; ?>/requests"><span class="glyphicon glyphicon-list"></span> Request</a></li>
-                        <li><a href=""><span class="glyphicon glyphicon-user"></span> Mobile user</a></li>
+                        <li><a href="<?php echo Config::PATH; ?>/mobileusers"><span class="glyphicon glyphicon-user"></span> Mobile user</a></li>
                         <li><a href="<?php echo Config::PATH; ?>/redeemcodes"><span class="glyphicon glyphicon-gift"></span> Redeem Code</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">

@@ -27,7 +27,7 @@ class RequestSignupController {
     }
 
     static function getRequestById($id){
-        return self::$requestSignupDaoImpl->getRequesSignupById($id);
+        return self::$requestSignupDaoImpl->getRequestSignupById($id);
     }
 
     static function rejectRequest($id, $accountId){

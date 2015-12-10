@@ -10,6 +10,6 @@ interface RedeemCodeDAO {
     public function getAllRedeemCode();
     public function getRedeemCodeByCode($redeemCode);
     public function addRedeemCode(RedeemCode $redeemCode);
-    public function updateRedeemCodeStatus();
+    public function updateRedeemCodeStatus($code);
 
 } 

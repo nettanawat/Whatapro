@@ -8,11 +8,29 @@
 include_once '../Config.php';
 $shopImageController = new ShopImageController();
 $shopInformationList = array();
+$promotionList = array();
 if(isset($_GET['accountId'])){
     $shopInformationList[] = ShopInformationController::getShopInformationById($_GET['accountId']);
-} elseif(isset($_GET[''])){
+} elseif(isset($_GET['hasPromotion'])){
+    $allShopInfo = ShopInformationController::getAllShopInformation();
+    for($i=0;$i<sizeof($allShopInfo);$i++) {
+        $promotionController = new PromotionController();
 
-} elseif(isset($_GET[''])){
+        if($promotionController->getPromotionByShopId($allShopInfo[$i]->getAccountId()) != null){
+            $shopInformationList[] = $allShopInfo[$i];
+            $promotionList = $promotionController->getPromotionByShopId($allShopInfo[$i]->getAccountId());
+        }
+//        var_dump($promotionController->getPromotionByShopId($allShopInfo[$i]->getAccountId()));
+
+        //image
+        $dataImageList = null;
+        if($shopImageController->getImageByAccountId($allShopInfo[$i]->getAccountId()) != null){
+            $dataImageList = $shopImageController->getImageByAccountId($allShopInfo[$i]->getAccountId());
+        }
+    }
+
+} elseif(isset($_GET['latitude']) && isset($_GET['longitude'])){
+    $shopInformationList[] = ShopInformationController::getShopInformationByLatitudeAndLongitude($_GET['latitude'], $_GET['longitude']);
 
 } elseif(isset($_GET[''])){
 
@@ -50,6 +68,14 @@ for($i=0;$i<sizeof($shopInformationList);$i++) {
             $imageout['image'][$j]['image'.($j+1)] = $dataImageList[$j]->getImagePath();
         }
         $outputarr['response_data'][$i]['shop_image'] = $imageout['image'];
+    }
+    if($promotionList != null){
+        $promotionout['promotion'] = array();
+        for($j=0; $j<sizeof($promotionList);$j++ ){
+            $promotionout['promotion'][$j]['promotion_id'] = $promotionList[$j]->getPromotionId();
+            $promotionout['promotion'][$j]['promotion_name'] = $promotionList[$j]->getName();
+        }
+        $outputarr['response_data'][$i]['shop_promotion'] = $promotionout['promotion'];
     }
 }
 echo json_encode($outputarr);

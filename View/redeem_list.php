@@ -8,11 +8,6 @@ if ('admin' != $user_type) {
     header('Location: error_message.php');
     exit;
 }
-if ('admin' == $user_type) {
-
-
-}
-
 ?>
 
 <html>
@@ -47,7 +42,6 @@ if ('admin' == $user_type) {
             <th>Id</th>
             <th>Owner</th>
             <th>Code</th>
-            <th>Barcode</th>
             <th>Generate date</th>
             <th>Point amount</th>
             <th>Status</th>
@@ -61,7 +55,6 @@ if ('admin' == $user_type) {
                     <td>'.$redeem->getId().'</td>
                     <td>'.$redeem->getOwner().'</td>
                     <td><label style="font-size: 15px;" class="label label-primary">'.$redeem->getCode().'</label></td>
-                    <td>'.$redeem->getBarcodePath().'</td>
                     <td>'.$redeem->getGenerateDate().'</td>
                     <td>'.$redeem->getPointAmount().'</td>
                     <td>'.$redeem->getStatus().'</td>

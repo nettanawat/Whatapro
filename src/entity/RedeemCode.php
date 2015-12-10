@@ -16,9 +16,8 @@ class RedeemCode {
     private $pointAmount;
     private $status;
 
-    function __construct($id, $owner, $code, $barcodePath, $generate_date, $pointAmount, $status)
+    function __construct($id, $owner, $code, $generate_date, $pointAmount, $status)
     {
-        $this->barcodePath = $barcodePath;
         $this->code = $code;
         $this->generate_date = $generate_date;
         $this->id = $id;

@@ -11,11 +11,8 @@ if ('admin' != $user_type) {
 <html>
 <head>
     <?php
-
     $assetPath = Config::PATH . '/';
-
     include_once '../assets.php'
-
     ?>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
     <script type="text/javascript"

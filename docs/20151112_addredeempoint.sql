@@ -144,8 +144,7 @@ DROP TABLE IF EXISTS `WAP`.`MobileUsers` ;
 
 CREATE  TABLE IF NOT EXISTS `WAP`.`MobileUsers` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `facebook_id` VARCHAR(250) NULL ,
-  `username` VARCHAR(100) NULL ,
+  `email` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
@@ -167,6 +166,18 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `WAP`.`MobileUsers`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `WAP`.`MobileUsers` ;
+
+CREATE  TABLE IF NOT EXISTS `WAP`.`MobileUsers` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `email` VARCHAR(45) NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `WAP`.`RedeemPoint`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `WAP`.`RedeemPoint` ;
@@ -177,11 +188,11 @@ CREATE  TABLE IF NOT EXISTS `WAP`.`RedeemPoint` (
   `spend_point` INT NULL ,
   `total_point` INT NULL ,
   `date` DATETIME NULL ,
-  `MobileUsers_id1` INT NOT NULL ,
+  `MobileUsers_id` INT NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_RedeemPoint_MobileUsers1_idx` (`MobileUsers_id1` ASC) ,
+  INDEX `fk_RedeemPoint_MobileUsers1_idx` (`MobileUsers_id` ASC) ,
   CONSTRAINT `fk_RedeemPoint_MobileUsers1`
-    FOREIGN KEY (`MobileUsers_id1` )
+    FOREIGN KEY (`MobileUsers_id` )
     REFERENCES `WAP`.`MobileUsers` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)

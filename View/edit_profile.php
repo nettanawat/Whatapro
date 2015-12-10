@@ -1,4 +1,5 @@
 <?php
+
 include_once 'session.php';
 
 // only admin has access
@@ -8,8 +9,6 @@ if ('user' != $user_type && 'admin' != $user_type) {
     header('Location: error_message.php');
     exit;
 }
-
-
 
 if (isset($_POST['edit'])) {
     $id = $_POST['inputId'];
@@ -22,35 +21,41 @@ if (isset($_POST['edit'])) {
     $openTime = $_POST['inputOpenAndCloseTime'];
     $category = 'test';
     $description = $_POST['inputDescription'];
-    AccountController::editAccount(new AccountInfo($id, $email, null, null, null, null));
+//    AccountController::editAccount(new AccountInfo($id, $email, null, null, null, null));
     ShopInformationController::editShopInformation(new ShopInformation($id, $name, $address, $phone, "", $latitude, $longitude, $openTime, $description, $category));
 
     //uplaod images
-    $folderPath = "../user_upload/".$id."/shop_images/";
+    $folderPath = "user_upload/" . $id . "/shop_images/";
+    mkdir("../".$folderPath, 0777,true);
     $target_dir = $folderPath;
 
-    $target_file = array();
-    foreach ($_FILES["files"]["name"] as $aImage) {
-        $target_file[] = $target_dir . basename($aImage);
-    }
-
-    $i = 0;
-    $uploadPath = array();
-    foreach ($_FILES["files"]["tmp_name"] as $imageTmp) {
-        if (move_uploaded_file($imageTmp, $target_file[$i])) {
-            $uploadPath[] = $target_file[$i];
+    if (isset($_FILES)) {
+        $realPath = array();
+        $i=0;
+        foreach ($_FILES["files"]["name"] as $aImage) {
+            $realPath[] = $target_dir . basename($aImage);
+            $target_file[] = "../".$realPath[$i];
+            $i++;
         }
-        $i++;
-    }
-    //add image
 
-    foreach($uploadPath as $image){
-        $shopImageController = new ShopImageController();
-        $shopImageController->addImage(new ShopImage("",$id,$image,""));
+        $i = 0;
+        $uploadPath = array();
+        foreach ($_FILES["files"]["tmp_name"] as $imageTmp) {
+            if (move_uploaded_file($imageTmp, $target_file[$i])) {
+                $uploadPath[] = $realPath[$i];
+            } else{
+                // cant upload
+            }
+            $i++;
+        }
+        //add image
+        foreach ($uploadPath as $image) {
+            $shopImageController = new ShopImageController();
+            $shopImageController->addImage(new ShopImage("", $id, $image, ""));
+        }
     }
-    $_SESSION['manageAccountStatus']= "true";
+    $_SESSION['manageAccountStatus'] = "true";
     $_SESSION['manageAccountAction'] = "edit";
-    exit;
 }
 ?>
 
@@ -59,12 +64,13 @@ if (isset($_POST['edit'])) {
 <head>
     <title>WAP / Edit profile</title>
     <?php
-
     $assetPath = Config::PATH.'';
 
-    include_once '../assets.php'
-
+    include_once '../assets.php';
     ?>
+
+    <script type="text/javascript" src="<?php echo Config::PATH.'/' ?>google_jsapi.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
 </head>
 <body>
 <div style="margin: 80px;" class="container-fluid">
@@ -171,15 +177,15 @@ if (isset($_POST['edit'])) {
                             <div id="showImage'.$shopImage->getId().'" style="padding-bottom: 20px;" class="col-md-3">
                                 <div class="panel panel-default">
                                     <div class="panel-body text-right">
-                                        <a href="take_delete_shop_image.php?shopImageId=' . $shopImage->getId() . '" class="deleteImage btn btn-danger btn-sm">remove</a>
+                                        <a href="' . Config::PATH . '/View/take_delete_shop_image.php?shopImageId=' . $shopImage->getId() . '" class="deleteImage btn btn-danger btn-sm">remove</a>
                                     </div>
-                                    <img width="100%" src="' .Config::PATH . '/whatapro/' . $shopImage->getImagePath() . '">
+                                    <img width="100%" src="' .Config::PATH .'/'. $shopImage->getImagePath() . '">
                                 </div>
                             </div>
                         ');
                 }
             } else {
-                echo ('<img class="col-md-6" width="100%" src="../img/youhavenoimage.png">');
+                echo ('<img class="col-md-6" width="100%" src="' . Config::PATH . '/img/noimage.png">');
             }
             ?>
             <div class="col-md-12">
@@ -192,25 +198,23 @@ if (isset($_POST['edit'])) {
             <div class="col-md-12" id="result"></div>
 
             <div style="margin-top: 20px;" class="col-md-12">
-                <a class="btn btn-default" href="home.php" role="button">Back</a>
+                <a class="btn btn-default" href="<?php echo Config::PATH .'/'; ?>" role="button">Back</a>
                 <button type="submit" name="edit" class="btn btn-default">Update</button>
             </div>
         </form>
     </div>
     <!-- /row -->
 </div>
-<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
+<script src="<?php echo $assetPath; ?>/jquery.js"></script>
+<script src="<?php echo $assetPath; ?>/bootstrap/js/bootstrap.min.js"></script>
 <script>
 
     $(".deleteImage").click(function (e) {
         if (confirm("Do you really want to delete this image?")) {
             e.preventDefault()
-            $.get($(this).attr('href'), function (result,data) {
-                $('#showImage'+result).remove();
+            $.get($(this).attr('href'), function (result, data) {
+                $('#showImage' + result).remove();
             });
-        }
-        else{
-
         }
     });
 

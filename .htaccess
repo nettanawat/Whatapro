@@ -15,6 +15,9 @@ RewriteRule    ^promotion/(.*)$    View/promotion.php?promotionId=$1    [NC,L]
 #profile
 RewriteRule    ^profile/edit    View/edit_profile.php    [NC,L]
 
+#mobileuser
+RewriteRule    ^mobileusers$    View/mobileuser_list.php    [NC,L]
+
 #redeem
 RewriteRule    ^redeemcodes$   View/redeem_list.php    [NC,L]
 RewriteRule    ^checkexistingemail   View/check_email.php    [NC,L]

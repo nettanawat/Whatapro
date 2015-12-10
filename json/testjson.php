@@ -6,11 +6,13 @@
  * Time: 6:48 PM
  */
 include_once '../Config.php';
-$promotionList = PromotionController::getAllPromotion();
-$promotionImageController = new PromotionImageController();
-for($i=0;$i<sizeof($promotionList);$i++) {
-    $promotionImageList = $promotionImageController->getPromotionImageByPromotionId($promotionList[$i]->getPromotionId());
-    $outputarr['response_data'][$i]['promotion_id'] = $promotionList[$i]->getPromotionId();
-    $outputarr['response_data'][$i]['account_id'] = $promotionList[$i]->getAccountId();
+if(isset($_GET['login'])) {
+    $outputarr['response_data']['login'] = "Yeah";
+    echo json_encode($outputarr);
 }
-echo json_encode($outputarr);
+
+if(isset($_POST['fbId']) && isset($_POST['fbUsername'])){
+    $id = MobileUserController::addMobileUser(new MobileUser($_POST['fbId'], $_POST['fbUsername'], $id));
+    $outputarr['response_data']['login'] = $id;
+    echo json_encode($outputarr);
+}

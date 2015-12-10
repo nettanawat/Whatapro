@@ -7,5 +7,8 @@
  */
 
 interface PointDAO {
+    public function addReceivePoint(PointInfo $pointInfo);
+    public function addSpendPoint(PointInfo $pointInfo);
+    public function getLastPointById($id);
 
 } 

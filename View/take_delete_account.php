@@ -62,5 +62,6 @@ if (isset($_POST['userId'])) { //delete account
     $deleteShopInfoDb = ShopInformationController::deleteShopInformation($account->getAccountId());
 
     $deleteAccountDb = AccountController::deleteAccount($account->getAccountId());
+
     echo $id;
 }

@@ -100,4 +100,24 @@ class ShopInformationDAOImpl implements ShopInformationDAO {
         }
         return $result;
     }
+
+    public function getShopInformationByLatitudeAndLongitude($latitude, $longitude){
+        $query = '';
+        $result = '';
+        try {
+            $query ="SELECT * FROM ShopInformations WHERE latitude ='" . $latitude . "' AND longitude ='" . $longitude . "'";
+            $row = Config::$connection->query($query)->fetch();
+            if($row == false) {
+                $result = null;
+            } else {
+                $result = new ShopInformation($row['accounts_id'], $row['name'], $row['address'], $row['phone_number'], $row['sub_district'], $row['latitude'], $row['longitude'], $row['open_time'], $row['description'], $row['category']);
+            }
+        }
+        catch(PDOException $e)
+        {
+            echo $query . "<br>" . $e->getMessage();
+            $result = null;
+        }
+        return $result;
+    }
 }

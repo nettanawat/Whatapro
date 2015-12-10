@@ -7,7 +7,9 @@
  */
 include dirname(__FILE__) . '/../Config.php';
 
-if(isset($_POST['add_redeem'])){
-    $redeemCodeController = new RedeemCodeController();
+if(isset($_POST['receive_point'])){
+//    $redeemCodeController = new RedeemCodeController();
 //    $redeemCodeController->
+} elseif(isset($_POST['spend_point'])){
+
 }

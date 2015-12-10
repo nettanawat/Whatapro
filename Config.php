@@ -30,6 +30,8 @@ class Config {
         'ShopImageController' => 'src/controller/ShopImageController',
         'PromotionImageController' => 'src/controller/PromotionImageController',
         'RedeemCodeController' => 'src/controller/RedeemCodeController',
+        'PointController' => 'src/controller/PointController',
+        'MobileUserController' => 'src/controller/MobileUserController',
         'Adaptor' => 'library/Adaptor',
         'AccountDAO' => 'src/dao/AccountDAO',
         'AccountDAOImpl' => 'src/dao/AccountDAOImpl',
@@ -47,6 +49,10 @@ class Config {
         'PromotionImageDAOImpl' => 'src/dao/PromotionImageDAOImpl',
         'RedeemCodeDAO' => 'src/dao/RedeemCodeDAO',
         'RedeemCodeDAOImpl' => 'src/dao/RedeemCodeDAOImpl',
+        'PointDAO' => 'src/dao/PointDAO',
+        'PointDAOImpl' => 'src/dao/PointDAOImpl',
+        'MobileUserDAO' => 'src/dao/MobileUserDAO',
+        'MobileUserDAOImpl' => 'src/dao/MobileUserDAOImpl',
         'AccountInfo' => 'src/entity/AccountInfo',
         'CheckInCode' => 'src/entity/CheckInCode',
         'Promotion' => 'src/entity/Promotion',
@@ -55,6 +61,8 @@ class Config {
         'ShopImage' => 'src/entity/ShopImage',
         'PromotionImage' => 'src/entity/PromotionImage',
         'RedeemCode' => 'src/entity/RedeemCode',
+        'PointInfo' => 'src/entity/PointInfo',
+        'MobileUser' => 'src/entity/MobileUser',
         'SQLConnector' => 'Library/SQLConnector',
     );
 }
@@ -78,3 +86,5 @@ PromotionController::loadClass();
 RequestSignupController::loadClass();
 ShopInformationController::loadClass();
 RedeemCodeController::loadClass();
+PointController::loadClass();
+MobileUserController::loadClass();

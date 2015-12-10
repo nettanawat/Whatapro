@@ -61,7 +61,7 @@ class ShopInformationDAOImplTest extends PHPUnit_Framework_TestCase {
 
     public function testGetAllShopInformation(){
         $shopInformationDaoImpl = new ShopInformationDAOImpl();
-        $this->assertEquals(3, sizeof($shopInformationDaoImpl->getAllShopInformation()));
+        $this->assertEquals(4, sizeof($shopInformationDaoImpl->getAllShopInformation()));
 
     }
 

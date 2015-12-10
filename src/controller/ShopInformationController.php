@@ -32,4 +32,8 @@ class ShopInformationController {
     static function getShopInformationById($id){
         return self::$shopInformationDaoImpl->getShopInformationById($id);
     }
+
+    static function getShopInformationByLatitudeAndLongitude($latitude, $longitude){
+        return self::$shopInformationDaoImpl->getShopInformationByLatitudeAndLongitude($latitude, $longitude);
+    }
 }

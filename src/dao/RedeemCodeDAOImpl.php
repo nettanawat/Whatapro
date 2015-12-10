@@ -1,54 +1,91 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: nettanwat
  * Date: 6/19/15 AD
  * Time: 1:41 PM
  */
-
-class RedeemCodeDAOImpl implements RedeemCodeDAO {
-    private $database = '';
-    private $table = 'Codes';
-
-    function __construct()
-    {
-        $this->database = new medoo();
-    }
+class RedeemCodeDAOImpl implements RedeemCodeDAO
+{
 
     public function getAllRedeemCode()
     {
-        $accountList = array();
-        foreach ($this->database->select($this->table,'*') as $row) {
-            $accountList[] = new RedeemCode($row['id'], '1892312344', $row['code'],$row['barcode_path'],$row['generate_date'],$row['point_amount'],$row['status']);
+        $query = '';
+        $result = array();
+        try {
+            $query = "SELECT * FROM Codes";
+            foreach (Config::$connection->query($query)->fetchAll() as $row) {
+                $result[] = new RedeemCode($row['id'], $row['facebook_id'], $row['code'], $row['generate_date'], $row['point_amount'], $row['status']);
+            }
+        } catch (PDOException $e) {
+            echo $query . "<br>" . $e->getMessage();
+            $result = null;
         }
-        return $accountList;
+        return $result;
     }
 
     public function addRedeemCode(RedeemCode $redeemCode)
     {
-        $data = [
-            'code' => $redeemCode->getCode(),
-            'point_amount' => $redeemCode->getPointAmount(),
-            'barcode_path' => $redeemCode->getBarcodePath(),
-            'generate_date' => $redeemCode->getGenerateDate(),
-            'status' => $redeemCode->getStatus()
-        ];
-        return $this->database->insert($this->table, $data);
+        $query = '';
+        $result = '';
+        try {
+            $queryGetId = "SELECT id FROM Codes ORDER BY id DESC LIMIT 1";
+            $lastId = Config::$connection->query($queryGetId)->fetch();
+            $id = 0;
+            if ($redeemCode->getId() != null) {
+                $id = $redeemCode->getId();
+            } else {
+                $id = $lastId['id'] + 1;
+            }
+            $query = "INSERT INTO Codes (id, point_amount, code, generate_date, status, facebook_id) VALUES ("
+                . $id . ",
+                     " . Config::$connection->quote($redeemCode->getPointAmount()) . ",
+                      " . Config::$connection->quote($redeemCode->getCode()) . ",
+                       " . Config::$connection->quote($redeemCode->getGenerateDate()) . ",
+                       " . Config::$connection->quote($redeemCode->getStatus()) . ",
+                       " . Config::$connection->quote($redeemCode->getOwner()) . ")";
+            $row = Config::$connection->query($query);
+            $result = Config::$connection->lastInsertId();
+        } catch (PDOException $e) {
+            echo $query . "<br>" . $e->getMessage();
+            $result = null;
+        }
+        $connection = null;
+        return $result;
     }
 
-    public function updateRedeemCodeStatus()
+    public function updateRedeemCodeStatus($code)
     {
-        // TODO: Implement updateRedeemCodeStatus() method.
+        $query = '';
+        $result = '';
+        try {
+            $query = "UPDATE Codes SET status=1 WHERE code='" . $code . "'";
+            $row = Config::$connection->exec($query);
+            $result = $row;
+        } catch (PDOException $e) {
+            echo $query . "<br>" . $e->getMessage();
+            $result = null;
+        }
+        return $result;
     }
 
     public function getRedeemCodeByCode($redeemCode)
     {
-        $row = $this->database->get($this->table,'*',['AND'=>['code'=>$redeemCode]]);
-        if(false == $row) {
-            return null;
+        $query = '';
+        $result = '';
+        try {
+            $query = "SELECT * FROM Codes WHERE code ='" . $redeemCode . "'";
+            $row = Config::$connection->query($query)->fetch();
+            if ($row == false) {
+                $result = null;
+            } else {
+                $result = new RedeemCode($row['id'], $row['facebook_id'], $row['code'], $row['generate_date'], $row['point_amount'], $row['status']);
+            }
+        } catch (PDOException $e) {
+            echo $query . "<br>" . $e->getMessage();
+            $result = null;
         }
-        else {
-            return new RedeemCode($row['id'], '1892312344', $row['code'],$row['barcode_path'],$row['generate_date'],$row['point_amount'],$row['status']);
-        }
+        return $result;
     }
 }
